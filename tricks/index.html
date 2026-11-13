@@ -17,13 +17,13 @@ Copyright © 2026 letseigo.com. All rights reserved.
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="../assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-bootstrap></script>
+    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
 
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-footer-layout-1">
-    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-13-footer-layout-1">
-    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-13-footer-layout-1">
-    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-13-footer-layout-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-rounded-wheel-font-1">
+    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-13-rounded-wheel-font-1">
+    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-13-rounded-wheel-font-1">
+    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-13-rounded-wheel-font-1">
     <style>
 
         .button-row,
@@ -52,9 +52,15 @@ Copyright © 2026 letseigo.com. All rights reserved.
         .icon-button:hover,
         .close-button:hover { background: var(--accent-soft); border-color: var(--accent-border); }
 
-        .intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 6px 18px; margin-bottom: 22px; }
-        .intro h2 { min-width: 0; align-self: center; margin: 0 0 4px; font-size: 17px; }
-        .intro p { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+        .app-shell.is-presenting .tricks-controls { display: contents; }
+        @media (min-width: 761px) {
+            .app-shell:not(.is-presenting) .mode-panel-content:not([hidden]) { display: grid; grid-template-columns: minmax(0, 1fr) var(--app-sidebar-width); column-gap: var(--app-column-gap); align-content: start; }
+            .app-shell:not(.is-presenting) .mode-panel-content > * { grid-column: 1; }
+            .app-shell:not(.is-presenting) .mode-panel-content > :is(.coin-style-setting, .dice-choice) { grid-column: 2; grid-row: 1 / 6; align-self: start; display: flex; flex-direction: column; align-items: stretch; gap: 10px; margin: 0; padding-top: 4px; text-align: center; }
+            .app-shell:not(.is-presenting) .option-switch label { justify-content: center; min-height: 44px; }
+            .app-shell:not(.is-presenting) .mode-panel-content > .dice-choice { flex-direction: row; gap: 0; justify-content: center; }
+        }
 
         .mode-tabs {
             display: grid;
@@ -182,7 +188,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
         .presentation-icon { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         body.presentation-open { overflow: hidden; }
         .app-shell.is-presenting { position: fixed; z-index: 500; inset: 0; width: 100vw; height: 100vh; height: 100dvh; max-width: none; display: flex; flex-direction: column; border: 0; border-radius: 0; box-shadow: none; overflow: auto; background: var(--bg); }
-        .app-shell.is-presenting .intro,
+
         .app-shell.is-presenting .mode-heading,
         .app-shell.is-presenting .mode-copy,
         .app-shell.is-presenting [data-modal-open] { display: none; }
@@ -201,31 +207,30 @@ Copyright © 2026 letseigo.com. All rights reserved.
         .app-shell.is-presenting .card-name { font-size: clamp(10px, 1.8vh, 18px); }
         .app-shell.is-presenting .result-label { flex: 0 0 auto; margin: 8px 0 0; font-size: clamp(24px, 5vh, 56px); }
         .app-shell.is-presenting .button-row { flex: 0 0 auto; margin-top: 8px; }
-        .app-shell.is-presenting .button { min-height: 48px; font-size: clamp(14px, 2vh, 20px); }
+        .app-shell.is-presenting .button { border-radius: 999px; min-height: 48px; font-size: clamp(14px, 2vh, 20px); }
         .coin[data-style="standard"] .coin-symbol,
         .coin:not([data-style="standard"]) .coin-letter,
         .coin:not([data-style="dog"]) .coin-dog,
         .coin[data-style="dog"] .coin-cat { display: none; }
         .coin-style-setting { display: flex; justify-content: center; align-items: center; gap: 9px; margin-bottom: 14px; }
-        .coin-style-setting label { font-size: 12px; color: var(--muted); font-weight: 700; }
-        .coin-style-setting select { min-height: 40px; padding: 7px 30px 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font: inherit; font-family: var(--font-ui); }
         .coin-word { font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
 
-        .dice-choice {
+        .option-switch {
+            display: flex;
             justify-content: center;
             gap: 0;
             margin: 0 auto 14px;
         }
 
-        .dice-choice label { cursor: pointer; }
-        .dice-choice input { position: absolute; opacity: 0; pointer-events: none; }
-        .dice-choice span {
+        .option-switch label { cursor: pointer; }
+        .option-switch input { position: absolute; opacity: 0; pointer-events: none; }
+        .option-switch span {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 96px;
-            min-height: 40px;
-            padding: 7px 13px;
+            min-width: 44px;
+            min-height: 44px;
+            padding: 7px 12px;
             border: 1px solid var(--line);
             color: var(--muted);
             background: var(--surface);
@@ -233,10 +238,13 @@ Copyright © 2026 letseigo.com. All rights reserved.
             font-weight: 750;
         }
 
-        .dice-choice label:first-child span { border-radius: 8px 0 0 8px; }
-        .dice-choice label:last-child span { margin-left: -1px; border-radius: 0 8px 8px 0; }
-        .dice-choice input:checked + span { position: relative; z-index: 1; color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
-        .dice-choice input:focus-visible + span { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
+        .coin-style-choice { margin: 0; }
+        .coin-style-choice span { min-width: 44px; padding-inline: 8px; }
+        .option-switch svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+        .option-switch label:first-child span { border-radius: 8px 0 0 8px; }
+        .option-switch label:last-child span { margin-left: -1px; border-radius: 0 8px 8px 0; }
+        .option-switch input:checked + span { position: relative; z-index: 1; color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+        .option-switch input:focus-visible + span { outline: 3px solid var(--focus-ring); outline-offset: 2px; }
 
         .dice-stage { gap: 18px; }
         .die {
@@ -381,34 +389,18 @@ Copyright © 2026 letseigo.com. All rights reserved.
             .die.rolling,
             .playing-card.new-draw { animation: none; transition: none; }
         }
-        /* Embedded layout is local to Bag of Tricks; other tools retain their shells. */
-        :root body[data-tool="tricks"] .app-shell:not(.is-presenting):not(:fullscreen) {
-            width: min(1060px, 100%);
-            background: transparent;
-            border: 0;
-            border-radius: 0;
-            box-shadow: none;
-            overflow: visible;
-        }
-        :root body[data-tool="tricks"] .app-shell:not(.is-presenting):not(:fullscreen) > .app-main { padding: 0; }
-        .tricks-actions { display: flex; align-items: center; gap: 6px; }
-        .tricks-actions .icon-button { width: 44px; height: 44px; flex: 0 0 44px; border: 0; background: transparent; border-radius: 12px; }
-        .tricks-actions .icon-button:hover { background: var(--accent-soft); }
-        @media (max-width: 620px) {
-            .intro { column-gap: 8px; margin-bottom: 18px; }
-        }
     </style>
 </head>
 <body data-tool="tricks" class="app-page">
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-tools></script>
-    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-toolbar data-page="tricks"></script>
-    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-profile></script>
+    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-tools></script>
+    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-toolbar data-page="tricks"></script>
+    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 <div class="site-page-scroll themed-scroll">
 
     <main class="page-main">
-        <div class="app-shell" data-app-version="v1.0.9">
+        <div class="app-shell" data-app-version="v1.0.10">
             <header class="app-presentation-header" hidden>
                 <div class="app-presentation-identity">
                     <h2 class="app-presentation-title" data-i18n="tricks.title">Bag of Tricks</h2>
@@ -418,34 +410,31 @@ Copyright © 2026 letseigo.com. All rights reserved.
             </header>
 
             <div class="app-main">
-                <section class="intro" aria-labelledby="introTitle">
-                    <h2 id="introTitle" data-i18n="tricks.intro.title">A little randomness, right when you need it</h2>
-                    <div class="tricks-actions">
+                <div class="tricks-controls app-control-row">
+                <div class="mode-tabs app-control-content" role="tablist" aria-label="Bag of Tricks modes" data-i18n-aria-label="tricks.mode.aria">
+                    <button type="button" id="coinTab" class="mode-tab" role="tab" aria-selected="true" aria-controls="coinPanel" tabindex="0" data-i18n="tricks.mode.coin">Coin</button>
+                    <button type="button" id="diceTab" class="mode-tab" role="tab" aria-selected="false" aria-controls="dicePanel" tabindex="-1" data-i18n="tricks.mode.dice">Dice</button>
+                    <button type="button" id="cardsTab" class="mode-tab" role="tab" aria-selected="false" aria-controls="cardsPanel" tabindex="-1" data-i18n="tricks.mode.cards">Cards</button>
+                </div>
+                    <div class="tricks-actions app-actions">
                     <button type="button" id="presentationButton" class="icon-button" aria-label="Enter presentation mode" aria-pressed="false" title="Presentation mode">
                         <svg class="presentation-icon" viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="presentation"></svg>
                     </button>
                     <button type="button" class="icon-button" data-modal-open="helpModal" aria-label="Open getting started help" aria-haspopup="dialog" title="Getting started" data-i18n-aria-label="tricks.help.open" data-i18n-title="tricks.help.title"><span class="help-button-mark" aria-hidden="true">?</span></button>
 
                     </div>
-                    <p data-i18n="tricks.intro.body">Choose a mode, then flip, roll, or draw for a quick classroom result.</p>
-                </section>
-
-                <div class="mode-tabs" role="tablist" aria-label="Bag of Tricks modes" data-i18n-aria-label="tricks.mode.aria">
-                    <button type="button" id="coinTab" class="mode-tab" role="tab" aria-selected="true" aria-controls="coinPanel" tabindex="0" data-i18n="tricks.mode.coin">Coin</button>
-                    <button type="button" id="diceTab" class="mode-tab" role="tab" aria-selected="false" aria-controls="dicePanel" tabindex="-1" data-i18n="tricks.mode.dice">Dice</button>
-                    <button type="button" id="cardsTab" class="mode-tab" role="tab" aria-selected="false" aria-controls="cardsPanel" tabindex="-1" data-i18n="tricks.mode.cards">Cards</button>
                 </div>
 
                 <section id="coinPanel" class="mode-panel-content" role="tabpanel" aria-labelledby="coinTab">
                     <h2 class="mode-heading" data-i18n="tricks.coin.title">Flip a coin</h2>
                     <p class="mode-copy" data-i18n="tricks.coin.body">Make a quick two-way choice with an equal chance of Heads or Tails.</p>
                     <div class="coin-style-setting">
-                        <label for="coinStyle" data-i18n="tricks.coin.style">Coin style</label>
-                        <select id="coinStyle">
-                            <option value="standard" data-i18n="tricks.coin.styleStandard">Standard</option>
-                            <option value="cat" data-i18n="tricks.coin.styleCat">Cat</option>
-                            <option value="dog" data-i18n="tricks.coin.styleDog">Dog</option>
-                        </select>
+                        <span id="coinStyleLabel" class="sr-only" data-i18n="tricks.coin.style">Coin style</span>
+                        <div class="coin-style-choice option-switch" role="radiogroup" aria-labelledby="coinStyleLabel">
+                            <label title="Standard" data-i18n-title="tricks.coin.styleStandard"><input type="radio" name="coinStyle" value="standard" checked aria-label="Standard" data-i18n-aria-label="tricks.coin.styleStandard"><span><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="coin-standard"></svg></span></label>
+                            <label title="Cat" data-i18n-title="tricks.coin.styleCat"><input type="radio" name="coinStyle" value="cat" aria-label="Cat" data-i18n-aria-label="tricks.coin.styleCat"><span><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="cat-head"></svg></span></label>
+                            <label title="Dog" data-i18n-title="tricks.coin.styleDog"><input type="radio" name="coinStyle" value="dog" aria-label="Dog" data-i18n-aria-label="tricks.coin.styleDog"><span><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="dog-head"></svg></span></label>
+                        </div>
                     </div>
                     <div class="result-stage">
                         <div id="coin" class="coin" data-style="standard" aria-hidden="true">
@@ -488,9 +477,9 @@ Copyright © 2026 letseigo.com. All rights reserved.
                 <section id="dicePanel" class="mode-panel-content" role="tabpanel" aria-labelledby="diceTab" hidden>
                     <h2 class="mode-heading" data-i18n="tricks.dice.title">Roll the dice</h2>
                     <p class="mode-copy" data-i18n="tricks.dice.body">Use one die for 1–6, or two dice for a total from 2–12.</p>
-                    <div class="dice-choice" role="radiogroup" aria-label="Number of dice" data-i18n-aria-label="tricks.dice.countAria">
-                        <label><input type="radio" name="diceCount" value="1" checked><span data-i18n="tricks.dice.one">One die</span></label>
-                        <label><input type="radio" name="diceCount" value="2"><span data-i18n="tricks.dice.two">Two dice</span></label>
+                    <div class="dice-choice option-switch" role="radiogroup" aria-label="Number of dice" data-i18n-aria-label="tricks.dice.countAria">
+                        <label title="One die" data-i18n-title="tricks.dice.one"><input type="radio" name="diceCount" value="1" checked aria-label="One die" data-i18n-aria-label="tricks.dice.one"><span><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="die"></svg></span></label>
+                        <label title="Two dice" data-i18n-title="tricks.dice.two"><input type="radio" name="diceCount" value="2" aria-label="Two dice" data-i18n-aria-label="tricks.dice.two"><span><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="dice"></svg></span></label>
                     </div>
                     <div id="diceStage" class="result-stage dice-stage" aria-hidden="true"></div>
                     <p id="diceResult" class="result-label" data-i18n="tricks.dice.ready">Ready to roll</p>
@@ -539,7 +528,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
     </div>
 
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-ui></script>
+    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
 
     <script>
@@ -554,8 +543,8 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "tricks.help.open": "Open getting started help",
                     "tricks.help.title": "Getting started",
                     "tricks.help.close": "Close getting started help",
-                    "tricks.intro.title": "A little randomness, right when you need it",
-                    "tricks.intro.body": "Choose a mode, then flip, roll, or draw for a quick classroom result.",
+
+
                     "tricks.mode.aria": "Bag of Tricks modes",
                     "tricks.mode.coin": "Coin",
                     "tricks.mode.dice": "Dice",
@@ -628,8 +617,8 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "tricks.help.open": "使い方を開く",
                     "tricks.help.title": "はじめに",
                     "tricks.help.close": "使い方を閉じる",
-                    "tricks.intro.title": "ちょっとしたランダム選びを、必要なときに",
-                    "tricks.intro.body": "モードを選び、コインを投げる、サイコロを振る、またはカードを引いて、授業ですぐに結果を出せます。",
+
+
                     "tricks.mode.aria": "お楽しみツールのモード",
                     "tricks.mode.coin": "コイン",
                     "tricks.mode.dice": "サイコロ",
@@ -756,11 +745,10 @@ Copyright © 2026 letseigo.com. All rights reserved.
             const liveResult = document.getElementById("liveResult");
             const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
             const coin = document.getElementById("coin");
-            const coinStyle = document.getElementById("coinStyle");
-            coinStyle.value = "standard";
-            coinStyle.addEventListener("change", () => {
-                coin.dataset.style = ["cat", "dog"].includes(coinStyle.value) ? coinStyle.value : "standard";
-            });
+            const coinStyles = Array.from(document.querySelectorAll('input[name="coinStyle"]'));
+            coinStyles.forEach(input => input.addEventListener("change", () => {
+                if (input.checked) coin.dataset.style = input.value;
+            }));
             const coinResult = document.getElementById("coinResult");
             const flipButton = document.getElementById("flipButton");
             const diceStage = document.getElementById("diceStage");
@@ -836,7 +824,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                 if (busy) return;
                 busy = true;
                 flipButton.disabled = true;
-                coinStyle.disabled = true;
+                coinStyles.forEach(input => input.disabled = true);
                 const selectedSide = randomInt(2);
                 const resultKey = selectedSide === 0 ? "tricks.coin.heads" : "tricks.coin.tails";
                 const halfTurns = 6 + ((selectedSide - currentCoinSide + 2) % 2);
@@ -851,7 +839,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     coinResult.textContent = result;
                     announce(t("tricks.coin.announcement", "Coin result: {result}.", { result }));
                     flipButton.disabled = false;
-                    coinStyle.disabled = false;
+                    coinStyles.forEach(input => input.disabled = false);
                     busy = false;
                 };
                 window.setTimeout(finish, reduceMotion.matches ? 0 : 780);

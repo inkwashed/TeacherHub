@@ -17,16 +17,29 @@ Copyright © 2026 letseigo.com. All rights reserved.
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="../assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-bootstrap></script>
+    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
 
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-footer-layout-1">
-    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-13-footer-layout-1">
-    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-13-footer-layout-1">
-    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-13-footer-layout-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-rounded-wheel-font-1">
+    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-13-rounded-wheel-font-1">
+    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-13-rounded-wheel-font-1">
+    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-13-rounded-wheel-font-1">
     <style>
 
-        /* Classroom Timer styles begin here. */
+        /* Classroom Timer controls and presentation visuals remain local. */
+
+        /* Presets share the utility controls' column only in the normal wide layout. */
+        @media (min-width: 761px) {
+            .app-shell:not(.is-presenting) .timer-panel:not([hidden]) { display: grid; grid-template-columns: minmax(0, 1fr) var(--app-sidebar-width); column-gap: var(--app-column-gap); align-items: start; }
+            .app-shell:not(.is-presenting) .timer-panel > .timer-stage { grid-column: 1; grid-row: 1; }
+            .app-shell:not(.is-presenting) .timer-panel > .keyboard-hint { grid-column: 1; grid-row: 2; }
+            .app-shell:not(.is-presenting) .countdown-setup { display: contents; }
+            .app-shell:not(.is-presenting) .quick-presets { grid-column: 2; grid-row: 1 / 4; padding-top: 19px; align-self: stretch; min-height: 0; contain: size; display: flex; flex-direction: column; max-height: max(120px, calc(100dvh - 200px)); }
+            .app-shell:not(.is-presenting) .quick-presets > .section-label { text-align: center; }
+            .app-shell:not(.is-presenting) .quick-presets .preset-list { flex-direction: column; flex-wrap: nowrap; align-items: stretch; flex: 1 1 auto; min-height: 0; overflow-y: auto; overflow-x: hidden; overscroll-behavior-y: contain; scrollbar-gutter: stable both-edges; padding: 4px; }
+            .app-shell:not(.is-presenting) .quick-presets .preset-button { min-height: 44px; flex: 0 0 auto; white-space: normal; overflow-wrap: anywhere; }
+            .app-shell:not(.is-presenting) .countdown-setup > .time-entry { grid-column: 1; grid-row: 3; margin-top: 18px; }
+        }
 
         .settings-icon { width: 23px; height: 23px; fill: currentColor; }
 
@@ -367,7 +380,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
             box-shadow: none;
         }
 
-        .app-shell.is-presenting .app-header { flex: 0 0 auto; }
+        .app-shell.is-presenting .timer-controls { display: contents; }
         .app-shell.is-presenting #helpOpenButton,
         .app-shell.is-presenting #settingsOpenButton { display: none; }
         .app-shell.is-presenting .app-main {
@@ -377,7 +390,6 @@ Copyright © 2026 letseigo.com. All rights reserved.
             flex-direction: column;
             padding: clamp(10px, 2vh, 20px);
         }
-        .app-shell.is-presenting .app-footer,
         .app-shell.is-presenting .countdown-setup,
         .app-shell.is-presenting .keyboard-hint { display: none; }
         .app-shell.is-presenting .mode-tabs { flex: 0 0 auto; width: min(430px, 100%); margin: 0 auto; }
@@ -397,7 +409,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
         }
         .app-shell.is-presenting .time-display { font-size: clamp(16px, calc(var(--presentation-timer-size) * 0.18), 92px); }
         .app-shell.is-presenting .timer-status { font-size: clamp(15px, 1.6vw, 22px); }
-        .app-shell.is-presenting .button { min-height: clamp(48px, 7vh, 66px); padding-inline: clamp(18px, 2.4vw, 30px); font-size: clamp(15px, 1.7vw, 22px); }
+        .app-shell.is-presenting .button { border-radius: 999px; min-height: clamp(48px, 7vh, 66px); padding-inline: clamp(18px, 2.4vw, 30px); font-size: clamp(15px, 1.7vw, 22px); }
 
         @keyframes finish-pulse {
             50% { transform: scale(1.025); }
@@ -444,22 +456,31 @@ Copyright © 2026 letseigo.com. All rights reserved.
         }
     </style>
 </head>
-<body data-tool="timer">
+<body data-tool="timer" class="app-page">
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-tools></script>
-    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-toolbar data-page="timer"></script>
-    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-profile></script>
+    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-tools></script>
+    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-toolbar data-page="timer"></script>
+    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 <div class="site-page-scroll themed-scroll">
 
     <main class="page-main">
-        <div class="app-shell">
-            <header class="app-header">
-                <div class="title-wrap">
-                    <h1 class="app-title" data-i18n="timer.title">Classroom Timer</h1>
-                    <span class="version-badge">v1.0</span>
+        <div class="app-shell" data-app-version="v1.0.2">
+            <header class="app-presentation-header" hidden>
+                <div class="app-presentation-identity">
+                    <h2 class="app-presentation-title" data-i18n="timer.title">Classroom Timer</h2>
+                    <span class="app-presentation-version"></span>
                 </div>
-                <div class="app-header-actions">
+                <div class="app-presentation-actions"></div>
+            </header>
+
+            <div class="app-main">
+                <div class="timer-controls app-control-row">
+                <div class="mode-tabs app-control-content" role="tablist" aria-label="Timer mode" data-i18n-aria-label="timer.mode.aria">
+                    <button type="button" id="countdownTab" class="mode-tab" role="tab" aria-selected="true" aria-controls="countdownPanel" data-i18n="timer.mode.countdown">Countdown</button>
+                    <button type="button" id="stopwatchTab" class="mode-tab" role="tab" aria-selected="false" aria-controls="stopwatchPanel" tabindex="-1" data-i18n="timer.mode.stopwatch">Stopwatch</button>
+                </div>
+                <div class="timer-actions app-actions">
                     <button type="button" id="presentationButton" class="icon-button" aria-label="Enter presentation mode" aria-pressed="false" title="Presentation mode" data-i18n-aria-label="timer.presentation.enter" data-i18n-title="timer.presentation.title">
                         <svg class="presentation-icon" viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="presentation"></svg>
                     </button>
@@ -470,12 +491,6 @@ Copyright © 2026 letseigo.com. All rights reserved.
                         <svg class="settings-icon" viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="settings"></svg>
                     </button>
                 </div>
-            </header>
-
-            <div class="app-main">
-                <div class="mode-tabs" role="tablist" aria-label="Timer mode" data-i18n-aria-label="timer.mode.aria">
-                    <button type="button" id="countdownTab" class="mode-tab" role="tab" aria-selected="true" aria-controls="countdownPanel" data-i18n="timer.mode.countdown">Countdown</button>
-                    <button type="button" id="stopwatchTab" class="mode-tab" role="tab" aria-selected="false" aria-controls="stopwatchPanel" tabindex="-1" data-i18n="timer.mode.stopwatch">Stopwatch</button>
                 </div>
 
                 <section id="countdownPanel" class="timer-panel" role="tabpanel" aria-labelledby="countdownTab">
@@ -494,6 +509,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     <p class="keyboard-hint" data-i18n="timer.keyboardHint">Press Space to start or pause while no field or dialog is active.</p>
 
                     <div class="countdown-setup">
+                        <div class="quick-presets">
                         <span class="section-label" data-i18n="timer.quickPresets">Quick presets</span>
                         <div id="presetList" class="preset-list" role="group" aria-label="Countdown presets" data-i18n-aria-label="timer.presets.aria">
                             <button type="button" class="preset-button" data-seconds="60" data-quick-preset="60" data-i18n="timer.minutes.1">1 min</button>
@@ -505,6 +521,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                             <span id="quickPresetEmpty" class="quick-preset-empty" hidden data-i18n="timer.presets.noneSelected">No quick presets selected.</span>
                         </div>
 
+                        </div>
                         <div class="time-entry" aria-label="Set countdown duration" data-i18n-aria-label="timer.duration.aria">
                             <label class="time-field">
                                 <span class="field-label" data-i18n="timer.hours">Hours</span>
@@ -539,13 +556,10 @@ Copyright © 2026 letseigo.com. All rights reserved.
                 </section>
             </div>
 
-            <footer class="app-footer">
-                <div class="footer-version" data-i18n="timer.footer.version">Classroom Timer · v1.0</div>
-                <div class="footer-copyright" data-i18n="timer.footer.note">Teacher Tools · Timer data stays in this browser.</div>
-            </footer>
         </div>
     </main>
 </div>
+    <footer class="app-copyright">Let’s EiGo! Teacher Tools © 2026 letseigo.com · All rights reserved.</footer>
 
     <div id="tutorialModal" class="modal-backdrop" data-shared-modal data-first-use-storage-key="teacherTools.classroomTimer.tutorialSeen.v1" aria-hidden="true">
         <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle" aria-describedby="tutorialIntro">
@@ -659,7 +673,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
     </div>
 
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-ui></script>
+    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
 
     <script>
@@ -724,8 +738,8 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "timer.minutes.5": "5 min",
                     "timer.minutes.10": "10 min",
                     "timer.minutes.15": "15 min",
-                    "timer.footer.version": "Classroom Timer · v1.0",
-                    "timer.footer.note": "Teacher Tools · Timer data stays in this browser.",
+
+
                     "timer.help.intro": "Use the Classroom Timer for a quick activity countdown or as a stopwatch.",
                     "timer.help.step1Title": "Choose a time",
                     "timer.help.step1Body": "Pick a quick preset or enter hours, minutes, and seconds.",
@@ -803,8 +817,8 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "timer.minutes.5": "5分",
                     "timer.minutes.10": "10分",
                     "timer.minutes.15": "15分",
-                    "timer.footer.version": "教室タイマー · v1.0",
-                    "timer.footer.note": "Teacher Tools · タイマーのデータはこのブラウザに保存されます。",
+
+
                     "timer.help.intro": "教室タイマーは、短い活動のカウントダウンにもストップウォッチにも使えます。",
                     "timer.help.step1Title": "時間を選ぶ",
                     "timer.help.step1Body": "クイックプリセットを選ぶか、時間・分・秒を入力します。",
@@ -1047,11 +1061,20 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     : t("timer.presentation.title", "Presentation mode");
             }
 
+            const presentationHeader = elements.appShell.querySelector(".app-presentation-header");
+            const actionGroup = elements.appShell.querySelector(".timer-actions");
+            const normalActionHome = actionGroup.parentElement;
+            presentationHeader.querySelector(".app-presentation-version").textContent = elements.appShell.dataset.appVersion;
+
             function setPresentationMode(active) {
+                if (active) presentationHeader.querySelector(".app-presentation-actions").append(actionGroup);
+                else normalActionHome.append(actionGroup);
+                presentationHeader.hidden = !active;
                 presentationMode = active;
                 elements.appShell.classList.toggle("is-presenting", active);
                 document.body.classList.toggle("presentation-open", active);
                 updatePresentationButton();
+                if (!active) elements.presentationButton.focus();
             }
 
             async function enterPresentationMode() {

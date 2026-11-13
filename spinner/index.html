@@ -17,34 +17,39 @@ Copyright © 2026 letseigo.com. All rights reserved.
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="../assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-bootstrap></script>
+    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
 
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-footer-layout-1">
-    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-13-footer-layout-1">
-    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-13-footer-layout-1">
-    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-13-footer-layout-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-rounded-wheel-font-1">
+    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-13-rounded-wheel-font-1">
+    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-13-rounded-wheel-font-1">
+    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-13-rounded-wheel-font-1">
     <style>
 
-        /* Spinner Wheel-specific presentation begins here. */
-
-        .app-header {
-            min-height: 56px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 10px 12px 10px 18px;
-            background: var(--surface);
-            border-bottom: 1px solid var(--line);
+        /* Spinner visuals remain local; converted shells use shared components. */
+        .app-shell:not(.is-presenting) .spinner-controls { grid-column: 1 / -1; }
+        .spinner-controls .wheel-summary { margin: 0; justify-content: flex-start; }
+        .app-shell:not(.is-presenting) .wheel-card { padding: 0; border: 0; background: transparent; box-shadow: none; }
+        .app-shell.is-presenting :is(.spin-button, .button) { border-radius: 999px; }
+        @media (max-width: 620px) {
+            .spinner-controls .wheel-summary { justify-content: center; }
         }
 
-        .app-title {
-            margin: 0;
-            color: var(--accent);
-            font-size: 19px;
-            font-weight: 750;
-            line-height: 1.2;
+
+        @media (min-width: 761px) {
+            .app-shell:not(.is-presenting) .wheel-card { display: grid; grid-template-columns: minmax(0, 1fr) var(--app-sidebar-width); column-gap: var(--app-column-gap); align-items: start; }
+            .app-shell:not(.is-presenting) .wheel-stage { grid-column: 1; grid-row: 2; }
+            .app-shell:not(.is-presenting) .spin-area { display: contents; }
+            .app-shell:not(.is-presenting) .spin-button { grid-column: 1; grid-row: 3; width: min(440px, 100%); justify-self: center; margin-top: 13px; }
+            .app-shell:not(.is-presenting) .wheel-status { grid-column: 1; grid-row: 4; text-align: center; }
+            .app-shell:not(.is-presenting) .round-panel { grid-column: 2; grid-row: 2 / 5; align-self: start; flex-direction: column; margin: 0; text-align: center; border-radius: 16px; }
+            .app-shell:not(.is-presenting) .round-panel .button { width: 100%; min-height: 44px; white-space: normal; }
+        }
+
+        body[data-tool="spinner"] .page-main { padding-bottom: 12px; }
+        @media (min-width: 761px) {
+            .app-shell:not(.is-presenting) .wheel-stage { width: min(100%, 520px, max(240px, calc(100dvh - 300px))); }
+            .app-shell:not(.is-presenting) .wheel-status { min-height: 0; }
         }
 
         .icon-button:disabled { opacity: 0.45; cursor: not-allowed; }
@@ -148,7 +153,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
             color: #ffffff;
             background: var(--accent);
             border: 1px solid var(--accent);
-            border-radius: 10px;
+            border-radius: 999px;
             font-size: 16px;
             font-weight: 800;
             cursor: pointer;
@@ -159,7 +164,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
         html[data-theme="true-dark"] .button-primary { color: #07101d; }
         .spin-button:hover:not(:disabled) { filter: brightness(1.05); }
         .spin-button:disabled { opacity: 0.48; cursor: not-allowed; box-shadow: none; }
-        .spin-icon { font-size: 21px; line-height: 1; }
+        .spin-icon { width: 1em; height: 1em; flex: 0 0 1em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; font-size: 21px; }
 
         .wheel-status {
             min-height: 34px;
@@ -300,11 +305,10 @@ Copyright © 2026 letseigo.com. All rights reserved.
             box-shadow: none;
         }
 
-        .app-shell.is-presenting .app-header { flex: 0 0 auto; }
+        .app-shell.is-presenting .spinner-controls { display: contents; }
         .app-shell.is-presenting #helpOpenButton,
         .app-shell.is-presenting #settingsOpenButton { display: none; }
         .app-shell.is-presenting .app-main { flex: 1 1 auto; min-height: 0; padding: clamp(10px, 2vh, 20px); }
-        .app-shell.is-presenting .app-footer { display: none; }
 
         .app-shell.is-presenting .wheel-card {
             width: 100%;
@@ -537,23 +541,34 @@ Copyright © 2026 letseigo.com. All rights reserved.
         }
     </style>
 </head>
-<body data-tool="spinner">
+<body data-tool="spinner" class="app-page">
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-tools></script>
-    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-toolbar data-page="spinner"></script>
-    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-profile></script>
+    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-tools></script>
+    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-toolbar data-page="spinner"></script>
+    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 <div class="site-page-scroll themed-scroll">
 
     <main class="page-main">
-        <div class="app-shell">
-            <header class="app-header">
-                <div class="title-wrap">
-                    <h1 class="app-title" data-i18n="spinner.title">Spinner Wheel</h1>
-                    <span class="version-badge">v1.2</span>
+        <div class="app-shell" data-app-version="v1.2.1">
+            <header class="app-presentation-header" hidden>
+                <div class="app-presentation-identity">
+                    <h2 class="app-presentation-title" data-i18n="spinner.title">Spinner Wheel</h2>
+                    <span class="app-presentation-version"></span>
                 </div>
+                <div class="app-presentation-actions"></div>
+            </header>
 
-                <div class="app-header-actions">
+            <div class="app-main">
+                <section class="wheel-card" aria-label="Spinner wheel" data-i18n-aria-label="spinner.wheelAria">
+                    <div class="spinner-controls app-control-row">
+                    <div class="wheel-summary app-control-content" aria-hidden="true">
+                        <span id="modeBadge" class="mode-badge">Numbers</span>
+                        <span id="choiceCountText">24 choices</span>
+                        <span aria-hidden="true">·</span>
+                        <span id="selectionBehaviorText">Selections stay on the wheel</span>
+                    </div>
+                <div class="spinner-actions app-actions">
                     <button type="button" id="presentationButton" class="icon-button" aria-label="Enter presentation mode" aria-pressed="false" title="Presentation mode" data-i18n-aria-label="spinner.presentation.enter" data-i18n-title="spinner.presentation.title">
                         <svg class="presentation-icon" viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="presentation"></svg>
                     </button>
@@ -564,15 +579,6 @@ Copyright © 2026 letseigo.com. All rights reserved.
                         <svg class="settings-icon" viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="settings"></svg>
                     </button>
                 </div>
-            </header>
-
-            <div class="app-main">
-                <section class="wheel-card" aria-label="Spinner wheel" data-i18n-aria-label="spinner.wheelAria">
-                    <div class="wheel-summary" aria-hidden="true">
-                        <span id="modeBadge" class="mode-badge">Numbers</span>
-                        <span id="choiceCountText">24 choices</span>
-                        <span aria-hidden="true">·</span>
-                        <span id="selectionBehaviorText">Selections stay on the wheel</span>
                     </div>
 
                     <div class="wheel-stage">
@@ -587,7 +593,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
 
                     <div class="spin-area">
                         <button type="button" id="spinButton" class="spin-button">
-                            <span class="spin-icon" aria-hidden="true">↻</span>
+                            <svg class="spin-icon" viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="rotate-right"></svg>
                             <span id="spinButtonText" data-i18n="spinner.spin">Spin the wheel</span>
                         </button>
                         <p id="wheelStatus" class="wheel-status" role="status" aria-live="polite">24 choices are ready.</p>
@@ -600,13 +606,10 @@ Copyright © 2026 letseigo.com. All rights reserved.
                 </section>
             </div>
 
-            <footer class="app-footer">
-                <div class="footer-version" data-i18n="spinner.footer.version">Spinner Wheel · v1.2</div>
-                <div class="footer-copyright" data-i18n="spinner.footer.note">Choices stay in this browser and are not uploaded.</div>
-            </footer>
         </div>
     </main>
 </div>
+    <footer class="app-copyright">Let’s EiGo! Teacher Tools © 2026 letseigo.com · All rights reserved.</footer>
 
     <div id="helpModal" class="modal-backdrop" data-shared-modal aria-hidden="true">
         <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="helpTitle" aria-describedby="helpIntro">
@@ -800,7 +803,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
     </div>
 
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-ui></script>
+    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
 
     <!-- Spinner Wheel-specific behavior begins here. -->
@@ -832,8 +835,8 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "spinner.spinAgain": "Spin again",
                     "spinner.spinning": "Spinning…",
                     "spinner.restoreAll": "Restore all",
-                    "spinner.footer.version": "Spinner Wheel · v1.2",
-                    "spinner.footer.note": "Choices stay in this browser and are not uploaded.",
+
+
                     "spinner.help.intro": "Choose a saved class number set or one of your reusable custom lists, then spin.",
                     "spinner.help.step1Title": "Choose the wheel mode",
                     "spinner.help.step1Body": "Use Numbers to choose a school and class from Scheduler. New class ranges use the saved student count when available, and you can still adjust the minimum, maximum, or exclusions. Use Custom Choices to keep a reusable bank of named lists.",
@@ -958,8 +961,8 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "spinner.spinAgain": "もう一度回す",
                     "spinner.spinning": "回転中…",
                     "spinner.restoreAll": "すべて戻す",
-                    "spinner.footer.version": "スピナーホイール · v1.2",
-                    "spinner.footer.note": "選択肢はこのブラウザだけに保存され、アップロードされません。",
+
+
                     "spinner.help.intro": "保存済みクラスの数字セットまたは再利用できるカスタムリストを選び、ホイールを回します。",
                     "spinner.help.step1Title": "ホイールのモードを選ぶ",
                     "spinner.help.step1Body": "「数字」では、スケジューラーの学校とクラスを選びます。保存済みの生徒数があれば新しい範囲に使われ、最小値・最大値・除外する数字も調整できます。「カスタム選択肢」では、名前付きリストを繰り返し使えます。",
@@ -1091,6 +1094,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
             const canvas = document.getElementById("wheelCanvas");
             const wheelStage = document.querySelector(".wheel-stage");
             const context = canvas.getContext("2d");
+            let wheelFontFamily = getComputedStyle(canvas).fontFamily;
             const appShell = document.querySelector(".app-shell");
             const presentationButton = document.getElementById("presentationButton");
             const modeBadge = document.getElementById("modeBadge");
@@ -1683,7 +1687,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                 const maximum = radius * 0.13;
                 fontSize = Math.max(minimum, Math.min(maximum, fontSize));
 
-                context.font = `750 ${fontSize}px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`;
+                context.font = `750 ${fontSize}px ${wheelFontFamily}`;
                 const measuredWidth = context.measureText(label).width;
                 if (measuredWidth > radialLimit) fontSize *= radialLimit / measuredWidth;
                 return Math.max(minimum, fontSize);
@@ -1702,6 +1706,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
             }
 
             function drawWheel(rotation, entries) {
+                wheelFontFamily = getComputedStyle(canvas).fontFamily;
                 const size = canvas.width;
                 const center = size / 2;
                 const radius = center - 16;
@@ -1717,7 +1722,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     context.strokeStyle = styles.getPropertyValue("--line");
                     context.stroke();
                     context.fillStyle = styles.getPropertyValue("--muted");
-                    context.font = "700 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
+                    context.font = `700 24px ${wheelFontFamily}`;
                     context.textAlign = "center";
                     context.textBaseline = "middle";
                     context.fillText(t("spinner.canvas.empty", "Add choices in Settings"), center, center);
@@ -1752,7 +1757,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     const displayLabel = truncateLabel(entry.label, entries.length);
                     const fontSize = wheelLabelFontSize(displayLabel, entries.length, radius, slice);
                     context.fillStyle = contrastColor(color);
-                    context.font = `750 ${fontSize}px -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`;
+                    context.font = `750 ${fontSize}px ${wheelFontFamily}`;
                     context.textAlign = "right";
                     context.textBaseline = "middle";
                     context.fillText(displayLabel, 0, 0);
@@ -2004,11 +2009,20 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     : t("spinner.presentation.title", "Presentation mode");
             }
 
+            const presentationHeader = appShell.querySelector(".app-presentation-header");
+            const actionGroup = appShell.querySelector(".spinner-actions");
+            const normalActionHome = actionGroup.parentElement;
+            presentationHeader.querySelector(".app-presentation-version").textContent = appShell.dataset.appVersion;
+
             function setPresentationMode(active) {
+                if (active) presentationHeader.querySelector(".app-presentation-actions").append(actionGroup);
+                else normalActionHome.append(actionGroup);
+                presentationHeader.hidden = !active;
                 presentationMode = active;
                 appShell.classList.toggle("is-presenting", active);
                 document.body.classList.toggle("presentation-open", active);
                 updatePresentationButton();
+                if (!active) presentationButton.focus();
                 window.setTimeout(resizeCanvas, 0);
             }
 
@@ -2129,6 +2143,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
             updatePresentationButton();
             applySpinnerLanguage();
             window.setTimeout(resizeCanvas, 0);
+            document.fonts?.ready.then(() => { if (!isSpinning) resizeCanvas(); });
         })();
     </script>
     <script src="../assets/js/selfie/svg-parts.js"></script>

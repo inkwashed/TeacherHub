@@ -158,3 +158,76 @@ Bag of Tricks has never been opened individually. PNG checks reject missing,
 HTML fallback and truncated responses. Artwork revisions bump the shared release
 so prepared installations receive the current images with the current page.
 Shared CSS and file-safe paths remain unchanged.
+
+### Embedded Classroom Timer (v1.0.1)
+
+Timer now opts into `body.app-page`, alongside Bag of Tricks. The converted
+transparent app shell and 44px in-content utility controls are owned once in
+`components.css` (`.app-actions`); mode layouts and timer visuals remain local.
+Normal mode puts Countdown/Stopwatch tabs beside fullscreen/help/settings, with
+controls above the tabs on phones. The site toolbar supplies the inline app
+name/version; no empty inner header remains. Presentation moves the same control
+group into the shared title/version header, retaining Timer's existing hidden
+help/settings behavior. Exit restores the controls and focus.
+
+The copyright footer is a direct body child outside the activity scroll region
+and is hidden in presentation. The canvas follows the theme surface, including
+dark/custom themes, without changing accents. Storage keys, presets, timekeeping,
+alerts and keyboard shortcuts are unchanged. `check_timer_layout.cjs` covers
+HTTP/file layouts, themes, both languages, countdown/stopwatch, dialogs, saved
+presets and fullscreen/fallback. Check alerts/audio, touch, safe areas and
+fullscreen behavior on a physical iPad Safari before release.
+
+Timer v1.0.2 places Quick presets in a vertical 144px column (matching the three 44px utility buttons and two 6px gaps) below the utility
+controls at widths of 761px and above. The countdown and duration inputs share
+the remaining column; saved presets use the same stack. Smaller layouts retain
+presets below the timer. Presentation continues to hide setup/presets, and
+Stopwatch does not show countdown presets. These grid rules are Timer-local.
+
+On wide Timer layouts, the preset sidebar uses size containment so its contents
+cannot enlarge the countdown grid rows. Its button list scrolls independently,
+bounded by the main column and viewport; the heading stays above the list.
+Buttons retain their minimum touch height and focus padding. Phone layouts
+retain ordinary page flow, and presentation continues to hide the sidebar.
+
+Bag of Tricks v1.0.10 removes the general introductory heading/copy. Its mode tabs
+and utility controls share a top row; wide layouts use a consistent 144px options
+column below the centered utility controls for coin style and dice count. Cards
+retain their deck status in the main column. Phones keep options above the
+activity; presentation retains its existing compact controls and moves the same
+utility group into the title/version header. These variants remain tool-local.
+
+### Embedded Spinner Wheel (v1.2.1)
+
+Spinner now opts into `body.app-page` and reuses the converted shell, shared
+utility controls, inline toolbar version, presentation identity and body-level
+copyright footer. The normal wheel card is transparent and borderless. Its
+summary and fullscreen/help/settings controls share a row on wide screens;
+phones put utility controls above the summary. The same controls move into the
+presentation header, with help/settings hidden as before. Existing wheel canvas,
+result card, responsive presentation layout and sounds remain local. Spin/action
+buttons use pills. Spinner storage schemas, saved lists and selection algorithms
+are unchanged. `check_spinner_layout.cjs` covers HTTP/file appearance, themes,
+languages, dialogs, number/custom spins, exclusions, round removal/restore,
+list persistence and native/fallback presentation. Physical iPad Safari touch,
+fullscreen, audio and safe-area verification still need device testing.
+
+### Shared converted-app control rows
+
+Timer, Bag of Tricks and Spinner use `.app-control-row` and
+`.app-control-content` from `components.css`. The normal-page standard is 56px
+high (44px tab/button targets plus 5px inset and 1px border on each edge).
+Spinner's status text gets the same minimum content height. Body-level tokens
+`--app-control-height`, `--app-sidebar-width` (144px), and `--app-column-gap`
+(16px) own these dimensions. Tool-local main/options grids consume these tokens
+rather than repeating widths. Utility groups are centered over the side column,
+including Bag of Tricks' two-button group. At 620px and below, all three use a
+44px utility row, 8px gap and 56px content row. Minimum heights may grow if text
+requires extra room for accessibility. Shared rules are scoped out of
+presentation mode so each tool retains its dedicated fullscreen layout.
+
+Spinner normal-page bottom padding is 12px, with no reserved empty status height
+on wide layouts. Its normal wheel is capped by available viewport height as well
+as the 520px maximum, preventing unnecessary desktop scrolling while retaining
+ordinary scrolling when a genuinely small viewport needs it. Presentation sizing
+remains independent.

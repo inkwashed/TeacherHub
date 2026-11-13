@@ -1726,7 +1726,7 @@ window.TeacherToolsCalendarValidate = value => {
             applyGlobalTheme(saved?.theme || "modern-blue", false, saved?.customColors);
         }
         if (event.key === SITE_LANGUAGE_KEY) {
-            applyGlobalLanguage(languageFromStoredValue(event.newValue) || "en", false);
+            applyGlobalLanguage(languageFromStoredValue(event.newValue) || window.TeacherToolsLanguage.browserDefault(), false);
         }
     });
 
@@ -1759,4 +1759,4 @@ window.TeacherToolsCalendarValidate = value => {
 })();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-13-footer-layout-1 */
+/* teacher-tools-release: teacher-tools-2026-11-13-rounded-wheel-font-1 */

@@ -1,6 +1,16 @@
 (() => {
     const key = "teacherTools.sitePreferences.v1";
     const languageKey = "teacherTools.siteLanguage.v1";
+    // Browser preferences are the web-visible system language settings.
+    // Shared with the runtime so clearing a saved choice restores this default.
+    const browserDefault = () => {
+        const browser = typeof navigator === "undefined" ? {} : navigator;
+        const preferences = [...(browser.languages || []), browser.language];
+        return preferences.filter(value => typeof value === "string")
+            .map(value => value.toLowerCase().split(/[-_]/)[0])
+            .find(value => ["en", "ja"].includes(value)) || "en";
+    };
+    window.TeacherToolsLanguage = Object.freeze({ browserDefault });
     const themes = ["modern-blue", "ocean-blue", "color-pop", "pretty-in-pink", "true-dark", "custom"];
     const themeColors = { "modern-blue": "#294f70", "ocean-blue": "#1e40af", "color-pop": "#8b5cf6", "pretty-in-pink": "#db2777", "true-dark": "#15191e" };
     let browserThemeColor = themeColors["modern-blue"];
@@ -43,10 +53,10 @@
         const saved = JSON.parse(localStorage.getItem(languageKey));
         document.documentElement.lang = saved && ["en", "ja"].includes(saved.language)
             ? saved.language
-            : "en";
+            : browserDefault();
     } catch (error) {
-        document.documentElement.lang = "en";
+        document.documentElement.lang = browserDefault();
     }
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-13-footer-layout-1 */
+/* teacher-tools-release: teacher-tools-2026-11-13-rounded-wheel-font-1 */

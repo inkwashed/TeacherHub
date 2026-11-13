@@ -15,12 +15,12 @@ Copyright © 2026 letseigo.com. All rights reserved.
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-bootstrap></script>
+    <script src="assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-footer-layout-1">
-    <link rel="stylesheet" href="assets/css/foundation.css?v=teacher-tools-2026-11-13-footer-layout-1">
-    <link rel="stylesheet" href="assets/css/site.css?v=teacher-tools-2026-11-13-footer-layout-1">
-    <link rel="stylesheet" href="assets/css/components.css?v=teacher-tools-2026-11-13-footer-layout-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-rounded-wheel-font-1">
+    <link rel="stylesheet" href="assets/css/foundation.css?v=teacher-tools-2026-11-13-rounded-wheel-font-1">
+    <link rel="stylesheet" href="assets/css/site.css?v=teacher-tools-2026-11-13-rounded-wheel-font-1">
+    <link rel="stylesheet" href="assets/css/components.css?v=teacher-tools-2026-11-13-rounded-wheel-font-1">
     <style>
 
         .home-main {
@@ -55,6 +55,9 @@ Copyright © 2026 letseigo.com. All rights reserved.
             padding: 16px;
         }
 
+        .home-intro-topline { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 12px; }
+        .home-intro-topline .welcome-kicker { margin: 0; }
+        .home-intro-topline .home-report-link { flex-shrink: 0; font-size: 14px; padding-inline: 0; }
         .welcome-panel {
             padding: 12px 0 32px;
         }
@@ -374,7 +377,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
         .site-footer > span { display: block; padding-inline: 18px; }
         .home-footer-row p { margin: 0; }
         .home-footer-row .copyright-link { flex-shrink: 0; padding-inline: 0; font-size: inherit; }
-        .copyright-link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 4px 12px; border: 0; background: transparent; color: var(--accent); font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+        .home-text-action { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 4px 12px; border: 0; background: transparent; color: var(--accent); font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
         #license-dialog { width: min(760px, calc(100% - 28px)); max-height: calc(100dvh - 28px); }
         #license-dialog .site-theme-header { padding: 16px 20px; }
         .license-text { min-height: 0; overflow: auto; overscroll-behavior: contain; white-space: pre-wrap; overflow-wrap: anywhere; padding: 20px; font-size: 14px; line-height: 1.65; }
@@ -418,16 +421,19 @@ Copyright © 2026 letseigo.com. All rights reserved.
 </head>
 <body>
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="assets/js/tools.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-tools></script>
-    <script src="assets/js/toolbar.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-toolbar data-page="home"></script>
-    <script src="assets/js/profile.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-profile></script>
+    <script src="assets/js/tools.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-tools></script>
+    <script src="assets/js/toolbar.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-toolbar data-page="home"></script>
+    <script src="assets/js/profile.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 
     <div class="home-scroll site-page-scroll themed-scroll">
     <main class="home-main">
         <div class="home-intro">
             <section class="welcome-panel">
-                <p class="welcome-kicker" data-i18n="home.welcome">Welcome to Teacher Tools</p>
+                <div class="home-intro-topline">
+                    <p class="welcome-kicker" data-i18n="home.welcome">Welcome to Teacher Tools</p>
+                    <a class="home-report-link home-text-action" href="https://docs.google.com/forms/d/e/1FAIpQLSfd_sgJ5SBsoqUx8e5SmWBVZz_aOyNXub10UXhYlL9tNng4qg/viewform?usp=publish-editor" target="_blank" rel="noopener noreferrer" aria-label="Report a bug (opens in a new tab)" data-i18n="home.reportBug" data-i18n-aria-label="home.reportBugAria">Report a bug</a>
+                </div>
                 <h1 class="welcome-title" data-i18n="home.title">Practical tools for ALTs and teachers.</h1>
                 <p class="welcome-copy" data-i18n="home.intro">Simple browser-based utilities designed to make everyday planning and classroom work a little easier.</p>
 
@@ -553,7 +559,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
     <footer class="site-footer">
         <div class="home-footer-row">
             <p data-i18n="home.footer">Free practical tools for ALTs and teachers.</p>
-            <button id="open-license" class="copyright-link" type="button" aria-haspopup="dialog" aria-controls="license-dialog" data-i18n="home.useCopyright">Use &amp; copyright</button>
+            <button id="open-license" class="copyright-link home-text-action" type="button" aria-haspopup="dialog" aria-controls="license-dialog" data-i18n="home.useCopyright">Use &amp; copyright</button>
         </div>
         <span>Let’s EiGo! Teacher Tools © 2026 letseigo.com · All rights reserved.</span>
     </footer>
@@ -596,7 +602,7 @@ THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     </dialog>
 
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="assets/js/ui.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-ui></script>
+    <script src="assets/js/ui.js?v=teacher-tools-2026-11-13-rounded-wheel-font-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
     <script>
         (() => {
@@ -640,6 +646,8 @@ THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                     "home.tricksLink": "Open Bag of Tricks",
                     "home.slidesName": "Google Slides Automator",
                     "home.slidesDescription": "Enter common lesson fields such as Today’s Goals and Target Language Structure, then generate a starter Google Slides presentation from a reusable template.",
+                    "home.reportBug": "Report a bug",
+                    "home.reportBugAria": "Report a bug (opens in a new tab)",
                     "home.useCopyright": "Use & copyright",
                     "home.closeTerms": "Close terms",
                     "home.footer": "Free practical tools for ALTs and teachers."
@@ -683,6 +691,8 @@ THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                     "home.tricksLink": "お楽しみツールを開く",
                     "home.slidesName": "Googleスライド自動作成",
                     "home.slidesDescription": "「今日の目標」や「ターゲット表現」などの項目を入力し、再利用できるテンプレートからGoogleスライドのたたき台を作成します。",
+                    "home.reportBug": "不具合を報告",
+                    "home.reportBugAria": "不具合を報告（新しいタブで開きます）",
                     "home.useCopyright": "利用条件・著作権",
                     "home.closeTerms": "利用条件を閉じる",
                     "home.footer": "ALTと先生のための無料で実用的なツール。"

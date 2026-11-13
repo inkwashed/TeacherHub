@@ -239,3 +239,22 @@ cover the whole suite rather than Google Class Scheduler alone, retain the six
 existing restrictions and warranty paragraph, identify letseigo.com and the
 Teacher Tools domain, and adapt the educational-output/export permission from
 Let’s EiGo! to this suite's outputs, backups and user-entered content.
+
+### Initial interface language
+
+The synchronous theme bootstrap also owns `TeacherToolsLanguage.browserDefault()`.
+It follows the first supported entry in `navigator.languages`, then
+`navigator.language`, normalizing regional tags such as `ja-JP` and `en-US`.
+Japanese and English are supported; English is the fallback. A valid saved
+`teacherTools.siteLanguage.v1` selection takes precedence. Automatic selection
+never writes storage, and unreadable saved values are not overwritten. The
+runtime uses the same helper when a saved language is removed in another tab.
+This mirrors Let’s EiGo!'s browser-preference behavior without a runtime dependency.
+The browser exposes its language preferences, which may differ from the device's
+OS language. User-entered data is not translated.
+
+Bag of Tricks' dice-count switch uses the shared `die` and `dice` utility SVGs
+from `tools.js`. Visible controls are icons; native radio inputs retain translated
+accessible names and their labels retain translated hover titles. Arrow-key
+selection and visible focus remain native. The pair stays on one row in the
+wide options column and in compact/fullscreen layouts.

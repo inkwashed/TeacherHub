@@ -71,7 +71,7 @@ const root = path.resolve(__dirname, '..');
             assert.equal((await message(page)).ready,false,kind+' fresh preparation');await context.close();
         }
         failure='';console.log('PASS Profile and card artwork missing/truncated/stale/fallback cache and network responses cannot report Ready; repair succeeds; failed refresh retains a complete cache.');
-        mode='prior';context=await browser.newContext();page=await context.newPage();await page.goto(origin+'/offline/');await ready(page);const old=await message(page);assert.notEqual(old.release,release);
+        mode='prior';context=await browser.newContext({locale:'ja-JP'});page=await context.newPage();await page.goto(origin+'/offline/');await ready(page);const old=await message(page);assert.notEqual(old.release,release);
         mode='current';failingFile='assets/js/toolbar.js';failure='missing';await page.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration('/');await r.update();});await page.waitForTimeout(700);assert.equal((await message(page)).release,old.release);
         await context.setOffline(true);await page.reload();await ready(page);await context.setOffline(false);failure='';
         await page.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration('/');await r.update();});await poll(page,async()=>await page.evaluate(async()=>!!(await navigator.serviceWorker.getRegistration('/'))?.waiting));
@@ -81,6 +81,7 @@ const root = path.resolve(__dirname, '..');
         await ready(page);await context.setOffline(true);
         for(const tool of ['','scheduler/','calendar/','spinner/','timer/','tracker/','tricks/','offline/']){
             await page.goto(origin+'/'+tool);await page.reload();
+            assert.equal(await page.locator('html').getAttribute('lang'),'ja','Browser locale must work offline');
             for(let n=0;n<3;n++){const close=page.locator('[data-modal-close]:visible').first();if(!await close.count())break;await close.click();}
             assert.equal(await page.locator('script[data-teacher-tools-profile]').count(),1);
             assert.equal(await page.locator('[data-teacher-tools-header]').count(),1);

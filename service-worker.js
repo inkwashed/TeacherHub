@@ -1,4 +1,4 @@
-const RELEASE = "teacher-tools-2026-11-13-footer-layout-1";
+const RELEASE = "teacher-tools-2026-11-13-rounded-wheel-font-1";
 const CACHE = `teacher-tools-${RELEASE}`;
 const APP_SHELL = [
   "/",

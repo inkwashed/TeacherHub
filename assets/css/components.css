@@ -481,7 +481,7 @@ body .app-shell .app-header .version-badge {
 }
 
 body .app-shell .app-header .help-button-mark,
-body .app-shell .tricks-actions .help-button-mark {
+body .app-shell .app-actions .help-button-mark {
     width: 21px;
     height: 21px;
     display: inline-grid;
@@ -722,6 +722,9 @@ body .app-shell .app-header .icon-button:focus-visible {
 
 /* Converted apps use the theme surface; accents belong on panels and controls. */
 body.app-page {
+    --app-control-height: 56px;
+    --app-sidebar-width: 144px;
+    --app-column-gap: 16px;
     --app-canvas: var(--surface);
     background: var(--app-canvas);
 }
@@ -763,4 +766,52 @@ body.app-page {
     .app-presentation-title { font-size: 18px; }
 }
 
-/* teacher-tools-release: teacher-tools-2026-11-13-footer-layout-1 */
+/* Converted app shells and in-content utility controls. */
+        :root body.app-page .app-shell:not(.is-presenting):not(:fullscreen) {
+            width: min(1060px, 100%);
+            background: transparent;
+            border: 0;
+            border-radius: 0;
+            box-shadow: none;
+            overflow: visible;
+        }
+        :root body.app-page .app-shell:not(.is-presenting):not(:fullscreen) > .app-main { padding: 0; }
+        .app-actions { display: flex; align-items: center; gap: 6px; }
+        .app-actions .icon-button { width: 44px; height: 44px; flex: 0 0 44px; border: 0; background: transparent; border-radius: 12px; }
+        .app-actions .icon-button:hover { background: var(--accent-soft); }
+
+/* Shared normal-page control row. Fullscreen keeps each tool's presentation layout. */
+body.app-page .app-shell:not(.is-presenting) .app-control-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--app-sidebar-width);
+    gap: var(--app-column-gap);
+    align-items: center;
+    min-height: var(--app-control-height);
+    margin: 0;
+}
+body.app-page .app-shell:not(.is-presenting) .app-control-content {
+    min-width: 0;
+    min-height: var(--app-control-height);
+    box-sizing: border-box;
+    margin: 0;
+}
+body.app-page .app-shell:not(.is-presenting) .app-control-content.mode-tabs {
+    height: var(--app-control-height);
+    padding: 5px;
+}
+body.app-page .app-shell:not(.is-presenting) .app-control-content .mode-tab {
+    min-height: 44px;
+    height: 44px;
+    padding-block: 0;
+}
+body.app-page .app-shell:not(.is-presenting) .app-control-row > .app-actions {
+    justify-self: center;
+    align-self: center;
+}
+@media (max-width: 620px) {
+    body.app-page .app-shell:not(.is-presenting) .app-control-row { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+    body.app-page .app-shell:not(.is-presenting) .app-control-row > .app-actions { grid-row: 1; justify-self: end; }
+    body.app-page .app-shell:not(.is-presenting) .app-control-content { grid-row: 2; }
+}
+
+/* teacher-tools-release: teacher-tools-2026-11-13-rounded-wheel-font-1 */
