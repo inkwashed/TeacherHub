@@ -119,6 +119,11 @@ def check():
         assert asset.is_file(), f'Missing card artwork: {source}'
         assert '/' + asset.relative_to(ROOT).as_posix() in urls, f'Card artwork missing offline: {source}'
 
+    import html
+    home = (ROOT / 'index.html').read_text()
+    embedded_terms = re.search(r'<!-- license:start -->(.*?)<!-- license:end -->', home, re.S)
+    assert embedded_terms and html.unescape(embedded_terms[1]) == (ROOT / 'LICENSE.txt').read_text(), 'Home terms differ from LICENSE.txt; run scripts/sync_terms.py'
+
     shared_rules = set()
     dependencies = set()
     for filename in SHARED:

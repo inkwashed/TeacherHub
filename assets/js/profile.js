@@ -417,4 +417,4 @@
     }
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-13-my-tools-defaults-1 */
+/* teacher-tools-release: teacher-tools-2026-11-13-footer-layout-1 */

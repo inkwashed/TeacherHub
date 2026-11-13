@@ -222,3 +222,20 @@ My Tools defaults include every current catalog app except Google Class Schedule
 Bag of Tricks is enabled. Defaults apply only without an existing selection;
 saved selections (including an empty selection) remain unchanged. Home keeps
 the full catalog independently of shortcut visibility.
+
+### Use & copyright
+
+Home's footer opens a native, themed dialog using the existing shared dialog
+shell classes. It follows Let’s EiGo!'s footer-button, scrollable English terms,
+Escape/close and focus-return pattern. Button/title/close labels follow the site
+language. TeacherHub has no ActivityHub runtime dependency.
+
+`LICENSE.txt` is the canonical Teacher Tools terms text. After editing it, run
+`python3 scripts/sync_terms.py` to embed it in Home. `check_styles.py` rejects any
+mismatch. Embedding deliberately avoids a runtime fetch so the full text works
+with HTTP, prepared offline Home and direct-file opening. No additional offline
+resource is needed; bump the release when changing the embedded page. The terms
+cover the whole suite rather than Google Class Scheduler alone, retain the six
+existing restrictions and warranty paragraph, identify letseigo.com and the
+Teacher Tools domain, and adapt the educational-output/export permission from
+Let’s EiGo! to this suite's outputs, backups and user-entered content.

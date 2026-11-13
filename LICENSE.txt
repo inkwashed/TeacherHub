@@ -1,10 +1,18 @@
-GOOGLE CLASS SCHEDULER — TERMS OF USE
+Let’s EiGo! Teacher Tools / TOOLS.LETSEIGO.COM — TERMS OF USE
 
-Copyright © 2026. All rights reserved.
+Copyright © 2026 letseigo.com. All rights reserved.
 
-Permission is granted to individual users, teachers, schools, and other educational users to access and use an unmodified copy of Google Class Scheduler free of charge for personal, classroom, and non-commercial educational purposes.
+Permission is granted to individual users, teachers, schools, and other educational users to access and use an unmodified copy of Teacher Tools free of charge for personal, classroom, and non-commercial educational purposes.
 
-You may share links to the official hosted version of Google Class Scheduler.
+These terms cover Teacher Tools applets, source code, and original artwork and assets supplied with them. Any separately identified third-party material remains subject to its own terms.
+
+You may save, print, and share the calendars, schedules, classroom results, and other documents or images produced by the built-in export, print, and download features for personal, classroom, and non-commercial educational purposes. You may also export and restore your records using the built-in backup and file-sync features. This permission does not authorize extracting or redistributing the underlying artwork, asset collection, or applet code.
+
+These terms do not claim ownership of records or other content you enter into Teacher Tools.
+
+You may share links to the official hosted version of Teacher Tools.
+
+Official hosted site: tools.letseigo.com. Teacher Tools is part of Let’s EiGo! (letseigo.com).
 
 Without prior written permission from the copyright holder, you may not:
 

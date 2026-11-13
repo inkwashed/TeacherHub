@@ -87,6 +87,12 @@ const root = path.resolve(__dirname, '..');
             assert.equal(await page.locator('script[data-teacher-tools-toolbar]').count(),1);
             assert.equal(await page.locator('#sitePinnedTools>a').count(),(await page.evaluate(()=>TeacherToolsTools.read().visible)).length);
             assert.equal(await page.locator('script[data-teacher-tools-bootstrap]').count(),1);assert.equal(await page.locator('script[data-teacher-tools-ui]').count(),1);assert(await page.evaluate(()=>!!TeacherToolsUI&&!!TeacherToolsCalendarValidate));if(['calendar/','tracker/','scheduler/'].includes(tool))assert(await page.evaluate(()=>!!TeacherToolsSchoolSettings&&!!TeacherToolsSchoolSettingsModel));for(const svg of await page.locator('svg[data-shared-icon]').all())assert(await svg.locator('path').count());if(tool==='')assert.equal(await page.locator('[data-tool-icon] svg').count(),6);
+            if(tool===''){
+                await page.locator('#open-license').click();
+                assert(await page.locator('#license-dialog').evaluate(e=>e.open));
+                assert.equal(await page.locator('.license-text').textContent(),await fs.readFile(path.join(root,'LICENSE.txt'),'utf8'));
+                await page.keyboard.press('Escape');
+            }
             if(tool==='tricks/'){
                 await page.evaluate(async assets=>{await Promise.all(assets.map(src=>new Promise((resolve,reject)=>{const img=new Image();img.onload=resolve;img.onerror=reject;img.src=src;})));},cardAssets);
                 await page.locator('#cardsTab').click();

@@ -162,4 +162,4 @@ html.site-scroll-page { height: 100%; overflow: hidden; scrollbar-gutter: auto; 
 .site-page-scroll { position: relative; --scrollbar-surface: var(--bg); flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .site-scroll-page body:is(.site-profile-open, .modal-open) .site-page-scroll { overflow: hidden; }
 
-/* teacher-tools-release: teacher-tools-2026-11-13-my-tools-defaults-1 */
+/* teacher-tools-release: teacher-tools-2026-11-13-footer-layout-1 */

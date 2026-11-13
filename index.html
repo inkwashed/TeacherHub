@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
 Teacher Tools Home
-Copyright © 2026. All rights reserved.
+Copyright © 2026 letseigo.com. All rights reserved.
 
 -->
 <html lang="en" class="home-page site-scroll-page">
@@ -15,12 +15,12 @@ Copyright © 2026. All rights reserved.
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-my-tools-defaults-1" data-teacher-tools-bootstrap></script>
+    <script src="assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-my-tools-defaults-1">
-    <link rel="stylesheet" href="assets/css/foundation.css?v=teacher-tools-2026-11-13-my-tools-defaults-1">
-    <link rel="stylesheet" href="assets/css/site.css?v=teacher-tools-2026-11-13-my-tools-defaults-1">
-    <link rel="stylesheet" href="assets/css/components.css?v=teacher-tools-2026-11-13-my-tools-defaults-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-footer-layout-1">
+    <link rel="stylesheet" href="assets/css/foundation.css?v=teacher-tools-2026-11-13-footer-layout-1">
+    <link rel="stylesheet" href="assets/css/site.css?v=teacher-tools-2026-11-13-footer-layout-1">
+    <link rel="stylesheet" href="assets/css/components.css?v=teacher-tools-2026-11-13-footer-layout-1">
     <style>
 
         .home-main {
@@ -363,17 +363,28 @@ Copyright © 2026. All rights reserved.
         .tool-link:hover { text-decoration: underline; }
 
         .site-footer {
-            padding: 14px 18px 18px;
+            padding: 14px 0 18px;
             color: var(--muted);
             text-align: center;
             font-size: 9.5px;
             line-height: 1.45;
         }
 
+        .home-footer-row { width: min(1060px, 100%); margin: 0 auto 12px; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; text-align: left; font-size: 14px; line-height: 1.5; }
+        .site-footer > span { display: block; padding-inline: 18px; }
+        .home-footer-row p { margin: 0; }
+        .home-footer-row .copyright-link { flex-shrink: 0; padding-inline: 0; font-size: inherit; }
+        .copyright-link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 4px 12px; border: 0; background: transparent; color: var(--accent); font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+        #license-dialog { width: min(760px, calc(100% - 28px)); max-height: calc(100dvh - 28px); }
+        #license-dialog .site-theme-header { padding: 16px 20px; }
+        .license-text { min-height: 0; overflow: auto; overscroll-behavior: contain; white-space: pre-wrap; overflow-wrap: anywhere; padding: 20px; font-size: 14px; line-height: 1.65; }
+        .license-text:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+
         @media (max-width: 620px) {
             .home-main {
     padding: 20px 20px 32px;
 }
+            .home-footer-row { padding-inline: 20px; flex-direction: column; align-items: flex-start; gap: 4px; }
             .welcome-panel { padding: 12px 12px 24px; }
             .welcome-copy { font-size: 18px; }
             .tool-category-grid { grid-template-columns: 1fr; }
@@ -407,9 +418,9 @@ Copyright © 2026. All rights reserved.
 </head>
 <body>
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="assets/js/tools.js?v=teacher-tools-2026-11-13-my-tools-defaults-1" data-teacher-tools-tools></script>
-    <script src="assets/js/toolbar.js?v=teacher-tools-2026-11-13-my-tools-defaults-1" data-teacher-tools-toolbar data-page="home"></script>
-    <script src="assets/js/profile.js?v=teacher-tools-2026-11-13-my-tools-defaults-1" data-teacher-tools-profile></script>
+    <script src="assets/js/tools.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-tools></script>
+    <script src="assets/js/toolbar.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-toolbar data-page="home"></script>
+    <script src="assets/js/profile.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 
     <div class="home-scroll site-page-scroll themed-scroll">
@@ -540,13 +551,52 @@ Copyright © 2026. All rights reserved.
     </main>
 
     <footer class="site-footer">
-        <span>Teacher Tools · tools.letseigo.com</span><br>
-        <span data-i18n="home.footer">Free practical tools for ALTs and teachers.</span>
+        <div class="home-footer-row">
+            <p data-i18n="home.footer">Free practical tools for ALTs and teachers.</p>
+            <button id="open-license" class="copyright-link" type="button" aria-haspopup="dialog" aria-controls="license-dialog" data-i18n="home.useCopyright">Use &amp; copyright</button>
+        </div>
+        <span>Let’s EiGo! Teacher Tools © 2026 letseigo.com · All rights reserved.</span>
     </footer>
     </div>
 
+    <dialog id="license-dialog" class="site-theme-panel" aria-labelledby="license-title">
+        <div class="site-theme-header">
+            <h2 id="license-title" class="site-theme-title" data-i18n="home.useCopyright">Use &amp; copyright</h2>
+            <button id="close-license" class="site-theme-close" type="button" autofocus aria-label="Close terms" data-i18n-aria-label="home.closeTerms">×</button>
+        </div>
+        <div class="license-text" lang="en" tabindex="0"><!-- license:start -->Let’s EiGo! Teacher Tools / TOOLS.LETSEIGO.COM — TERMS OF USE
+
+Copyright © 2026 letseigo.com. All rights reserved.
+
+Permission is granted to individual users, teachers, schools, and other educational users to access and use an unmodified copy of Teacher Tools free of charge for personal, classroom, and non-commercial educational purposes.
+
+These terms cover Teacher Tools applets, source code, and original artwork and assets supplied with them. Any separately identified third-party material remains subject to its own terms.
+
+You may save, print, and share the calendars, schedules, classroom results, and other documents or images produced by the built-in export, print, and download features for personal, classroom, and non-commercial educational purposes. You may also export and restore your records using the built-in backup and file-sync features. This permission does not authorize extracting or redistributing the underlying artwork, asset collection, or applet code.
+
+These terms do not claim ownership of records or other content you enter into Teacher Tools.
+
+You may share links to the official hosted version of Teacher Tools.
+
+Official hosted site: tools.letseigo.com. Teacher Tools is part of Let’s EiGo! (letseigo.com).
+
+Without prior written permission from the copyright holder, you may not:
+
+1. Sell, license, rent, monetize, or otherwise use the software commercially.
+2. Incorporate the software or its source code into another product, application, website, service, or commercial offering.
+3. Redistribute, republish, mirror, or host copies of the software or its source code for distribution to others.
+4. Distribute modified, adapted, translated, rebranded, or derivative versions of the software.
+5. Remove, obscure, or alter copyright, attribution, or terms-of-use notices.
+6. Represent the software, its source code, or a derivative work as your own original creation.
+
+Permission to modify, redistribute, integrate, or otherwise use the software outside the permissions above may be granted separately in writing by the copyright holder.
+
+THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. USE OF THE SOFTWARE IS AT THE USER’S OWN RISK.
+<!-- license:end --></div>
+    </dialog>
+
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="assets/js/ui.js?v=teacher-tools-2026-11-13-my-tools-defaults-1" data-teacher-tools-ui></script>
+    <script src="assets/js/ui.js?v=teacher-tools-2026-11-13-footer-layout-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
     <script>
         (() => {
@@ -590,6 +640,8 @@ Copyright © 2026. All rights reserved.
                     "home.tricksLink": "Open Bag of Tricks",
                     "home.slidesName": "Google Slides Automator",
                     "home.slidesDescription": "Enter common lesson fields such as Today’s Goals and Target Language Structure, then generate a starter Google Slides presentation from a reusable template.",
+                    "home.useCopyright": "Use & copyright",
+                    "home.closeTerms": "Close terms",
                     "home.footer": "Free practical tools for ALTs and teachers."
                 },
                 ja: {
@@ -631,10 +683,18 @@ Copyright © 2026. All rights reserved.
                     "home.tricksLink": "お楽しみツールを開く",
                     "home.slidesName": "Googleスライド自動作成",
                     "home.slidesDescription": "「今日の目標」や「ターゲット表現」などの項目を入力し、再利用できるテンプレートからGoogleスライドのたたき台を作成します。",
+                    "home.useCopyright": "利用条件・著作権",
+                    "home.closeTerms": "利用条件を閉じる",
                     "home.footer": "ALTと先生のための無料で実用的なツール。"
                 }
             };
             window.TeacherToolsUI?.registerTranslations(catalogs);
+            // Native dialog contains keyboard focus and supports Escape dismissal.
+            const licenseDialog = document.getElementById("license-dialog");
+            const licenseOpener = document.getElementById("open-license");
+            licenseOpener.addEventListener("click", () => licenseDialog.showModal());
+            document.getElementById("close-license").addEventListener("click", () => licenseDialog.close());
+            licenseDialog.addEventListener("close", () => { if (!licenseDialog.open) licenseOpener.focus(); });
             const updateMetadata = () => {
                 document.title = window.TeacherToolsUI?.translate("home.metaTitle", "Teacher Tools") || "Teacher Tools";
                 const description = document.querySelector('meta[name="description"]');
