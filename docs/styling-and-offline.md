@@ -231,3 +231,48 @@ on wide layouts. Its normal wheel is capped by available viewport height as well
 as the 520px maximum, preventing unnecessary desktop scrolling while retaining
 ordinary scrolling when a genuinely small viewport needs it. Presentation sizing
 remains independent.
+
+### Embedded Class Tracker (v1.0.1)
+
+Tracker opts into `body.app-page` and reuses the shared centered transparent
+shell, theme surface, control-row dimensions, help/settings icons, inline toolbar
+version and body-level copyright footer. Progress/Points/Notes tabs sit in the shared
+control row beside help/settings, separate from the tracking panel; introductory
+copy and the former inner header/footer are removed.
+The functional class picker and Progress/Points/Notes panels remain tool-local,
+including their responsive stacking. Tracker v1.1 adds a tracking-focused presentation mode: the class/textbook
+picker and copyright footer are hidden, the selected class remains visible, and
+Progress/Points/Notes remain editable. The existing app controls move into the
+shared title/version header; help/settings buttons are hidden during presentation.
+Native fullscreen and a viewport fallback both support exit/focus restoration.
+Tracker dialogs move inside the fullscreen element while active, then return to
+their original positions, so school settings remain reachable from tracking flows. School and Tracker storage schemas, recovery,
+checklists, points and notes are unchanged. `check_tracker_layout.cjs` covers
+HTTP/file appearance, themes, languages, dashboard views and dialogs;
+`check_tracker.cjs` and the browser Tracker recovery checks cover stored data.
+Physical iPad Safari touch, scrolling, dialogs and safe areas need device testing.
+
+`check_tracker_fullscreen.cjs` covers presentation at phone/tablet/desktop sizes
+in both languages, live checklist edits, dashboard views, dialog containment,
+Escape behavior and persisted checks after returning to normal mode. Physical
+iPad Safari fullscreen/touch, scrolling and keyboard behavior need device testing.
+
+### Embedded Class Calendar (v0.7)
+
+Calendar opts into `body.app-page`, reusing the theme surface, transparent shell,
+shared 56px control row/144px utility column, canonical help/settings icons and
+inline toolbar version. The date range now occupies the control row beside
+help/statistics/settings. Existing date navigation, view selection, Add event
+and filters remain below it; the original inner header/footer are removed.
+The copyright footer lives outside the scroll region at the viewport bottom.
+
+Calendar retains tool-local grid/container behavior within the shared 1060px
+maximum shell width. Narrower screens use the available content width; dense
+hourly grids retain their internal scrolling rather than widening the page. The calendar grid,
+period suggestions, event cards and editor/statistics layouts remain local.
+Week, month, agenda and custom view behavior and storage schemas are unchanged.
+Testing also fixed the option translator to preserve explicit option values
+before translating labels, so Japanese category labels do not alter saved values.
+`check_calendar_layout.cjs` covers HTTP/file layouts, languages/themes, views,
+dialogs, event creation and reload persistence. Physical iPad Safari still needs
+touch/grid scrolling, date-picker, dialog and safe-area verification.

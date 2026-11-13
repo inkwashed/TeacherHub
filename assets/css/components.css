@@ -760,6 +760,7 @@ body.app-page {
 /* Converted app shells and in-content utility controls. */
         :root body.app-page .app-shell:not(.is-presenting):not(:fullscreen) {
             width: min(1060px, 100%);
+            margin-inline: auto;
             background: transparent;
             border: 0;
             border-radius: 0;
@@ -769,7 +770,8 @@ body.app-page {
         :root body.app-page .app-shell:not(.is-presenting):not(:fullscreen) > .app-main { padding: 0; }
         .app-actions { display: flex; align-items: center; gap: 6px; }
         .app-actions .icon-button { width: 44px; height: 44px; flex: 0 0 44px; border: 0; background: transparent; border-radius: 12px; }
-        .app-actions .icon-button:hover { background: var(--accent-soft); }
+        .app-actions .icon-button:disabled { opacity: .45; cursor: default; }
+        .app-actions .icon-button:enabled:hover { background: var(--accent-soft); }
 
 /* Shared normal-page control row. Fullscreen keeps each tool's presentation layout. */
 body.app-page .app-shell:not(.is-presenting) .app-control-row {
@@ -805,4 +807,4 @@ body.app-page .app-shell:not(.is-presenting) .app-control-row > .app-actions {
     body.app-page .app-shell:not(.is-presenting) .app-control-content { grid-row: 2; }
 }
 
-/* teacher-tools-release: teacher-tools-2026-11-13-standard-utility-icons-1 */
+/* teacher-tools-release: teacher-tools-2026-11-13-calendar-round-add-1 */

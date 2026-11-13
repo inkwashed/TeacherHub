@@ -17,13 +17,13 @@ Copyright © 2026 letseigo.com. All rights reserved.
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="../assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-standard-utility-icons-1" data-teacher-tools-bootstrap></script>
+    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
 
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-standard-utility-icons-1">
-    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-13-standard-utility-icons-1">
-    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-13-standard-utility-icons-1">
-    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-13-standard-utility-icons-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-calendar-round-add-1">
+    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-13-calendar-round-add-1">
+    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-13-calendar-round-add-1">
+    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-13-calendar-round-add-1">
     <style>
 
         .button-row,
@@ -188,6 +188,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
         body.presentation-open { overflow: hidden; }
         .app-shell.is-presenting { position: fixed; z-index: 500; inset: 0; width: 100vw; height: 100vh; height: 100dvh; max-width: none; display: flex; flex-direction: column; border: 0; border-radius: 0; box-shadow: none; overflow: auto; background: var(--bg); }
 
+        .app-shell.is-presenting #settingsPlaceholder,
         .app-shell.is-presenting .mode-heading,
         .app-shell.is-presenting .mode-copy,
         .app-shell.is-presenting [data-modal-open] { display: none; }
@@ -392,9 +393,9 @@ Copyright © 2026 letseigo.com. All rights reserved.
 </head>
 <body data-tool="tricks" class="app-page">
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-13-standard-utility-icons-1" data-teacher-tools-tools></script>
-    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-13-standard-utility-icons-1" data-teacher-tools-toolbar data-page="tricks"></script>
-    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-13-standard-utility-icons-1" data-teacher-tools-profile></script>
+    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-tools></script>
+    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-toolbar data-page="tricks"></script>
+    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 <div class="site-page-scroll themed-scroll">
 
@@ -420,7 +421,9 @@ Copyright © 2026 letseigo.com. All rights reserved.
                         <svg class="presentation-icon" viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="presentation"></svg>
                     </button>
                     <button type="button" class="icon-button" data-modal-open="helpModal" aria-label="Open getting started help" aria-haspopup="dialog" title="Getting started" data-i18n-aria-label="tricks.help.open" data-i18n-title="tricks.help.title"><span class="help-button-mark" aria-hidden="true">?</span></button>
-
+                    <button type="button" id="settingsPlaceholder" class="icon-button" disabled aria-label="Settings (not available yet)" title="Settings (not available yet)" data-i18n-aria-label="tricks.settings.unavailable" data-i18n-title="tricks.settings.unavailable">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="settings"></svg>
+                    </button>
                     </div>
                 </div>
 
@@ -527,7 +530,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
     </div>
 
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-13-standard-utility-icons-1" data-teacher-tools-ui></script>
+    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
 
     <script>
@@ -539,6 +542,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "tricks.meta.title": "Bag of Tricks · Teacher Tools",
                     "tricks.meta.description": "Quick classroom coin, dice, and card randomizers.",
                     "tricks.title": "Bag of Tricks",
+                    "tricks.settings.unavailable": "Settings (not available yet)",
                     "tricks.help.open": "Open getting started help",
                     "tricks.help.title": "Getting started",
                     "tricks.help.close": "Close getting started help",
@@ -613,6 +617,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "tricks.meta.title": "お楽しみツール · Teacher Tools",
                     "tricks.meta.description": "授業ですぐ使えるコイン、サイコロ、カードのランダムツールです。",
                     "tricks.title": "お楽しみツール",
+                    "tricks.settings.unavailable": "設定（現在は利用できません）",
                     "tricks.help.open": "使い方を開く",
                     "tricks.help.title": "はじめに",
                     "tricks.help.close": "使い方を閉じる",

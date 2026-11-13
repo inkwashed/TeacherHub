@@ -417,4 +417,4 @@
     }
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-13-standard-utility-icons-1 */
+/* teacher-tools-release: teacher-tools-2026-11-13-calendar-round-add-1 */

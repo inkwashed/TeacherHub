@@ -707,9 +707,9 @@ html[data-theme="custom"] .site-brand-mark { color: var(--accent-contrast); }
     fill: currentColor; stroke: none;
     transform-origin: center; transition: transform 260ms ease;
 }
-button:is(:hover, :focus-visible) > svg[data-shared-icon="settings"] { transform: rotate(45deg); }
+button:enabled:is(:hover, :focus-visible) > svg[data-shared-icon="settings"] { transform: rotate(45deg); }
 @media (prefers-reduced-motion: reduce) {
     :root svg[data-shared-icon="settings"] { transition: none; }
 }
 
-/* teacher-tools-release: teacher-tools-2026-11-13-standard-utility-icons-1 */
+/* teacher-tools-release: teacher-tools-2026-11-13-calendar-round-add-1 */

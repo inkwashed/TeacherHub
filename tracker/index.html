@@ -12,25 +12,34 @@
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="../assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-standard-utility-icons-1" data-teacher-tools-bootstrap></script>
+    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-standard-utility-icons-1">
-    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-13-standard-utility-icons-1">
-    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-13-standard-utility-icons-1">
-    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-13-standard-utility-icons-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-calendar-round-add-1">
+    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-13-calendar-round-add-1">
+    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-13-calendar-round-add-1">
+    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-13-calendar-round-add-1">
     <style>
 
-        .app-shell { width: min(900px, 100%); margin: 0 auto; overflow: hidden; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 8px 26px rgba(0,0,0,.09); }
 
-        .app-header-actions { display: flex; gap: 2px; }
         .icon-button { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 0; color: var(--accent); background: transparent; border: 0; border-radius: 50%; cursor: pointer; }
         .icon-button:hover { background: var(--panel); }
-        .help-button-mark { width: 21px; height: 21px; display: grid; place-items: center; border: 1.8px solid currentColor; border-radius: 50%; font-size: 13px; font-weight: 800; }
 
-        .intro { margin-bottom: 16px; }
-        .intro h2 { margin: 0 0 5px; font-size: 17px; }
-        .intro p, .helper-text, .empty-copy { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
-        .dashboard-grid { display: grid; grid-template-columns: minmax(220px, .72fr) minmax(0, 1.6fr); gap: 14px; align-items: start; }
+        .app-shell.is-presenting { position: fixed; z-index: 500; inset: 0; width: 100%; height: 100dvh; max-width: none; margin: 0; display: flex; flex-direction: column; border: 0; border-radius: 0; box-shadow: none; }
+        .app-shell.is-presenting .app-main { flex: 1; min-height: 0; overflow: auto; padding: 16px; }
+        .app-shell.is-presenting .tracker-controls { display: block; }
+        .app-shell.is-presenting .dashboard-tabs { min-height: 56px; margin: 0; }
+        .app-shell.is-presenting .dashboard-tab { min-height: 44px; }
+        .app-shell.is-presenting .dashboard-grid { display: block; }
+        .app-shell.is-presenting .picker-card,
+        .app-shell.is-presenting .tracker-actions [data-modal-open] { display: none; }
+        .app-shell.is-presenting .tracker-card { padding: 16px 0; background: transparent; border: 0; }
+        .app-shell.is-presenting .button { border-radius: 999px; }
+        .app-shell.is-presenting .modal-backdrop { z-index: 700; }
+        .tracker-focus-context { margin: 0 0 12px; color: var(--muted); font-weight: 700; }
+
+        .tracker-controls + .dashboard-grid { margin-top: 16px; }
+        .helper-text, .empty-copy { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+        .dashboard-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(220px, .72fr); gap: 14px; align-items: start; }
         .picker-card, .tracker-card { padding: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
         .field { display: grid; gap: 5px; margin-bottom: 11px; }
 
@@ -68,7 +77,6 @@
         .check-row.complete .check-label-text { color: var(--muted); text-decoration: line-through; }
         .empty-state { padding: 28px 18px; text-align: center; border: 1px dashed var(--accent-border); border-radius: 8px; }
         .empty-state strong { display: block; margin-bottom: 5px; font-size: 14px; }
-        .app-footer { padding: 11px 16px 13px; text-align: center; background: var(--panel); border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
         .modal-backdrop { position: fixed; inset: 0; z-index: 200; display: none; align-items: center; justify-content: center; padding: 16px; background: rgba(15,23,42,.58); }
 
         .modal-card { width: min(620px,100%); max-height: min(760px,calc(100dvh - 32px)); overflow: hidden; display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
@@ -107,6 +115,10 @@
         .tutorial-step h3 { margin: 2px 0 3px; font-size: 14px; }
         .tutorial-step p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
         .modal-actions { display: flex; justify-content: flex-end; padding: 12px 16px; border-top: 1px solid var(--line); }
+        @media (min-width: 701px) {
+            .dashboard-grid > .tracker-card { grid-column: 1; grid-row: 1; }
+            .dashboard-grid > .picker-card { grid-column: 2; grid-row: 1; }
+        }
         @media (max-width: 700px) { .dashboard-grid { grid-template-columns: 1fr; } }
         @media (max-width: 620px) {     .modal-card { max-height: calc(100dvh - 12px); } .settings-grid { grid-template-columns: 1fr; } .class-edit-row { grid-template-columns: minmax(0,1fr) 34px; } .class-edit-row .class-detail-field { grid-column: 1 / -1; } }
         @media (max-width: 380px) { .check-row.level-2 { margin-left: 7px; } .check-row.level-3 { margin-left: 14px; } }
@@ -114,7 +126,7 @@
 
         /* Schools: match Scheduler's applet-owned field and row patterns. */
         .textbook-section { margin-top: 12px; }
-        .dashboard-tabs { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 5px; margin-bottom: 14px; }
+        .dashboard-tabs { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 4px; padding: 5px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
         .note-card { border: 1px solid var(--line); background: color-mix(in srgb, var(--panel) 76%, var(--accent-soft)); border-radius: 10px; padding: 14px; margin: 12px 0; min-width: 0; }
         .note-card h3 { margin: 0 0 10px; overflow-wrap: anywhere; }
         .calendar-note-badge { float: right; margin-left: 8px; color: var(--accent); }
@@ -124,8 +136,8 @@
         .note-line .check-marker-icon { display: inline-block; vertical-align: middle; margin: 0 3px; color: var(--accent); }
         .note-line input { vertical-align: middle; width: 18px; height: 18px; margin: 0 5px; accent-color: var(--accent); }
         .note-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-        .dashboard-tab { min-height: 40px; padding: 8px; border: 1px solid var(--line); border-radius: 7px; color: var(--muted); background: var(--surface); font-size: 12px; font-weight: 650; cursor: pointer; }
-        .dashboard-tab.active { color: var(--accent); background: var(--accent-soft); border-color: var(--accent-border); }
+        .dashboard-tab { min-height: 44px; padding: 8px; border: 1px solid transparent; border-radius: 7px; color: var(--muted); background: transparent; font-size: 13px; font-weight: 750; cursor: pointer; }
+        .dashboard-tab.active { color: var(--accent); background: var(--surface); border-color: var(--accent-border); }
         .class-points-summary { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 10px; padding: 11px 13px; color: var(--text); background: var(--accent-soft); border: 1px solid var(--accent-border); border-radius: 8px; }
         .class-points-summary span { font-size: 12px; font-weight: 750; }
         .class-points-summary strong { color: var(--accent); font-size: 22px; line-height: 1; }
@@ -235,25 +247,37 @@
 
 </style>
 </head>
-<body data-tool="tracker">
+<body data-tool="tracker" class="app-page">
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-13-standard-utility-icons-1" data-teacher-tools-tools></script>
-    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-13-standard-utility-icons-1" data-teacher-tools-toolbar data-page="tracker"></script>
-    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-13-standard-utility-icons-1" data-teacher-tools-profile></script>
+    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-tools></script>
+    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-toolbar data-page="tracker"></script>
+    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 <div class="site-page-scroll themed-scroll">
     <main class="page-main">
-        <div class="app-shell">
-            <header class="app-header">
-                <div class="title-wrap"><h1 class="app-title" data-i18n="tracker.title">Class Tracker</h1><span class="version-badge">v1.0</span></div>
-                <div class="app-header-actions">
+        <div class="app-shell" data-app-version="v1.1">
+            <header class="app-presentation-header" hidden>
+                <div class="app-presentation-identity">
+                    <h2 class="app-presentation-title" data-i18n="tracker.title">Class Tracker</h2>
+                    <span class="app-presentation-version">v1.1</span>
+                </div>
+                <div class="app-presentation-actions"></div>
+            </header>
+            <div class="app-main">
+                <p class="tracker-focus-context" hidden></p>
+                <p id="schoolDataNotice" class="settings-help" role="status" hidden></p>
+                <div class="tracker-controls app-control-row">
+                        <div class="mode-tab dashboard-tabs mode-tabs app-control-content" role="tablist" aria-label="Class tracking views" data-i18n-aria-label="tracker.viewsAria">
+                            <button type="button" id="dashboardTab-progress" class="mode-tab dashboard-tab active" role="tab" aria-selected="true" aria-controls="dashboardPanel-progress" data-dashboard-tab="progress" data-i18n="tracker.progress">Progress</button>
+                            <button type="button" id="dashboardTab-points" class="mode-tab dashboard-tab" role="tab" aria-selected="false" aria-controls="dashboardPanel-points" tabindex="-1" data-dashboard-tab="points" data-i18n="tracker.points">Points</button>
+                            <button type="button" id="dashboardTab-notes" class="mode-tab dashboard-tab" role="tab" aria-selected="false" aria-controls="dashboardPanel-notes" tabindex="-1" data-dashboard-tab="notes" data-i18n="tracker.notes">Notes</button>
+                        </div>
+                <div class="tracker-actions app-actions">
+                    <button type="button" id="presentationButton" class="icon-button" aria-label="Enter fullscreen tracking" title="Fullscreen tracking" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="presentation"></svg></button>
                     <button type="button" class="icon-button" data-modal-open="tutorialModal" aria-label="Open getting started help" title="Getting started" data-i18n-aria-label="tracker.helpOpen" data-i18n-title="tracker.helpTitle"><span class="help-button-mark" aria-hidden="true">?</span></button>
                     <button type="button" class="icon-button" data-modal-open="settingsModal" aria-label="Open Class Tracker settings" title="Settings" data-i18n-aria-label="tracker.settingsOpen" data-i18n-title="tracker.settingsTitle"><svg class="settings-icon" viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="settings"></svg></button>
                 </div>
-            </header>
-            <div class="app-main">
-                <p id="schoolDataNotice" class="settings-help" role="status" hidden></p>
-                <section class="intro"><h2 data-i18n="tracker.introTitle">Keep every class moving forward</h2><p data-i18n="tracker.introBody">Choose a class, assign a reusable checklist, and mark lesson or textbook progress as you teach.</p></section>
+                </div>
                 <div class="dashboard-grid">
                     <aside class="picker-card" aria-label="Class and textbook selection" data-i18n-aria-label="tracker.pickerAria">
                         <label class="field"><span class="field-label" data-i18n="tracker.school">School</span><select id="schoolSelect"></select></label>
@@ -265,12 +289,9 @@
                             <div class="progress-line"><span data-i18n="tracker.progress">Progress</span><strong id="progressText">0 of 0</strong></div><div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
                         </div>
                     </aside>
+
                     <section class="tracker-card" aria-label="Class tracking" data-i18n-aria-label="tracker.trackingAria">
-                        <div class="dashboard-tabs" role="tablist" aria-label="Class tracking views" data-i18n-aria-label="tracker.viewsAria">
-                            <button type="button" id="dashboardTab-progress" class="dashboard-tab active" role="tab" aria-selected="true" aria-controls="dashboardPanel-progress" data-dashboard-tab="progress" data-i18n="tracker.progress">Progress</button>
-                            <button type="button" id="dashboardTab-points" class="dashboard-tab" role="tab" aria-selected="false" aria-controls="dashboardPanel-points" tabindex="-1" data-dashboard-tab="points" data-i18n="tracker.points">Points</button>
-                            <button type="button" id="dashboardTab-notes" class="dashboard-tab" role="tab" aria-selected="false" aria-controls="dashboardPanel-notes" tabindex="-1" data-dashboard-tab="notes" data-i18n="tracker.notes">Notes</button>
-                        </div>
+
                         <section id="dashboardPanel-progress" role="tabpanel" aria-labelledby="dashboardTab-progress">
                             <div class="tracker-heading"><h2 id="checklistHeading" data-i18n="tracker.textbookProgress">Textbook Progress</h2><button type="button" id="clearProgressButton" class="button" hidden data-i18n="tracker.clearChecks">Clear checks</button></div>
                             <div id="checklist" class="checklist"></div>
@@ -296,12 +317,13 @@
                             <p id="notesStatus" class="status" role="status"></p>
                         </section>
                     </section>
+
                 </div>
             </div>
-            <footer class="app-footer" data-i18n="tracker.footer">Class Tracker · v1.0 · Data stays in this browser</footer>
         </div>
     </main>
 </div>
+    <footer class="app-copyright">Let’s EiGo! Teacher Tools © 2026 letseigo.com · All rights reserved.</footer>
 
     <div id="tutorialModal" class="modal-backdrop" data-shared-modal data-first-use-storage-key="teacherTools.classTracker.tutorialSeen.v1" aria-hidden="true">
         <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
@@ -420,7 +442,7 @@
     </div>
 
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-13-standard-utility-icons-1" data-teacher-tools-ui></script>
+    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
     <script>
     (() => {
@@ -429,10 +451,10 @@
         const SCHEDULER_KEY = "classAutomatorData_v3";
         const TRACKER_TRANSLATIONS = {
             en: {
-                "tracker.title":"Class Tracker","tracker.helpOpen":"Open getting started help","tracker.helpTitle":"Getting started","tracker.helpClose":"Close help","tracker.settingsOpen":"Open Class Tracker settings","tracker.settingsTitle":"Class Tracker settings","tracker.settingsClose":"Close settings","tracker.introTitle":"Keep every class moving forward","tracker.introBody":"Choose a class, assign a reusable checklist, and mark lesson or textbook progress as you teach.","tracker.pickerAria":"Class and textbook selection","tracker.school":"School","tracker.class":"Class","tracker.assignedTextbook":"Assigned Textbook","tracker.assignTextbook":"Assign Textbook","tracker.currentClass":"Current class","tracker.chooseClass":"Choose a class","tracker.progress":"Progress","tracker.trackingAria":"Class tracking","tracker.viewsAria":"Class tracking views","tracker.points":"Points","tracker.notes":"Notes","tracker.textbookProgress":"Textbook Progress","tracker.clearChecks":"Clear checks","tracker.studentPoints":"Student points","tracker.classPoints":"Class Points","tracker.pointsHelp":"Points are saved separately for this class by student number. Audit totals combine adjustments made within a five-minute window. Set the student count in Settings → Schools.","tracker.classNotes":"Class notes","tracker.archived":"Archived","tracker.addNote":"＋ Add Note","tracker.notesHelp":"Quick reminders and to-do lists saved separately for each class. Calendar event notes appear automatically for the matching school and class in this browser. Edit linked notes in Calendar; archive them here to hide them.","tracker.addNotePlain":"Add note","tracker.editNote":"Edit note","tracker.noteTitle":"Title","tracker.details":"Details","tracker.noteSyntaxHelp":"Use [] for a checkbox, [-] for a bullet, and [1], [2], etc. for circled numbers. Activity markers such as [G], [L], [ES], and [KS] work here too. Checked boxes appear as [x] when editing.","tracker.saveNote":"Save Note","tracker.cancel":"Cancel","tracker.footer":"Class Tracker · v1.0 · Data stays in this browser","tracker.tutorial1Title":"Choose a school and class","tracker.tutorial1Body":"Class Tracker uses the same school and class list as Google Class Scheduler in this browser.","tracker.tutorial2Title":"Assign a textbook","tracker.tutorial2Body":"Use a textbook preset or create a custom three-level progress list in Settings, then assign it to any class.","tracker.tutorial3Title":"Check off progress","tracker.tutorial3Body":"Each class keeps its own progress. Your data is local to this browser profile, so use Teacher Tools backup and restore to protect it.","tracker.startTracking":"Start tracking","tracker.caution":"CAUTION:","tracker.storageWarning":"Your schools, textbooks, and progress are saved only in this browser/profile. Use Profile → Sync to preserve or move them.","tracker.textbooks":"Textbooks","tracker.textbookPresets":"Textbook presets","tracker.presetsHelp":"Check the books you want to see in the dashboard dropdown. Unchecking a book does not remove it from classes already using it.","tracker.presetsIncluded":"Includes Let's Try! 1 and 2, NEW HORIZON Elementary 5 and 6, and NEW HORIZON English Course 1. Beta・ marks presets awaiting final textbook checks.","tracker.customTextbooks":"Custom textbooks","tracker.customHelp":"Your saved textbooks are available to all your classes. Edit a book below, or add a new one.","tracker.addCustomTextbook":"＋ Add Custom Textbook","tracker.addCustomTextbookPlain":"Add custom textbook","tracker.editCustomTextbook":"Edit custom textbook","tracker.editorHelp":"Use one line per item. Start lines with #, ##, or ### for levels 1–3. Add activity-marker codes as needed. Edits apply to every class using this textbook; unchanged items retain their checks.","tracker.textbookTitle":"Textbook Title","tracker.titlePlaceholder":"Let's Try! 4 Textbook","tracker.sectionsActivities":"Textbook Sections and Activities","tracker.itemsPlaceholder":"# Unit 1\n## [G] Unit goal\n### [L] Listen and repeat","tracker.saveTextbook":"Save Textbook","tracker.chooseTextbook":"Choose a textbook…","tracker.customPrefix":"Custom · ","tracker.hiddenAssigned":"{title} (assigned · hidden preset)","tracker.noTextbookTitle":"No textbook assigned yet","tracker.noTextbookBody":"Choose a textbook on the left, then assign it to this class.","tracker.collapse":"Collapse {item}","tracker.expand":"Expand {item}","tracker.progressCount":"{done} of {total}","tracker.clearConfirm":"Clear all checks for this class?","tracker.period":"Period {number}","tracker.lunch":"Lunch","tracker.notesSaved":"Notes saved.","tracker.notesSaveError":"Could not save notes in this browser. Please back up your data.","tracker.backToNotes":"Back to notes","tracker.archivedCount":"Archived ({count})","tracker.noArchivedNotes":"No archived notes.","tracker.noNotes":"No notes yet. Add a reminder or to-do list.","tracker.chooseClassNotes":"Choose a class to add notes.","tracker.syncedCalendar":"Synced from Class Calendar","tracker.checklistItem":"Checklist item","tracker.moveUp":"Move up {title}","tracker.moveDown":"Move down {title}","tracker.edit":"Edit","tracker.editNamed":"Edit {title}","tracker.delete":"Delete","tracker.deleteNamed":"Delete {title}","tracker.deleteNoteConfirm":"Delete note “{title}”?","tracker.openCalendar":"Open Calendar","tracker.restore":"Restore","tracker.archive":"Archive","tracker.actionNamed":"{action} {title}","tracker.noChanges":"No changes yet","tracker.audit":"{sign}{amount} {unit} on {date} at {time}","tracker.pointOne":"point","tracker.pointMany":"points","tracker.selectClassPoints":"Select a class to track student points.","tracker.noStudents":"No students to display. Enter a student count for this class in Schools settings.","tracker.openSchools":"Open Schools settings","tracker.studentsCaption":"{className} · {count} students","tracker.auditHeading":"Audit","tracker.pointsHeading":"Points","tracker.pointsFor":"Points for student {student}","tracker.decreasePoints":"Decrease points for student {student}","tracker.increasePoints":"Increase points for student {student}","tracker.pointsRange":"Use a whole number from 0 to 999,999.","tracker.pointsSaved":"Student {student}: {value} points saved.","tracker.pointsSaveError":"Points could not be saved in this browser. Keep this page open and export a backup.","tracker.presetSaved":"Preset visibility saved.","tracker.bookSummary":"{items} items · {uses} class assignments","tracker.deleteBookConfirm":"Delete “{title}”?{impact} Export a backup first if you may need it later.","tracker.deleteBookImpact":" This removes its assignments and saved checks from {uses} classes.","tracker.customDeleted":"Custom textbook deleted.","tracker.noCustomBooks":"No custom textbooks yet. Add your first textbook below.","tracker.draftDiscard":"Discard the current textbook draft?","tracker.draftCancelled":"Draft cancelled. Saved textbooks are unchanged.","tracker.bookRequired":"Add a textbook title and at least one section or activity.","tracker.tooManyItems":"Please use no more than 1,000 items per textbook.","tracker.changeChecksConfirm":"Changed or removed items will lose their checks in classes using this textbook. Unchanged items keep their progress. Save changes?","tracker.bookUpdated":"Textbook updated. Unchanged items kept their progress.","tracker.bookSaved":"Custom textbook saved and ready to assign."
+                "tracker.title":"Class Tracker","tracker.helpOpen":"Open getting started help","tracker.helpTitle":"Getting started","tracker.helpClose":"Close help","tracker.settingsOpen":"Open Class Tracker settings","tracker.settingsTitle":"Class Tracker settings","tracker.settingsClose":"Close settings","tracker.pickerAria":"Class and textbook selection","tracker.school":"School","tracker.class":"Class","tracker.assignedTextbook":"Assigned Textbook","tracker.assignTextbook":"Assign Textbook","tracker.currentClass":"Current class","tracker.chooseClass":"Choose a class","tracker.progress":"Progress","tracker.trackingAria":"Class tracking","tracker.viewsAria":"Class tracking views","tracker.points":"Points","tracker.notes":"Notes","tracker.textbookProgress":"Textbook Progress","tracker.clearChecks":"Clear checks","tracker.studentPoints":"Student points","tracker.classPoints":"Class Points","tracker.pointsHelp":"Points are saved separately for this class by student number. Audit totals combine adjustments made within a five-minute window. Set the student count in Settings → Schools.","tracker.classNotes":"Class notes","tracker.archived":"Archived","tracker.addNote":"＋ Add Note","tracker.notesHelp":"Quick reminders and to-do lists saved separately for each class. Calendar event notes appear automatically for the matching school and class in this browser. Edit linked notes in Calendar; archive them here to hide them.","tracker.addNotePlain":"Add note","tracker.editNote":"Edit note","tracker.noteTitle":"Title","tracker.details":"Details","tracker.noteSyntaxHelp":"Use [] for a checkbox, [-] for a bullet, and [1], [2], etc. for circled numbers. Activity markers such as [G], [L], [ES], and [KS] work here too. Checked boxes appear as [x] when editing.","tracker.saveNote":"Save Note","tracker.cancel":"Cancel","tracker.tutorial1Title":"Choose a school and class","tracker.tutorial1Body":"Class Tracker uses the same school and class list as Google Class Scheduler in this browser.","tracker.tutorial2Title":"Assign a textbook","tracker.tutorial2Body":"Use a textbook preset or create a custom three-level progress list in Settings, then assign it to any class.","tracker.tutorial3Title":"Check off progress","tracker.tutorial3Body":"Each class keeps its own progress. Your data is local to this browser profile, so use Teacher Tools backup and restore to protect it.","tracker.startTracking":"Start tracking","tracker.caution":"CAUTION:","tracker.storageWarning":"Your schools, textbooks, and progress are saved only in this browser/profile. Use Profile → Sync to preserve or move them.","tracker.textbooks":"Textbooks","tracker.textbookPresets":"Textbook presets","tracker.presetsHelp":"Check the books you want to see in the dashboard dropdown. Unchecking a book does not remove it from classes already using it.","tracker.presetsIncluded":"Includes Let's Try! 1 and 2, NEW HORIZON Elementary 5 and 6, and NEW HORIZON English Course 1. Beta・ marks presets awaiting final textbook checks.","tracker.customTextbooks":"Custom textbooks","tracker.customHelp":"Your saved textbooks are available to all your classes. Edit a book below, or add a new one.","tracker.addCustomTextbook":"＋ Add Custom Textbook","tracker.addCustomTextbookPlain":"Add custom textbook","tracker.editCustomTextbook":"Edit custom textbook","tracker.editorHelp":"Use one line per item. Start lines with #, ##, or ### for levels 1–3. Add activity-marker codes as needed. Edits apply to every class using this textbook; unchanged items retain their checks.","tracker.textbookTitle":"Textbook Title","tracker.titlePlaceholder":"Let's Try! 4 Textbook","tracker.sectionsActivities":"Textbook Sections and Activities","tracker.itemsPlaceholder":"# Unit 1\n## [G] Unit goal\n### [L] Listen and repeat","tracker.saveTextbook":"Save Textbook","tracker.chooseTextbook":"Choose a textbook…","tracker.customPrefix":"Custom · ","tracker.hiddenAssigned":"{title} (assigned · hidden preset)","tracker.noTextbookTitle":"No textbook assigned yet","tracker.noTextbookBody":"Choose a textbook, then assign it to this class.","tracker.collapse":"Collapse {item}","tracker.expand":"Expand {item}","tracker.progressCount":"{done} of {total}","tracker.clearConfirm":"Clear all checks for this class?","tracker.period":"Period {number}","tracker.lunch":"Lunch","tracker.notesSaved":"Notes saved.","tracker.notesSaveError":"Could not save notes in this browser. Please back up your data.","tracker.backToNotes":"Back to notes","tracker.archivedCount":"Archived ({count})","tracker.noArchivedNotes":"No archived notes.","tracker.noNotes":"No notes yet. Add a reminder or to-do list.","tracker.chooseClassNotes":"Choose a class to add notes.","tracker.syncedCalendar":"Synced from Class Calendar","tracker.checklistItem":"Checklist item","tracker.moveUp":"Move up {title}","tracker.moveDown":"Move down {title}","tracker.edit":"Edit","tracker.editNamed":"Edit {title}","tracker.delete":"Delete","tracker.deleteNamed":"Delete {title}","tracker.deleteNoteConfirm":"Delete note “{title}”?","tracker.openCalendar":"Open Calendar","tracker.restore":"Restore","tracker.archive":"Archive","tracker.actionNamed":"{action} {title}","tracker.noChanges":"No changes yet","tracker.audit":"{sign}{amount} {unit} on {date} at {time}","tracker.pointOne":"point","tracker.pointMany":"points","tracker.selectClassPoints":"Select a class to track student points.","tracker.noStudents":"No students to display. Enter a student count for this class in Schools settings.","tracker.openSchools":"Open Schools settings","tracker.studentsCaption":"{className} · {count} students","tracker.auditHeading":"Audit","tracker.pointsHeading":"Points","tracker.pointsFor":"Points for student {student}","tracker.decreasePoints":"Decrease points for student {student}","tracker.increasePoints":"Increase points for student {student}","tracker.pointsRange":"Use a whole number from 0 to 999,999.","tracker.pointsSaved":"Student {student}: {value} points saved.","tracker.pointsSaveError":"Points could not be saved in this browser. Keep this page open and export a backup.","tracker.presetSaved":"Preset visibility saved.","tracker.bookSummary":"{items} items · {uses} class assignments","tracker.deleteBookConfirm":"Delete “{title}”?{impact} Export a backup first if you may need it later.","tracker.deleteBookImpact":" This removes its assignments and saved checks from {uses} classes.","tracker.customDeleted":"Custom textbook deleted.","tracker.noCustomBooks":"No custom textbooks yet. Add your first textbook below.","tracker.draftDiscard":"Discard the current textbook draft?","tracker.draftCancelled":"Draft cancelled. Saved textbooks are unchanged.","tracker.bookRequired":"Add a textbook title and at least one section or activity.","tracker.tooManyItems":"Please use no more than 1,000 items per textbook.","tracker.changeChecksConfirm":"Changed or removed items will lose their checks in classes using this textbook. Unchanged items keep their progress. Save changes?","tracker.bookUpdated":"Textbook updated. Unchanged items kept their progress.","tracker.bookSaved":"Custom textbook saved and ready to assign."
             },
             ja: {
-                "tracker.title":"クラストラッカー","tracker.helpOpen":"使い方を開く","tracker.helpTitle":"はじめに","tracker.helpClose":"使い方を閉じる","tracker.settingsOpen":"クラストラッカー設定を開く","tracker.settingsTitle":"クラストラッカー設定","tracker.settingsClose":"設定を閉じる","tracker.introTitle":"すべてのクラスを着実に前へ","tracker.introBody":"学校とクラスを選び、再利用できるチェックリストを割り当てて、授業や教科書の進み具合を記録します。","tracker.pickerAria":"クラスと教科書の選択","tracker.school":"学校","tracker.class":"クラス","tracker.assignedTextbook":"割り当てた教科書","tracker.assignTextbook":"教科書を割り当てる","tracker.currentClass":"現在のクラス","tracker.chooseClass":"クラスを選ぶ","tracker.progress":"進捗","tracker.trackingAria":"クラス進捗管理","tracker.viewsAria":"クラス進捗の表示","tracker.points":"ポイント","tracker.notes":"メモ","tracker.textbookProgress":"教科書の進捗","tracker.clearChecks":"チェックを消去","tracker.studentPoints":"生徒ポイント","tracker.classPoints":"クラス合計ポイント","tracker.pointsHelp":"ポイントは生徒番号ごとに、このクラス用として保存されます。履歴の合計は5分以内の変更をまとめます。生徒数は「設定 → 学校」で指定してください。","tracker.classNotes":"クラスメモ","tracker.archived":"アーカイブ済み","tracker.addNote":"＋ メモを追加","tracker.notesHelp":"クラスごとに保存できる簡単なリマインダーとToDoリストです。同じ学校・クラスのカレンダー予定メモも、このブラウザ内で自動表示されます。連携メモの編集はカレンダーで行い、ここでアーカイブすると非表示にできます。","tracker.addNotePlain":"メモを追加","tracker.editNote":"メモを編集","tracker.noteTitle":"タイトル","tracker.details":"詳細","tracker.noteSyntaxHelp":"[] はチェックボックス、[-] は箇条書き、[1]、[2] などは丸数字になります。[G]、[L]、[ES]、[KS] などの活動マーカーも使えます。チェック済みの項目は編集時に [x] と表示されます。","tracker.saveNote":"メモを保存","tracker.cancel":"キャンセル","tracker.footer":"クラストラッカー · v1.0 · データはこのブラウザに保存されます","tracker.tutorial1Title":"学校とクラスを選ぶ","tracker.tutorial1Body":"クラストラッカーは、このブラウザのGoogleクラススケジューラーと同じ学校・クラス一覧を使います。","tracker.tutorial2Title":"教科書を割り当てる","tracker.tutorial2Body":"教科書プリセットを使うか、設定で3段階のカスタム進捗リストを作成し、クラスに割り当てます。","tracker.tutorial3Title":"進捗をチェックする","tracker.tutorial3Body":"進捗はクラスごとに保存されます。データはこのブラウザのプロフィール内に保存されるため、Teacher Toolsのバックアップと復元で保護してください。","tracker.startTracking":"記録を始める","tracker.caution":"注意：","tracker.storageWarning":"学校、教科書、進捗はこのブラウザのプロフィールだけに保存されます。プロフィールの「同期」で保護または移動してください。","tracker.textbooks":"教科書","tracker.textbookPresets":"教科書プリセット","tracker.presetsHelp":"ダッシュボードのリストに表示したい教科書を選びます。選択を外しても、すでに使用中のクラスからは削除されません。","tracker.presetsIncluded":"Let's Try! 1・2、NEW HORIZON Elementary 5・6、NEW HORIZON English Course 1を収録しています。「Beta・」は最終確認前のプリセットです。","tracker.customTextbooks":"カスタム教科書","tracker.customHelp":"保存した教科書はすべてのクラスで利用できます。下の教科書を編集するか、新しく追加してください。","tracker.addCustomTextbook":"＋ カスタム教科書を追加","tracker.addCustomTextbookPlain":"カスタム教科書を追加","tracker.editCustomTextbook":"カスタム教科書を編集","tracker.editorHelp":"1項目を1行で入力します。行頭の #、##、### で1〜3段階を指定し、必要に応じて活動マーカーのコードを加えます。編集内容はこの教科書を使うすべてのクラスに反映され、変更されていない項目のチェックは保持されます。","tracker.textbookTitle":"教科書名","tracker.titlePlaceholder":"例：Let's Try! 4","tracker.sectionsActivities":"教科書の章と活動","tracker.itemsPlaceholder":"# Unit 1\n## [G] Unit goal\n### [L] Listen and repeat","tracker.saveTextbook":"教科書を保存","tracker.chooseTextbook":"教科書を選ぶ…","tracker.customPrefix":"カスタム · ","tracker.hiddenAssigned":"{title}（割り当て済み・非表示プリセット）","tracker.noTextbookTitle":"教科書がまだ割り当てられていません","tracker.noTextbookBody":"左側で教科書を選び、このクラスに割り当ててください。","tracker.collapse":"{item}を折りたたむ","tracker.expand":"{item}を展開する","tracker.progressCount":"{total}件中{done}件","tracker.clearConfirm":"このクラスのチェックをすべて消去しますか？","tracker.period":"{number}時限","tracker.lunch":"給食","tracker.notesSaved":"メモを保存しました。","tracker.notesSaveError":"このブラウザにメモを保存できませんでした。データをバックアップしてください。","tracker.backToNotes":"メモに戻る","tracker.archivedCount":"アーカイブ済み（{count}）","tracker.noArchivedNotes":"アーカイブ済みのメモはありません。","tracker.noNotes":"メモはまだありません。リマインダーやToDoを追加してください。","tracker.chooseClassNotes":"メモを追加するクラスを選んでください。","tracker.syncedCalendar":"クラスカレンダーから同期","tracker.checklistItem":"チェック項目","tracker.moveUp":"{title}を上へ移動","tracker.moveDown":"{title}を下へ移動","tracker.edit":"編集","tracker.editNamed":"{title}を編集","tracker.delete":"削除","tracker.deleteNamed":"{title}を削除","tracker.deleteNoteConfirm":"メモ「{title}」を削除しますか？","tracker.openCalendar":"カレンダーを開く","tracker.restore":"元に戻す","tracker.archive":"アーカイブ","tracker.actionNamed":"{title}：{action}","tracker.noChanges":"変更履歴なし","tracker.audit":"{date} {time} に {sign}{amount}{unit}","tracker.pointOne":"ポイント","tracker.pointMany":"ポイント","tracker.selectClassPoints":"ポイントを記録するクラスを選んでください。","tracker.noStudents":"表示する生徒がいません。「学校」設定でこのクラスの生徒数を入力してください。","tracker.openSchools":"学校設定を開く","tracker.studentsCaption":"{className} · 生徒{count}人","tracker.auditHeading":"履歴","tracker.pointsHeading":"ポイント","tracker.pointsFor":"生徒{student}のポイント","tracker.decreasePoints":"生徒{student}のポイントを減らす","tracker.increasePoints":"生徒{student}のポイントを増やす","tracker.pointsRange":"0〜999,999の整数を入力してください。","tracker.pointsSaved":"生徒{student}：{value}ポイントを保存しました。","tracker.pointsSaveError":"このブラウザにポイントを保存できませんでした。このページを開いたままバックアップを書き出してください。","tracker.presetSaved":"プリセットの表示設定を保存しました。","tracker.bookSummary":"{items}項目 · {uses}クラスで使用","tracker.deleteBookConfirm":"「{title}」を削除しますか？{impact} 後で必要になる場合は、先にバックアップを書き出してください。","tracker.deleteBookImpact":" 使用中の{uses}クラスから割り当てと保存済みチェックが削除されます。","tracker.customDeleted":"カスタム教科書を削除しました。","tracker.noCustomBooks":"カスタム教科書はまだありません。下から最初の教科書を追加してください。","tracker.draftDiscard":"編集中の教科書の下書きを破棄しますか？","tracker.draftCancelled":"下書きをキャンセルしました。保存済み教科書は変更されていません。","tracker.bookRequired":"教科書名と、章または活動を1項目以上入力してください。","tracker.tooManyItems":"1冊につき1,000項目以内にしてください。","tracker.changeChecksConfirm":"変更または削除した項目のチェックは、この教科書を使用中のクラスから失われます。変更していない項目の進捗は保持されます。保存しますか？","tracker.bookUpdated":"教科書を更新しました。変更していない項目の進捗は保持されています。","tracker.bookSaved":"カスタム教科書を保存し、割り当てできるようになりました。"
+                "tracker.title":"クラストラッカー","tracker.helpOpen":"使い方を開く","tracker.helpTitle":"はじめに","tracker.helpClose":"使い方を閉じる","tracker.settingsOpen":"クラストラッカー設定を開く","tracker.settingsTitle":"クラストラッカー設定","tracker.settingsClose":"設定を閉じる","tracker.pickerAria":"クラスと教科書の選択","tracker.school":"学校","tracker.class":"クラス","tracker.assignedTextbook":"割り当てた教科書","tracker.assignTextbook":"教科書を割り当てる","tracker.currentClass":"現在のクラス","tracker.chooseClass":"クラスを選ぶ","tracker.progress":"進捗","tracker.trackingAria":"クラス進捗管理","tracker.viewsAria":"クラス進捗の表示","tracker.points":"ポイント","tracker.notes":"メモ","tracker.textbookProgress":"教科書の進捗","tracker.clearChecks":"チェックを消去","tracker.studentPoints":"生徒ポイント","tracker.classPoints":"クラス合計ポイント","tracker.pointsHelp":"ポイントは生徒番号ごとに、このクラス用として保存されます。履歴の合計は5分以内の変更をまとめます。生徒数は「設定 → 学校」で指定してください。","tracker.classNotes":"クラスメモ","tracker.archived":"アーカイブ済み","tracker.addNote":"＋ メモを追加","tracker.notesHelp":"クラスごとに保存できる簡単なリマインダーとToDoリストです。同じ学校・クラスのカレンダー予定メモも、このブラウザ内で自動表示されます。連携メモの編集はカレンダーで行い、ここでアーカイブすると非表示にできます。","tracker.addNotePlain":"メモを追加","tracker.editNote":"メモを編集","tracker.noteTitle":"タイトル","tracker.details":"詳細","tracker.noteSyntaxHelp":"[] はチェックボックス、[-] は箇条書き、[1]、[2] などは丸数字になります。[G]、[L]、[ES]、[KS] などの活動マーカーも使えます。チェック済みの項目は編集時に [x] と表示されます。","tracker.saveNote":"メモを保存","tracker.cancel":"キャンセル","tracker.tutorial1Title":"学校とクラスを選ぶ","tracker.tutorial1Body":"クラストラッカーは、このブラウザのGoogleクラススケジューラーと同じ学校・クラス一覧を使います。","tracker.tutorial2Title":"教科書を割り当てる","tracker.tutorial2Body":"教科書プリセットを使うか、設定で3段階のカスタム進捗リストを作成し、クラスに割り当てます。","tracker.tutorial3Title":"進捗をチェックする","tracker.tutorial3Body":"進捗はクラスごとに保存されます。データはこのブラウザのプロフィール内に保存されるため、Teacher Toolsのバックアップと復元で保護してください。","tracker.startTracking":"記録を始める","tracker.caution":"注意：","tracker.storageWarning":"学校、教科書、進捗はこのブラウザのプロフィールだけに保存されます。プロフィールの「同期」で保護または移動してください。","tracker.textbooks":"教科書","tracker.textbookPresets":"教科書プリセット","tracker.presetsHelp":"ダッシュボードのリストに表示したい教科書を選びます。選択を外しても、すでに使用中のクラスからは削除されません。","tracker.presetsIncluded":"Let's Try! 1・2、NEW HORIZON Elementary 5・6、NEW HORIZON English Course 1を収録しています。「Beta・」は最終確認前のプリセットです。","tracker.customTextbooks":"カスタム教科書","tracker.customHelp":"保存した教科書はすべてのクラスで利用できます。下の教科書を編集するか、新しく追加してください。","tracker.addCustomTextbook":"＋ カスタム教科書を追加","tracker.addCustomTextbookPlain":"カスタム教科書を追加","tracker.editCustomTextbook":"カスタム教科書を編集","tracker.editorHelp":"1項目を1行で入力します。行頭の #、##、### で1〜3段階を指定し、必要に応じて活動マーカーのコードを加えます。編集内容はこの教科書を使うすべてのクラスに反映され、変更されていない項目のチェックは保持されます。","tracker.textbookTitle":"教科書名","tracker.titlePlaceholder":"例：Let's Try! 4","tracker.sectionsActivities":"教科書の章と活動","tracker.itemsPlaceholder":"# Unit 1\n## [G] Unit goal\n### [L] Listen and repeat","tracker.saveTextbook":"教科書を保存","tracker.chooseTextbook":"教科書を選ぶ…","tracker.customPrefix":"カスタム · ","tracker.hiddenAssigned":"{title}（割り当て済み・非表示プリセット）","tracker.noTextbookTitle":"教科書がまだ割り当てられていません","tracker.noTextbookBody":"教科書を選び、このクラスに割り当ててください。","tracker.collapse":"{item}を折りたたむ","tracker.expand":"{item}を展開する","tracker.progressCount":"{total}件中{done}件","tracker.clearConfirm":"このクラスのチェックをすべて消去しますか？","tracker.period":"{number}時限","tracker.lunch":"給食","tracker.notesSaved":"メモを保存しました。","tracker.notesSaveError":"このブラウザにメモを保存できませんでした。データをバックアップしてください。","tracker.backToNotes":"メモに戻る","tracker.archivedCount":"アーカイブ済み（{count}）","tracker.noArchivedNotes":"アーカイブ済みのメモはありません。","tracker.noNotes":"メモはまだありません。リマインダーやToDoを追加してください。","tracker.chooseClassNotes":"メモを追加するクラスを選んでください。","tracker.syncedCalendar":"クラスカレンダーから同期","tracker.checklistItem":"チェック項目","tracker.moveUp":"{title}を上へ移動","tracker.moveDown":"{title}を下へ移動","tracker.edit":"編集","tracker.editNamed":"{title}を編集","tracker.delete":"削除","tracker.deleteNamed":"{title}を削除","tracker.deleteNoteConfirm":"メモ「{title}」を削除しますか？","tracker.openCalendar":"カレンダーを開く","tracker.restore":"元に戻す","tracker.archive":"アーカイブ","tracker.actionNamed":"{title}：{action}","tracker.noChanges":"変更履歴なし","tracker.audit":"{date} {time} に {sign}{amount}{unit}","tracker.pointOne":"ポイント","tracker.pointMany":"ポイント","tracker.selectClassPoints":"ポイントを記録するクラスを選んでください。","tracker.noStudents":"表示する生徒がいません。「学校」設定でこのクラスの生徒数を入力してください。","tracker.openSchools":"学校設定を開く","tracker.studentsCaption":"{className} · 生徒{count}人","tracker.auditHeading":"履歴","tracker.pointsHeading":"ポイント","tracker.pointsFor":"生徒{student}のポイント","tracker.decreasePoints":"生徒{student}のポイントを減らす","tracker.increasePoints":"生徒{student}のポイントを増やす","tracker.pointsRange":"0〜999,999の整数を入力してください。","tracker.pointsSaved":"生徒{student}：{value}ポイントを保存しました。","tracker.pointsSaveError":"このブラウザにポイントを保存できませんでした。このページを開いたままバックアップを書き出してください。","tracker.presetSaved":"プリセットの表示設定を保存しました。","tracker.bookSummary":"{items}項目 · {uses}クラスで使用","tracker.deleteBookConfirm":"「{title}」を削除しますか？{impact} 後で必要になる場合は、先にバックアップを書き出してください。","tracker.deleteBookImpact":" 使用中の{uses}クラスから割り当てと保存済みチェックが削除されます。","tracker.customDeleted":"カスタム教科書を削除しました。","tracker.noCustomBooks":"カスタム教科書はまだありません。下から最初の教科書を追加してください。","tracker.draftDiscard":"編集中の教科書の下書きを破棄しますか？","tracker.draftCancelled":"下書きをキャンセルしました。保存済み教科書は変更されていません。","tracker.bookRequired":"教科書名と、章または活動を1項目以上入力してください。","tracker.tooManyItems":"1冊につき1,000項目以内にしてください。","tracker.changeChecksConfirm":"変更または削除した項目のチェックは、この教科書を使用中のクラスから失われます。変更していない項目の進捗は保持されます。保存しますか？","tracker.bookUpdated":"教科書を更新しました。変更していない項目の進捗は保持されています。","tracker.bookSaved":"カスタム教科書を保存し、割り当てできるようになりました。"
             }
         };
         TRACKER_TRANSLATIONS.en["tracker.metaTitle"] = "Class Tracker · Teacher Tools";
@@ -6299,7 +6321,7 @@
             const template=assignedTemplate(); checklist.replaceChildren();
             document.getElementById("checklistHeading").textContent=template?.title||trackerT("tracker.textbookProgress","Textbook Progress");
             document.getElementById("clearProgressButton").hidden=!template;
-            if(!template){ const empty=document.createElement("div"); empty.className="empty-state"; const title=document.createElement("strong"); title.textContent=trackerT("tracker.noTextbookTitle","No textbook assigned yet"); const copy=document.createElement("p"); copy.className="empty-copy"; copy.textContent=trackerT("tracker.noTextbookBody","Choose a textbook on the left, then assign it to this class."); empty.append(title,copy); checklist.append(empty); updateProgress(null); return; }
+            if(!template){ const empty=document.createElement("div"); empty.className="empty-state"; const title=document.createElement("strong"); title.textContent=trackerT("tracker.noTextbookTitle","No textbook assigned yet"); const copy=document.createElement("p"); copy.className="empty-copy"; copy.textContent=trackerT("tracker.noTextbookBody","Choose a textbook, then assign it to this class."); empty.append(title,copy); checklist.append(empty); updateProgress(null); return; }
             const key=classKey(), expansionKey=key+"::"+template.id, done=state.progress[key]||{}, expanded=state.expanded[expansionKey]||{};
             let openLevelOne=false, openLevelTwo=false, hasLevelTwo=false;
             template.items.forEach((item,index)=>{
@@ -6689,7 +6711,7 @@
     })();
     </script>
 <!-- TEACHER-TOOLS:SHARED-SCHOOL-SETTINGS-SCRIPT:START -->
-<script src="../assets/js/school-settings.js?v=teacher-tools-2026-11-13-standard-utility-icons-1" data-teacher-tools-school-settings></script>
+<script src="../assets/js/school-settings.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-school-settings></script>
 <script>
 
 (() => {
@@ -6712,6 +6734,48 @@
 })();
 </script>
 <!-- TEACHER-TOOLS:SHARED-SCHOOL-SETTINGS-SCRIPT:END -->
+    <script>
+    (() => {
+        const shell = document.querySelector(".app-shell");
+        const button = document.getElementById("presentationButton");
+        const header = shell.querySelector(".app-presentation-header");
+        const actions = shell.querySelector(".tracker-actions");
+        const home = actions.parentElement;
+        const context = shell.querySelector(".tracker-focus-context");
+        const modals = [...document.querySelectorAll("body > .modal-backdrop")].map(element => ({element, parent:element.parentElement, marker:document.createComment("tracker-dialog-home")}));
+        modals.forEach(({element,parent,marker}) => parent.insertBefore(marker,element));
+        let active = false;
+        const t = (key, fallback) => window.TeacherToolsUI.translate(key, fallback);
+        window.TeacherToolsUI.registerTranslations({
+            en:{"tracker.fullscreen.enter":"Enter fullscreen tracking","tracker.fullscreen.exit":"Exit fullscreen tracking"},
+            ja:{"tracker.fullscreen.enter":"全画面で表示","tracker.fullscreen.exit":"全画面表示を終了"}
+        });
+        function label() {
+            button.setAttribute("aria-label", t(active?"tracker.fullscreen.exit":"tracker.fullscreen.enter", active?"Exit fullscreen tracking":"Enter fullscreen tracking"));
+            button.title=button.getAttribute("aria-label");
+            button.setAttribute("aria-pressed",String(active));
+            context.textContent=document.getElementById("classHeading").textContent;
+        }
+        function setMode(value) {
+            active=value;
+            if(value) header.querySelector(".app-presentation-actions").append(actions); else home.append(actions);
+            modals.forEach(({element,parent,marker})=>value?shell.append(element):parent.insertBefore(element,marker.nextSibling));
+            header.hidden=!value; context.hidden=!value;
+            shell.classList.toggle("is-presenting",value);
+            document.body.classList.toggle("presentation-open",value);
+            label(); if(!value)button.focus();
+        }
+        button.addEventListener("click",async()=>{
+            if(active){if(document.fullscreenElement===shell){try{await document.exitFullscreen();}catch{return;}}setMode(false);}
+            else{setMode(true);try{await shell.requestFullscreen?.();}catch{/* Viewport fallback remains usable. */}}
+        });
+        document.addEventListener("fullscreenchange",()=>{if(active&&document.fullscreenElement!==shell)setMode(false);});
+        document.addEventListener("keydown",event=>{if(event.key==="Escape"&&active&&!document.fullscreenElement&&!event.defaultPrevented&&!document.querySelector(".modal-backdrop.open"))setMode(false);},true);
+        window.addEventListener("teacher-tools:languagechange",label);
+        new MutationObserver(label).observe(document.getElementById("classHeading"),{childList:true,subtree:true,characterData:true});
+        label();
+    })();
+    </script>
     <script src="../assets/js/selfie/svg-parts.js"></script>
     <script src="../assets/js/selfie/renderer.js"></script>
     <script src="../assets/js/selfie/transfer-config.js"></script>
