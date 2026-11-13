@@ -179,15 +179,6 @@ body:where([data-tool="calendar"], [data-tool="spinner"], [data-tool="timer"]) .
     border-top: 1px solid var(--line);
 }
 
-:where([data-tool="spinner"], [data-tool="timer"]) .presentation-icon {
-    width: 20px;
-    height: 20px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.9;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
 
 body:where([data-tool="spinner"], [data-tool="timer"]) .button-neutral {
     color: var(--text);
@@ -814,4 +805,4 @@ body.app-page .app-shell:not(.is-presenting) .app-control-row > .app-actions {
     body.app-page .app-shell:not(.is-presenting) .app-control-content { grid-row: 2; }
 }
 
-/* teacher-tools-release: teacher-tools-2026-11-13-rounded-wheel-font-1 */
+/* teacher-tools-release: teacher-tools-2026-11-13-standard-utility-icons-1 */

@@ -123,20 +123,6 @@ html[data-theme="true-dark"] .button-primary { color: #07101d; }
     stroke-linecap: round;
     stroke-linejoin: round;
 }
- .site-settings-button svg {
-    width: 24px;
-    height: 24px;
-    fill: currentColor;
-}
- .settings-icon {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-    transform-origin: center;
-    transition: transform 260ms ease;
-}
- .icon-button:hover .settings-icon,
-.icon-button:focus-visible .settings-icon { transform: rotate(45deg); }
 
  .site-mobile-toggle svg {
     width: 22px;
@@ -710,4 +696,20 @@ html[data-theme="custom"] .site-brand-mark { color: var(--accent-contrast); }
     .app-page .site-identity .site-brand-title { font-size: 14px; }
 }
 
-/* teacher-tools-release: teacher-tools-2026-11-13-rounded-wheel-font-1 */
+/* Canonical utility icon styles: Bag of Tricks fullscreen, Timer settings. */
+:root svg[data-shared-icon="presentation"] {
+    width: 21px; height: 21px; flex-shrink: 0;
+    fill: none; stroke: currentColor; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+}
+:root svg[data-shared-icon="settings"] {
+    width: 23px; height: 23px; flex-shrink: 0;
+    fill: currentColor; stroke: none;
+    transform-origin: center; transition: transform 260ms ease;
+}
+button:is(:hover, :focus-visible) > svg[data-shared-icon="settings"] { transform: rotate(45deg); }
+@media (prefers-reduced-motion: reduce) {
+    :root svg[data-shared-icon="settings"] { transition: none; }
+}
+
+/* teacher-tools-release: teacher-tools-2026-11-13-standard-utility-icons-1 */

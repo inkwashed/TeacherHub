@@ -258,3 +258,15 @@ from `tools.js`. Visible controls are icons; native radio inputs retain translat
 accessible names and their labels retain translated hover titles. Arrow-key
 selection and visible focus remain native. The pair stays on one row in the
 wide options column and in compact/fullscreen layouts.
+
+### Fullscreen and settings icon standard
+
+Use the registry markers `data-shared-icon="presentation"` and
+`data-shared-icon="settings"` everywhere, including new pages. `tools.js` owns
+the geometry and `site.css` owns the marker-based visual styles. Fullscreen
+matches Bag of Tricks: 21px, no fill, 2px current-color stroke with rounded caps
+and joins. Settings matches Timer: 23px, current-color fill and no stroke,
+with the existing hover/focus rotation (no animation under reduced motion).
+Page-local `.presentation-icon`, `.settings-icon` and Home gear variants were
+removed; marker styling also covers Home and Scheduler without special classes.
+Do not copy geometry or override these standard icons per page.

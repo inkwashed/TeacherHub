@@ -124,6 +124,9 @@ def check():
     embedded_terms = re.search(r'<!-- license:start -->(.*?)<!-- license:end -->', home, re.S)
     assert embedded_terms and html.unescape(embedded_terms[1]) == (ROOT / 'LICENSE.txt').read_text(), 'Home terms differ from LICENSE.txt; run scripts/sync_terms.py'
 
+    for page_path in [ROOT / 'index.html', *(ROOT / tool / 'index.html' for tool in ('timer', 'tricks', 'spinner', 'calendar', 'tracker', 'scheduler', 'offline'))]:
+        assert not re.search(r'\.(?:presentation|settings)-icon\s*\{', page_path.read_text()), f'{page_path}: utility icon styles belong in site.css'
+
     shared_rules = set()
     dependencies = set()
     for filename in SHARED:
