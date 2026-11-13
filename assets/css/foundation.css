@@ -1,0 +1,165 @@
+/* Theme tokens, reset, typography, and keyboard focus. See docs/styling-and-offline.md for ownership and load order. */
+
+:root {
+    /* Match Let's EiGo!'s rounded system typography without external assets. */
+    --font-ui: ui-rounded, "Arial Rounded MT Bold", "Trebuchet MS", Arial, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+    --font-title: var(--font-ui);
+    --font-body: var(--font-ui);
+    color-scheme: light;
+    --accent: #1e40af;
+    --accent-secondary: #60a5fa;
+    --accent-soft: #dbeafe;
+    --accent-border: #93c5fd;
+    --focus-ring: rgba(30, 64, 175, 0.18);
+    --text: #2f3337;
+    --muted: #697078;
+    --line: #dfe3e8;
+    --bg: #f5f8ff;
+    --surface: #ffffff;
+    --panel: #f8faff;
+    --danger: #d93025;
+    --warning-bg: #fff8e1;
+    --warning-border: #f5d67b;
+    --warning-text: #6f5200;
+    --tooltip-text: #ffffff;
+}
+
+/* Modern Blue is the unsaved/default palette; Ocean Blue retains the root values. */
+:root:not([data-theme]),
+html[data-theme="modern-blue"] {
+    --accent: #294f70;
+    --accent-secondary: #7ea9e5;
+    --accent-soft: #deecf7;
+    --accent-border: #346a94;
+    --focus-ring: rgba(36, 94, 179, 0.18);
+    --text: #253e50;
+    --muted: #475c6a;
+    --line: #d6e1e9;
+    --bg: #f3f7fb;
+    --surface: #fdfefe;
+    --panel: #ecf4fb;
+}
+
+html[data-theme="color-pop"] {
+    --accent: #8b5cf6;
+    --accent-secondary: #fbbf24;
+    --accent-soft: #e9d5ff;
+    --accent-border: #c4b5fd;
+    --focus-ring: rgba(139, 92, 246, 0.18);
+    --bg: #faf8ff;
+    --panel: #fcfaff;
+}
+
+html[data-theme="pretty-in-pink"] {
+    --accent: #db2777;
+    --accent-secondary: #dd79a5;
+    --accent-soft: #fce7f3;
+    --accent-border: #f9a8d4;
+    --focus-ring: rgba(219, 39, 119, 0.18);
+    --bg: #fff8fb;
+    --panel: #fffafd;
+}
+
+html[data-theme="true-dark"] {
+    color-scheme: dark;
+    --accent: #8ab4f8;
+    --accent-secondary: #c4a7ff;
+    --accent-soft: #18263c;
+    --accent-border: #35557e;
+    --focus-ring: rgba(138, 180, 248, 0.24);
+    --text: #eef2f7;
+    --muted: #a9b1bc;
+    --line: #30363d;
+    --bg: #000000;
+    --surface: #0d0f12;
+    --panel: #15191e;
+    --danger: #ff7676;
+    --warning-bg: #332b12;
+    --warning-border: #8a7125;
+    --warning-text: #ffe08a;
+    --tooltip-text: #07101d;
+}
+
+html[data-theme="custom"] { color-scheme: var(--custom-color-scheme, light); }
+
+/* Global Teacher Tools page foundation */
+* { box-sizing: border-box; }
+
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+}
+
+html { scrollbar-gutter: stable; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    transition: background-color 180ms ease, color 180ms ease;
+}
+
+body.modal-open { overflow: hidden; }
+
+button,
+input,
+select,
+textarea { font: inherit; font-family: var(--font-ui); }
+
+button { -webkit-tap-highlight-color: transparent; }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Typography roles are independent of the selected color theme. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.app-title,
+.welcome-title,
+.offline-title,
+nav,
+label,
+legend,
+summary,
+.app-panel-description,
+.section-description,
+.welcome-copy,
+.settings-heading,
+.settings-subheading,
+.grid-title,
+.site-linked-data-heading {
+    font-family: var(--font-ui);
+}
+
+.site-brand-title {
+    font-family: var(--font-title);
+    font-weight: 700;
+}
+
+/* Opt-in scrolling regions: shared theme-aware treatment for page/panel bodies. */
+.themed-scroll { scrollbar-gutter: stable; scrollbar-color: var(--accent-border) transparent; scrollbar-width: auto; }
+.themed-scroll::-webkit-scrollbar { width: 12px; height: 12px; }
+.themed-scroll::-webkit-scrollbar-track { background: transparent; }
+.themed-scroll::-webkit-scrollbar-thumb { background: var(--accent-border); border: 3px solid var(--scrollbar-surface, var(--surface)); border-radius: 999px; }
+@media (forced-colors: active) { .themed-scroll { scrollbar-color: auto; } }
+
+/* Page content scrolls beneath shared navigation; tool internals retain their layouts. */
+html.site-scroll-page { height: 100%; overflow: hidden; scrollbar-gutter: auto; }
+.site-scroll-page body { height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+.site-scroll-page .site-header { flex: 0 0 auto; }
+.site-page-scroll { position: relative; --scrollbar-surface: var(--bg); flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.site-scroll-page body:is(.site-profile-open, .modal-open) .site-page-scroll { overflow: hidden; }
+
+/* teacher-tools-release: teacher-tools-2026-11-13-card-art-2 */

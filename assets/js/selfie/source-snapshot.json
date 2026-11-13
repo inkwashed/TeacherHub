@@ -1,0 +1,9 @@
+{
+  "source": "ActivityHub/apps/avatar",
+  "schemaVersion": 1,
+  "sha256": {
+    "config.js": "1a71e7a2c372b1616dd9c8b04bae315618a8e260b3f70041095f6b9acf565e1b",
+    "svg-parts.js": "c356f314885e854b963cd843975893ff6c5b0f90d500fb0e5a92bc3541fe6a6a",
+    "svg-art.js": "fd72dbaac39587a93c7765b4ba00a41a337f2d55194f6e61e92bda6e198fda11"
+  }
+}

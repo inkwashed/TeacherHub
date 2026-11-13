@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:teacher-tools:selfie-avatar:1",
+  "title": "Let’s EiGo! / Teacher Tools Selfie Avatar v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "choices"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "choices": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "face",
+        "eyes",
+        "eyeStyle",
+        "nose",
+        "mouth",
+        "hair",
+        "clothes",
+        "accessories",
+        "skin",
+        "hairColor",
+        "eyeColor",
+        "shirtColor",
+        "background"
+      ],
+      "properties": {
+        "face": {
+          "type": "string",
+          "enum": [
+            "classic",
+            "round",
+            "slim"
+          ]
+        },
+        "eyes": {
+          "type": "string",
+          "enum": [
+            "cheerful",
+            "angry",
+            "worried",
+            "sleepy",
+            "happy",
+            "heart",
+            "starry",
+            "mixed"
+          ]
+        },
+        "eyeStyle": {
+          "type": "string",
+          "enum": [
+            "basic",
+            "eyelashes"
+          ]
+        },
+        "nose": {
+          "type": "string",
+          "enum": [
+            "small",
+            "largerArch",
+            "tinyWedge",
+            "softHook",
+            "buttonCurve",
+            "none"
+          ]
+        },
+        "mouth": {
+          "type": "string",
+          "enum": [
+            "neutral",
+            "closedSmile",
+            "smile",
+            "teethSmile",
+            "smirk",
+            "surprisedO",
+            "frown"
+          ]
+        },
+        "hair": {
+          "type": "string",
+          "enum": [
+            "tousled",
+            "curly",
+            "centerPart",
+            "longBangs",
+            "none"
+          ]
+        },
+        "clothes": {
+          "type": "string",
+          "enum": [
+            "tee",
+            "pointedCollar",
+            "roundedCollar"
+          ]
+        },
+        "accessories": {
+          "type": "string",
+          "enum": [
+            "none"
+          ]
+        },
+        "skin": {
+          "type": "string",
+          "enum": [
+            "#f8ddc4",
+            "#f8cfa9",
+            "#dca577",
+            "#b6845d",
+            "#845d40",
+            "#573f31"
+          ]
+        },
+        "hairColor": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "eyeColor": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "shirtColor": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "background": {
+          "type": "string",
+          "enum": [
+            "#dcebe4",
+            "#f3dfd7",
+            "#e1e8f3",
+            "#eee1f1",
+            "#f3e9c9",
+            "#fffefa"
+          ]
+        }
+      }
+    }
+  }
+}
