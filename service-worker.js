@@ -1,4 +1,4 @@
-const RELEASE = "teacher-tools-2026-11-13-card-art-2";
+const RELEASE = "teacher-tools-2026-11-13-my-tools-defaults-1";
 const CACHE = `teacher-tools-${RELEASE}`;
 const APP_SHELL = [
   "/",

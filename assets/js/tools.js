@@ -64,7 +64,7 @@
     const key = 'teacherTools.sitePreferences.v1';
     const legacyKey = 'teacherTools.home.appPanel.v1';
     const ids = catalog.map(tool => tool.id);
-    const defaults = ['calendar','tracker','timer','spinner'];
+    const defaults = ids.filter(id => id !== 'scheduler');
     const known = id => ids.includes(id);
     const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
     const strings = value => Array.isArray(value) && value.every(id => typeof id === 'string');
@@ -225,4 +225,4 @@
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initialize,{once:true});else initialize();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-13-card-art-2 */
+/* teacher-tools-release: teacher-tools-2026-11-13-my-tools-defaults-1 */

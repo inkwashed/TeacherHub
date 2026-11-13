@@ -217,3 +217,8 @@ checks require the PNG type, signature and complete end marker. Run
 The artwork is supplied as four shared sheets rather than sixteen separate
 requests; the current offline inventory contains 30 resources. Physical iPad
 Safari sizing, fullscreen and offline behavior still need device verification.
+
+My Tools defaults include every current catalog app except Google Class Scheduler.
+Bag of Tricks is enabled. Defaults apply only without an existing selection;
+saved selections (including an empty selection) remain unchanged. Home keeps
+the full catalog independently of shortcut visibility.
