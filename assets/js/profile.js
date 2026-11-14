@@ -320,7 +320,7 @@
             if (save({...read(), name: name.value.trim().slice(0, 80)}, 'profile.saved')) finishNameEditing();
         });
         const transfer = window.TeacherToolsSelfieTransfer.create({
-            validate: schema.normalize,
+            validate: schema.normalizeTransfer,
             save: avatar => {
                 // Verify rendering before any write. Merge with the latest profile and preferences.
                 localSelfie(avatar);
@@ -417,4 +417,4 @@
     }
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-13-calendar-round-add-1 */
+/* teacher-tools-release: teacher-tools-2026-11-14-selfie-transfer-shape-1 */

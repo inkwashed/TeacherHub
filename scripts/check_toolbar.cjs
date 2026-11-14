@@ -3,7 +3,7 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const assert=require('node:assert/strict'),path=require('node:path'),fs=require('node:fs/promises');const {pathToFileURL}=require('node:url');
 const root=path.resolve(__dirname,'..'),origin='http://localhost:8765',key='teacherTools.sitePreferences.v1';
 const pages=['home','calendar','tracker','timer','spinner','tricks','scheduler','offline'];
-const versions={calendar:'v0.7',tracker:'v1.1',timer:'v1.0.2',spinner:'v1.2.1',tricks:'v1.0.10',scheduler:'v3.6'};
+const versions={calendar:'v0.7',tracker:'v1.2',timer:'v1.0.2',spinner:'v1.2.1',tricks:'v1.0.10',scheduler:'v3.6'};
 async function closeTutorial(p){for(let n=0;n<3;n++){const b=p.locator('[data-modal-close]:visible').first();if(!await b.count())break;await b.click();}}
 async function configure(p){await p.evaluate(()=>TeacherToolsProfile.openNavigation());assert(await p.locator('#siteNavigationEditor').isVisible());}
 (async()=>{const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});try{

@@ -2,7 +2,7 @@
 
 ## Status and scope
 
-Teacher Tools implements the receiver, strict v1 validation, a bundled local renderer, editable-choice persistence, and backup support. **The actual Let’s EiGo! transfer sender has not been implemented, deployed, or tested.** The ordinary `/apps/avatar/` editor is not a transfer endpoint. Profile intentionally has no explanatory text or sender-preparation notice; the sender is still a coordinated follow-up. Custom-photo import is not supported.
+Teacher Tools implements the receiver, strict v1 validation, a bundled local renderer, editable-choice persistence, and backup support. On November 14, 2026, the public Let’s EiGo! transfer/config scripts were checked and matched the ActivityHub reference source. The sender sends a direct avatar choice map, whereas the original receiver expected a versioned avatar wrapper; this mismatch caused the reported unsupported-selfie error. The transfer-only normalizer now accepts either exact format and produces the existing canonical `{schemaVersion:1, choices}` record. Stored profiles and backups still require that canonical shape. Custom-photo import is not supported.
 
 There are no accounts, database, cloud uploads, background requests, or synchronization. Clicking **Use Selfie** explicitly opens one popup. The sender must require **Use this selfie** before sending avatar choices. Later editor changes never modify the Teacher Tools copy without another explicit update.
 
@@ -29,6 +29,32 @@ https://letseigo.com/apps/avatar/transfer.html?requestId=<32 lowercase hex chara
 In production `receiverOrigin` is `https://tools.letseigo.com`. The window gets a unique name and a suggested 480×640 size. `window.opener` is required for the protocol, so this particular popup must not use `noopener`. The sender's headers must not sever the opener relationship (for example, with incompatible Cross-Origin-Opener-Policy settings); verify this on the deployed sites. The receiver sends no initial data message. The only query values Teacher Tools adds are request ID and receiver origin: no names, classes, students, profile image, or other saved data.
 
 The receiver-origin query is a **routing hint, never authorization**. The sender must maintain its own independent exact-origin allowlist. Production should allow `https://tools.letseigo.com`; include `http://localhost:8765` only in an explicitly enabled development setup. Never trust arbitrary query parameters, `document.referrer`, a suffix match, or `"*"`. There must be a live opener before enabling confirmation.
+
+## Current sender format and normalization
+
+The deployed sender uses the same four envelope fields shown below, but its
+`avatar` value is the direct choice map (the contents of `choices` in the
+versioned example). `TeacherToolsSelfieSchema.normalizeTransfer` accepts this
+exact map or the original versioned wrapper. Both paths run the same catalog,
+field, color and unknown-key checks; there is no arbitrary SVG/photo import or
+relaxed backup validator. The Profile transfer callback uses this adapter.
+Origin, popup source, request ID, protocol version, transaction/rollback and ACK
+checks are unchanged. The current catalog matches the sender configuration, so
+no artwork or renderer changes were needed.
+
+The actual sender hardcodes the production receiver origin. Real imports from
+local HTTP previews therefore still need sender-side development-origin support;
+Teacher Tools' existing fixture tests exercise local receiver behavior separately.
+No ActivityHub files or deployed sites were modified for this fix.
+
+`check_selfie_transfer.cjs` tests canonical/raw formats and invalid payloads;
+`check_selfie_browser.cjs` tests raw-map transfer through the receiver fixture,
+failures and backups. `check_selfie_sender_contract.cjs` runs the actual sender
+source and renderer against production-shaped origins served from local files,
+with isolated storage and synthetic long-bangs/eyelashes/custom-color choices.
+This verifies confirmation, canonical persistence, ACK/popup close and reload
+rendering; it does not read the owner's live saved Selfie. Physical Safari/iPad
+popup behavior and a deployed-site retry still need owner verification.
 
 ## Message contract
 
@@ -81,7 +107,7 @@ The sender must verify all of the following before automatically closing:
 
 The sender should show a waiting state after sending and close only after that valid ACK. A visible Cancel action may close without sending. No ACK means the sender cannot claim the import succeeded. A closed window cannot be guaranteed to receive an ACK even if the copy committed immediately before closure; do not retry or resynchronize in the background. A further copy/update requires user action.
 
-## Required sender work in ActivityHub
+## Historical sender handoff in ActivityHub (reference only)
 
 1. Add `/apps/avatar/transfer.html` as a coordinated, opt-in sender UI. Do not redirect the usual editor to transfer mode or assume the endpoint already exists.
 2. Read only the existing `letseigo.app.avatar` version-1 saved avatar through the editor's save conventions. The current editor uses `saved.state`. Do not read/send `letseigo.profile` (names), school data, blog data, achievements, or arbitrary local storage.

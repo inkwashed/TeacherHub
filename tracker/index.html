@@ -12,30 +12,29 @@
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="../assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-bootstrap></script>
+    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-calendar-round-add-1">
-    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-13-calendar-round-add-1">
-    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-13-calendar-round-add-1">
-    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-13-calendar-round-add-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-14-selfie-transfer-shape-1">
+    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-14-selfie-transfer-shape-1">
+    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-14-selfie-transfer-shape-1">
+    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-14-selfie-transfer-shape-1">
     <style>
 
 
         .icon-button { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; padding: 0; color: var(--accent); background: transparent; border: 0; border-radius: 50%; cursor: pointer; }
         .icon-button:hover { background: var(--panel); }
 
-        .app-shell.is-presenting { position: fixed; z-index: 500; inset: 0; width: 100%; height: 100dvh; max-width: none; margin: 0; display: flex; flex-direction: column; border: 0; border-radius: 0; box-shadow: none; }
-        .app-shell.is-presenting .app-main { flex: 1; min-height: 0; overflow: auto; padding: 16px; }
-        .app-shell.is-presenting .tracker-controls { display: block; }
-        .app-shell.is-presenting .dashboard-tabs { min-height: 56px; margin: 0; }
-        .app-shell.is-presenting .dashboard-tab { min-height: 44px; }
-        .app-shell.is-presenting .dashboard-grid { display: block; }
-        .app-shell.is-presenting .picker-card,
-        .app-shell.is-presenting .tracker-actions [data-modal-open] { display: none; }
-        .app-shell.is-presenting .tracker-card { padding: 16px 0; background: transparent; border: 0; }
-        .app-shell.is-presenting .button { border-radius: 999px; }
-        .app-shell.is-presenting .modal-backdrop { z-index: 700; }
-        .tracker-focus-context { margin: 0 0 12px; color: var(--muted); font-weight: 700; }
+        .modal-card.overview-modal { width: min(960px, 100%); }
+        .overview-modal .close-button { width: 44px; height: 44px; }
+        .overview-filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .overview-summary { margin: 16px 0; color: var(--text); font-weight: 700; }
+        .overview-table-wrap { max-width: 100%; overflow: auto; }
+        .overview-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        .overview-table th, .overview-table td { padding: 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+        .overview-table th { color: var(--muted); }
+        .overview-table .button { min-height: 44px; }
+        .overview-progress { white-space: nowrap; }
+        @media (max-width: 620px) { .overview-filters { grid-template-columns: 1fr; } }
 
         .tracker-controls + .dashboard-grid { margin-top: 16px; }
         .helper-text, .empty-copy { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
@@ -249,22 +248,14 @@
 </head>
 <body data-tool="tracker" class="app-page">
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-tools></script>
-    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-toolbar data-page="tracker"></script>
-    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-profile></script>
+    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-tools></script>
+    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-toolbar data-page="tracker"></script>
+    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 <div class="site-page-scroll themed-scroll">
     <main class="page-main">
-        <div class="app-shell" data-app-version="v1.1">
-            <header class="app-presentation-header" hidden>
-                <div class="app-presentation-identity">
-                    <h2 class="app-presentation-title" data-i18n="tracker.title">Class Tracker</h2>
-                    <span class="app-presentation-version">v1.1</span>
-                </div>
-                <div class="app-presentation-actions"></div>
-            </header>
+        <div class="app-shell" data-app-version="v1.2">
             <div class="app-main">
-                <p class="tracker-focus-context" hidden></p>
                 <p id="schoolDataNotice" class="settings-help" role="status" hidden></p>
                 <div class="tracker-controls app-control-row">
                         <div class="mode-tab dashboard-tabs mode-tabs app-control-content" role="tablist" aria-label="Class tracking views" data-i18n-aria-label="tracker.viewsAria">
@@ -273,7 +264,7 @@
                             <button type="button" id="dashboardTab-notes" class="mode-tab dashboard-tab" role="tab" aria-selected="false" aria-controls="dashboardPanel-notes" tabindex="-1" data-dashboard-tab="notes" data-i18n="tracker.notes">Notes</button>
                         </div>
                 <div class="tracker-actions app-actions">
-                    <button type="button" id="presentationButton" class="icon-button" aria-label="Enter fullscreen tracking" title="Fullscreen tracking" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="presentation"></svg></button>
+                    <button type="button" id="overviewButton" class="icon-button" data-modal-open="overviewModal" aria-haspopup="dialog" aria-label="Class overview" title="Class overview" data-i18n-aria-label="overview.title" data-i18n-title="overview.title"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="statistics"></svg></button>
                     <button type="button" class="icon-button" data-modal-open="tutorialModal" aria-label="Open getting started help" title="Getting started" data-i18n-aria-label="tracker.helpOpen" data-i18n-title="tracker.helpTitle"><span class="help-button-mark" aria-hidden="true">?</span></button>
                     <button type="button" class="icon-button" data-modal-open="settingsModal" aria-label="Open Class Tracker settings" title="Settings" data-i18n-aria-label="tracker.settingsOpen" data-i18n-title="tracker.settingsTitle"><svg class="settings-icon" viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="settings"></svg></button>
                 </div>
@@ -324,6 +315,19 @@
     </main>
 </div>
     <footer class="app-copyright">Let’s EiGo! Teacher Tools © 2026 letseigo.com · All rights reserved.</footer>
+
+    <div id="overviewModal" class="modal-backdrop" data-shared-modal aria-hidden="true">
+        <section class="modal-card overview-modal" role="dialog" aria-modal="true" aria-labelledby="overviewTitle">
+            <header class="modal-header"><h2 id="overviewTitle" class="modal-title" data-i18n="overview.title">Class overview</h2><button type="button" class="close-button" data-modal-close aria-label="Close class overview" data-i18n-aria-label="overview.close">×</button></header>
+            <div class="modal-content">
+                <div class="overview-filters"><label class="field"><span data-i18n="tracker.school">School</span><select id="overviewSchool"></select></label><label class="field"><span data-i18n="tracker.assignedTextbook">Assigned Textbook</span><select id="overviewTextbook"></select></label></div>
+                <p class="helper-text" data-i18n="overview.help">Current checklist totals include all levels, just like Progress. Compare percentages within the same textbook. Active notes and unchecked tasks include unarchived Calendar notes.</p>
+                <p id="overviewSummary" class="overview-summary" role="status" aria-live="polite"></p>
+                <div class="overview-table-wrap" tabindex="0" role="region" aria-label="Class overview results" data-i18n-aria-label="overview.results"><table class="overview-table"><thead><tr><th data-i18n="tracker.school">School</th><th data-i18n="tracker.class">Class</th><th data-i18n="tracker.assignedTextbook">Assigned Textbook</th><th data-i18n="tracker.progress">Progress</th><th data-i18n="overview.notes">Active notes</th><th data-i18n="overview.tasks">Open tasks</th></tr></thead><tbody id="overviewRows"></tbody></table></div>
+                <p id="overviewEmpty" class="empty-copy" hidden data-i18n="overview.empty">No classes match these filters.</p>
+            </div>
+        </section>
+    </div>
 
     <div id="tutorialModal" class="modal-backdrop" data-shared-modal data-first-use-storage-key="teacherTools.classTracker.tutorialSeen.v1" aria-hidden="true">
         <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
@@ -442,7 +446,7 @@
     </div>
 
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-ui></script>
+    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
     <script>
     (() => {
@@ -6406,6 +6410,59 @@
         document.getElementById("assignButton").addEventListener("click",()=>{ if(!classSelect.value||!templateSelect.value) return; state.assignments[classKey()]=templateSelect.value; state.progress[classKey()] ||= {}; saveTracker(); renderDashboard(); });
         document.getElementById("clearProgressButton").addEventListener("click",()=>{ if(confirm(trackerT("tracker.clearConfirm","Clear all checks for this class?"))){ state.progress[classKey()]={}; saveTracker(); renderDashboard(); } });
         schoolSelect.addEventListener("change",renderClasses); classSelect.addEventListener("change",()=>{ state.preferences.selectedClass=classSelect.value; saveTracker(); renderTemplates(); renderDashboard(); });
+        window.TeacherToolsUI.registerTranslations({
+            en:{"overview.title":"Class overview","overview.close":"Close class overview","overview.help":"Current checklist totals include all levels, just like Progress. Compare percentages within the same textbook. Active notes and unchecked tasks include unarchived Calendar notes.","overview.results":"Class overview results","overview.notes":"Active notes","overview.tasks":"Open tasks","overview.empty":"No classes match these filters.","overview.allSchools":"All schools","overview.allBooks":"All textbooks","overview.unassigned":"Unassigned","overview.unavailable":"Unavailable textbook","overview.summary":"Classes: {classes} · Assigned: {assigned} · Open tasks: {tasks}","overview.openNotes":"Open notes for {school} · {className}"},
+            ja:{"overview.title":"クラス概要","overview.close":"クラス概要を閉じる","overview.help":"進捗と同じく、チェック項目はすべての階層を数えます。達成率は同じ教科書のクラス間で比較してください。未アーカイブのカレンダーメモもメモ・未完了タスク数に含みます。","overview.results":"クラス概要の結果","overview.notes":"有効なメモ","overview.tasks":"未完了タスク","overview.empty":"条件に一致するクラスがありません。","overview.allSchools":"すべての学校","overview.allBooks":"すべての教科書","overview.unassigned":"未割り当て","overview.unavailable":"教科書が見つかりません","overview.summary":"クラス数：{classes} · 割り当て済み：{assigned} · 未完了タスク：{tasks}","overview.openNotes":"{school}・{className}のメモを開く"}
+        });
+        const overviewSchool=document.getElementById('overviewSchool'), overviewBook=document.getElementById('overviewTextbook');
+        function overviewData(){
+            let calendar=[];
+            try{const value=JSON.parse(get('teacherTools.classCalendar.state.v1'));if(value?.version===1&&Array.isArray(value.events))calendar=value.events;}catch{}
+            const archived=new Set(Array.isArray(state.preferences.archivedNoteIds)?state.preferences.archivedNoteIds:[]);
+            return scheduler.schools.flatMap(school=>(school.classes||[]).map(className=>{
+                const key=school.id+'::'+className, bookId=state.assignments?.[key]||'', book=state.templates.find(item=>item.id===bookId);
+                const items=Array.isArray(book?.items)?book.items:[], done=items.filter(item=>state.progress?.[key]?.[item.id]).length;
+                const local=(Array.isArray(state.notes?.[key])?state.notes[key]:[]).filter(note=>note&&!note.archived);
+                const synced=calendar.filter(event=>event&&event.schoolId===school.id&&event.className===className&&typeof event.id==='string'&&typeof event.date==='string'&&typeof event.notes==='string'&&event.notes.trim()&&!archived.has('calendar:'+event.id)).map(event=>({body:event.notes}));
+                const notes=[...local,...synced], tasks=notes.reduce((sum,note)=>sum+(typeof note.body==='string'?(note.body.match(/\[(?: )?\]/g)||[]).length:0),0);
+                return {school,className,bookId,book,total:items.length,done,notes:notes.length,tasks};
+            }));
+        }
+        function openOverviewNotes(row){
+            window.TeacherToolsUI.closeModal();
+            schoolSelect.value=row.school.id;schoolSelect.dispatchEvent(new Event('change'));
+            classSelect.value=row.className;classSelect.dispatchEvent(new Event('change'));
+            showDashboardTab('notes');document.getElementById('dashboardTab-notes').focus();
+        }
+        function renderOverview(refresh=false){
+            const data=overviewData();
+            if(refresh){
+                const school=overviewSchool.value,book=overviewBook.value;
+                overviewSchool.replaceChildren(new Option(trackerT('overview.allSchools','All schools'),''),...scheduler.schools.map(item=>new Option(item.name,item.id)));
+                overviewSchool.value=[...overviewSchool.options].some(option=>option.value===school)?school:'';
+                const ids=[...new Set(data.map(row=>row.bookId).filter(Boolean))];
+                overviewBook.replaceChildren(new Option(trackerT('overview.allBooks','All textbooks'),''),new Option(trackerT('overview.unassigned','Unassigned'),'@unassigned'),...ids.map(id=>new Option(state.templates.find(item=>item.id===id)?.title||trackerT('overview.unavailable','Unavailable textbook'),id)));
+                overviewBook.value=[...overviewBook.options].some(option=>option.value===book)?book:'';
+            }
+            const rows=data.filter(row=>(!overviewSchool.value||row.school.id===overviewSchool.value)&&(!overviewBook.value||(overviewBook.value==='@unassigned'?!row.bookId:row.bookId===overviewBook.value)));
+            document.getElementById('overviewSummary').textContent=trackerT('overview.summary','Classes: {classes} · Assigned: {assigned} · Open tasks: {tasks}',{classes:rows.length,assigned:rows.filter(row=>row.book).length,tasks:rows.reduce((sum,row)=>sum+row.tasks,0)});
+            const root=document.getElementById('overviewRows');root.replaceChildren();
+            for(const row of rows){
+                const tr=document.createElement('tr');tr.dataset.overviewClass=row.school.id+'::'+row.className;
+                const values=[row.school.name,row.className,row.book?.title||trackerT(row.bookId?'overview.unavailable':'overview.unassigned',row.bookId?'Unavailable textbook':'Unassigned'),row.book?trackerT('tracker.progressCount','{done} of {total}',{done:row.done,total:row.total})+' · '+(row.total?Math.round(row.done/row.total*100)+'%':'—'):'—'];
+                values.forEach((value,index)=>{const td=document.createElement('td');td.textContent=value;if(index===3)td.className='overview-progress';tr.append(td);});
+                const notes=document.createElement('td'),link=document.createElement('button');link.type='button';link.className='button';link.textContent=String(row.notes);link.setAttribute('aria-label',trackerT('overview.openNotes','Open notes for {school} · {className}',{school:row.school.name,className:row.className}));link.addEventListener('click',()=>openOverviewNotes(row));notes.append(link);tr.append(notes);
+                const tasks=document.createElement('td');tasks.textContent=String(row.tasks);tr.append(tasks);root.append(tr);
+            }
+            document.getElementById('overviewEmpty').hidden=rows.length>0;
+            document.querySelector('.overview-table-wrap').hidden=rows.length===0;
+        }
+        document.getElementById('overviewButton').addEventListener('click',()=>renderOverview(true));
+        [overviewSchool,overviewBook].forEach(select=>select.addEventListener('change',()=>renderOverview()));
+        const refreshOverviewIfOpen=()=>{if(document.getElementById('overviewModal').classList.contains('open'))renderOverview(true);};
+        window.addEventListener('teacher-tools:languagechange',refreshOverviewIfOpen);
+        window.addEventListener('storage',()=>queueMicrotask(refreshOverviewIfOpen));
+
         const dashboardTabs=[...document.querySelectorAll("[data-dashboard-tab]")];
         function showDashboardTab(name){
             dashboardTabs.forEach(button=>{ const active=button.dataset.dashboardTab===name; button.classList.toggle("active",active); button.setAttribute("aria-selected",String(active)); button.tabIndex=active?0:-1; document.getElementById(button.getAttribute("aria-controls")).hidden=!active; });
@@ -6711,7 +6768,7 @@
     })();
     </script>
 <!-- TEACHER-TOOLS:SHARED-SCHOOL-SETTINGS-SCRIPT:START -->
-<script src="../assets/js/school-settings.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-school-settings></script>
+<script src="../assets/js/school-settings.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-school-settings></script>
 <script>
 
 (() => {
@@ -6734,48 +6791,6 @@
 })();
 </script>
 <!-- TEACHER-TOOLS:SHARED-SCHOOL-SETTINGS-SCRIPT:END -->
-    <script>
-    (() => {
-        const shell = document.querySelector(".app-shell");
-        const button = document.getElementById("presentationButton");
-        const header = shell.querySelector(".app-presentation-header");
-        const actions = shell.querySelector(".tracker-actions");
-        const home = actions.parentElement;
-        const context = shell.querySelector(".tracker-focus-context");
-        const modals = [...document.querySelectorAll("body > .modal-backdrop")].map(element => ({element, parent:element.parentElement, marker:document.createComment("tracker-dialog-home")}));
-        modals.forEach(({element,parent,marker}) => parent.insertBefore(marker,element));
-        let active = false;
-        const t = (key, fallback) => window.TeacherToolsUI.translate(key, fallback);
-        window.TeacherToolsUI.registerTranslations({
-            en:{"tracker.fullscreen.enter":"Enter fullscreen tracking","tracker.fullscreen.exit":"Exit fullscreen tracking"},
-            ja:{"tracker.fullscreen.enter":"全画面で表示","tracker.fullscreen.exit":"全画面表示を終了"}
-        });
-        function label() {
-            button.setAttribute("aria-label", t(active?"tracker.fullscreen.exit":"tracker.fullscreen.enter", active?"Exit fullscreen tracking":"Enter fullscreen tracking"));
-            button.title=button.getAttribute("aria-label");
-            button.setAttribute("aria-pressed",String(active));
-            context.textContent=document.getElementById("classHeading").textContent;
-        }
-        function setMode(value) {
-            active=value;
-            if(value) header.querySelector(".app-presentation-actions").append(actions); else home.append(actions);
-            modals.forEach(({element,parent,marker})=>value?shell.append(element):parent.insertBefore(element,marker.nextSibling));
-            header.hidden=!value; context.hidden=!value;
-            shell.classList.toggle("is-presenting",value);
-            document.body.classList.toggle("presentation-open",value);
-            label(); if(!value)button.focus();
-        }
-        button.addEventListener("click",async()=>{
-            if(active){if(document.fullscreenElement===shell){try{await document.exitFullscreen();}catch{return;}}setMode(false);}
-            else{setMode(true);try{await shell.requestFullscreen?.();}catch{/* Viewport fallback remains usable. */}}
-        });
-        document.addEventListener("fullscreenchange",()=>{if(active&&document.fullscreenElement!==shell)setMode(false);});
-        document.addEventListener("keydown",event=>{if(event.key==="Escape"&&active&&!document.fullscreenElement&&!event.defaultPrevented&&!document.querySelector(".modal-backdrop.open"))setMode(false);},true);
-        window.addEventListener("teacher-tools:languagechange",label);
-        new MutationObserver(label).observe(document.getElementById("classHeading"),{childList:true,subtree:true,characterData:true});
-        label();
-    })();
-    </script>
     <script src="../assets/js/selfie/svg-parts.js"></script>
     <script src="../assets/js/selfie/renderer.js"></script>
     <script src="../assets/js/selfie/transfer-config.js"></script>

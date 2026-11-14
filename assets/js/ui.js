@@ -1759,4 +1759,4 @@ window.TeacherToolsCalendarValidate = value => {
 })();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-13-calendar-round-add-1 */
+/* teacher-tools-release: teacher-tools-2026-11-14-selfie-transfer-shape-1 */

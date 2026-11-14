@@ -21,7 +21,7 @@ function environment(options = {}) {
     for (const file of ['schema.js','transfer-config.js','transfer.js']) vm.runInContext(fs.readFileSync(path.join(root,'assets/js/selfie',file),'utf8'),context);
     const model = value => vm.runInContext('('+JSON.stringify(value)+')',context);
     const defaults = model({schemaVersion:1,choices:window.TeacherToolsSelfieSchema.catalog.defaults});
-    const api = window.TeacherToolsSelfieTransfer.create({validate:window.TeacherToolsSelfieSchema.normalize,
+    const api = window.TeacherToolsSelfieTransfer.create({validate:window.TeacherToolsSelfieSchema.normalizeTransfer,
         save(value) { if (options.saveFails) return null; writes.push(value); return {rollback() { rollbackCount++; writes.pop(); }}; },
         status(key,error) { statuses.push({key,error}); }, busy(value) { busy.push(value); }});
     const emit = (type,event) => [...(listeners.get(type)||[])].forEach(fn=>fn(event));
@@ -45,4 +45,5 @@ test('cancel, timeout and navigation clean up without writes',()=>{for(const act
 test('failed persistence sends no ACK and clears pending state',()=>{const e=environment({saveFails:true});e.api.start();e.send();assert.equal(e.writes.length,0);assert.equal(e.sent.length,0);e.clean()});
 test('synchronous ACK error rolls back the local commit',()=>{const e=environment({ackThrows:true});e.api.start();e.send();assert.equal(e.writes.length,0);assert.equal(e.rollbackCount(),1);e.clean()});
 test('profile backups allow only My Selfie choices; custom photo data is rejected',()=>{const e=environment();const avatar={schemaVersion:1,choices:e.schema.catalog.defaults};assert(e.schema.validProfile(e.model({name:'Teacher',selfie:avatar})));assert(e.schema.validProfile(e.model({name:'Teacher',avatar:'',selfie:avatar})));assert(!e.schema.validProfile(e.model({name:'Teacher',avatar:'data:image/png;base64,YQ=='})));assert(!e.schema.validProfile(e.model({name:'Teacher',avatar:'https://example.com/photo.png'})));assert(!e.schema.validProfile(e.model({name:'Teacher',selfie:{schemaVersion:2,choices:avatar.choices}})));});
-console.log(`PASS ${checks} receiver/schema groups. Simulated popup events only; real sender integration is not implemented.`);
+test('current sender raw choices normalize to canonical records without weakening stored validation',()=>{const e=environment();const raw=e.model({...e.schema.catalog.defaults,hair:'longBangs',eyeStyle:'eyelashes',clothes:'pointedCollar',hairColor:'#AB12CD'});assert.equal(e.schema.normalize(raw),null);e.api.start();e.send({avatar:raw});assert.equal(e.writes.length,1);assert.equal(e.writes[0].schemaVersion,1);assert.equal(e.writes[0].choices.hairColor,'#ab12cd');assert.equal(e.sent.length,1);e.clean();for(const bad of [{...raw,extra:'x'},{...raw,hair:'futureHair'},{...raw,hairColor:'url(x)'},{...raw,skin:'#000000'}])assert.equal(e.schema.normalizeTransfer(e.model(bad)),null);const missing={...raw};delete missing.face;assert.equal(e.schema.normalizeTransfer(e.model(missing)),null);});
+console.log(`PASS ${checks} receiver/schema groups. Unit popup events only; actual sender source is covered by check_selfie_sender_contract.cjs.`);

@@ -19,21 +19,25 @@ Class Calendar v0.6 — Teacher Tools.
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="../assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-bootstrap></script>
+    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
 
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-13-calendar-round-add-1">
-    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-13-calendar-round-add-1">
-    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-13-calendar-round-add-1">
-    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-13-calendar-round-add-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-14-selfie-transfer-shape-1">
+    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-14-selfie-transfer-shape-1">
+    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-14-selfie-transfer-shape-1">
+    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-14-selfie-transfer-shape-1">
     <style>
 
         .calendar-controls { margin-bottom: 12px; }
-        .calendar-navigation { display: flex; align-items: center; }
-        .calendar-navigation h2 { margin: 0; font-size: 22px; line-height: 1.25; }
+        .calendar-layout-switch { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); }
+        .calendar-layout-switch .mode-tab { min-width: 0; border: 1px solid transparent; border-radius: 7px; background: transparent; color: var(--muted); font: inherit; font-size: 13px; font-weight: 750; cursor: pointer; }
+        .calendar-layout-switch .mode-tab[aria-pressed="true"] { color: var(--accent); background: var(--surface); border-color: var(--accent-border); }
+        .calendar-period-row { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px 16px; margin: 12px 0; }
+        .calendar-period-row h2 { flex: 1 0 auto; margin: 0 auto 0 0; min-height: 44px; display: flex; align-items: center; font-size: 22px; line-height: 1.25; }
+        .calendar-period-row .toolbar { justify-content: flex-end; margin: 0 0 0 auto; }
+        @media (max-width: 760px) { .calendar-period-row h2 { flex-basis: 100%; } }
         :root body[data-tool="calendar"] .calendar:not(.month) .day-head > .button { width: 44px; height: 44px; min-width: 44px; min-height: 44px; flex: 0 0 44px; padding: 0; border-radius: 50%; display: inline-grid; place-items: center; }
 
-        .calendar-controls + .toolbar { margin-top: 12px; }
 
         /* Applet-specific styles begin here. */
         /* Applet shell */
@@ -629,15 +633,16 @@ html[data-theme="true-dark"] .calendar .event.continues-before.is-past[data-cate
 </head>
 <body data-tool="calendar" class="app-page">
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-tools></script>
-    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-toolbar data-page="calendar"></script>
-    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-profile></script>
+    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-tools></script>
+    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-toolbar data-page="calendar"></script>
+    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 <div class="site-page-scroll themed-scroll">
 
 <main class="page-main"><section class="app-shell" data-app-version="v0.7"><div class="app-main">
-<div class="calendar-controls app-control-row"><div class="calendar-navigation app-control-content"><h2 id="rangeHeading"></h2></div><div class="calendar-actions app-actions"><button type="button" id="helpOpenButton" class="icon-button" data-modal-open="helpModal" aria-label="Open Class Calendar help" aria-haspopup="dialog" title="Getting started"><span class="help-button-mark" aria-hidden="true">?</span></button><button type="button" class="icon-button" id="statisticsButton" aria-label="Calendar statistics" aria-haspopup="dialog" title="Statistics"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 3v17h17M8 16v-5M13 16V6M18 16V9"/></svg></button><button type="button" class="icon-button" id="settingsButton" aria-label="Open Class Calendar settings" aria-haspopup="dialog" title="Class Calendar settings"><svg class="settings-icon" viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="settings"></svg></button></div></div>
-<div class="toolbar"><button class="button" id="previous" aria-label="Previous period">‹</button><button class="button" id="today">Today</button><button class="button" id="next" aria-label="Next period">›</button><label>Jump to date<input type="date" id="jump"></label><label>View<select id="view"><option value="week">Week</option><option value="month">Month</option><option value="agenda">Day / agenda</option><option value="custom">Custom days</option></select></label><button class="button primary" id="addEvent">＋ Add event</button></div>
+<div class="calendar-controls app-control-row"><div class="calendar-layout-switch mode-tabs app-control-content" role="group" aria-label="Schedule layout" data-i18n-aria-label="calendar.layout.label"><button type="button" class="mode-tab" id="layoutHourly" data-calendar-layout="grid" aria-pressed="false" data-i18n="calendar.layout.hourly">Hourly</button><button type="button" class="mode-tab" id="layoutCompact" data-calendar-layout="stacked" aria-pressed="false" data-i18n="calendar.layout.compact">Compact</button></div><div class="calendar-actions app-actions"><button type="button" class="icon-button" id="statisticsButton" aria-label="Calendar statistics" aria-haspopup="dialog" title="Statistics"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="statistics"></svg></button><button type="button" id="helpOpenButton" class="icon-button" data-modal-open="helpModal" aria-label="Open Class Calendar help" aria-haspopup="dialog" title="Getting started"><span class="help-button-mark" aria-hidden="true">?</span></button><button type="button" class="icon-button" id="settingsButton" aria-label="Open Class Calendar settings" aria-haspopup="dialog" title="Class Calendar settings"><svg class="settings-icon" viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="settings"></svg></button></div></div>
+<div class="calendar-period-row"><h2 id="rangeHeading"></h2><div class="toolbar"><button class="button" id="previous" aria-label="Previous period">‹</button><button class="button" id="today">Today</button><button class="button" id="next" aria-label="Next period">›</button><label>Jump to date<input type="date" id="jump"></label><label>View<select id="view"><option value="week">Week</option><option value="month">Month</option><option value="agenda">Day / agenda</option><option value="custom">Custom days</option></select></label><button class="button primary" id="addEvent">＋ Add event</button></div>
+</div>
 <div class="filters"><label>School<select id="schoolFilter"></select></label><label>Periods<select id="ghostMode"><option value="regular">Regular</option><option value="irregular">Irregular</option><option value="off">Hidden</option></select></label><div class="class-filter"><span class="field-label">Class</span><details id="classFilter"><summary id="classFilterSummary">All classes</summary><div class="class-filter-menu"><button type="button" class="button" id="clearClasses">All classes</button><div id="classChoices"></div></div></details></div><div class="class-filter"><span class="field-label">Category</span><details id="categoryFilter"><summary id="categoryFilterSummary">All categories</summary><div class="class-filter-menu"><button type="button" class="button" id="clearCategories">All categories</button><div id="categoryChoices"></div></div></details></div><label class="check"><input type="checkbox" id="showWorking">Working hours</label><button class="button" id="exportOpen">Export ICS</button></div>
 <div class="calendar-meta"><p class="status" id="zoneLabel"></p><div id="customDays" class="weekday-picks" role="group" aria-label="Days shown in custom view" hidden></div></div><div id="onboarding" class="notice" hidden>No schools yet. Add a school and attendance dates in <strong>Settings → Schools</strong> to see suggested periods, or use <strong>Add event</strong> to start with custom times.</div><p class="status" id="status" role="status" aria-live="polite"></p><div id="calendar" class="calendar"></div><p class="status">Dashed slots are suggestions, not saved events. Select ＋ to add a class. Times stay fixed after saving; edit an event to apply different bell times.</p></div></section></main>
 </div>
@@ -730,10 +735,10 @@ html[data-theme="true-dark"] .calendar .event.continues-before.is-past[data-cate
 <div id="statisticsModal" class="modal-backdrop" data-shared-modal aria-hidden="true"><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="statisticsTitle"><header class="modal-header"><h2 id="statisticsTitle" class="modal-title">Calendar statistics</h2><button type="button" class="close-button" data-modal-close aria-label="Close statistics">×</button></header><div class="modal-content"><div class="form-grid"><label>Include<select id="statsScope"><option value="completed">Completed events so far</option><option value="scheduled">All scheduled events</option></select></label><label>School<select id="statsSchool"></select></label><label>From (optional)<input type="date" id="statsFrom"></label><label>Through (optional)<input type="date" id="statsTo"></label></div><p id="statsError" class="error" role="alert"></p><div id="statsResults" aria-live="polite"><div id="statsTotals" class="stats-totals"></div><h3>Hours by category</h3><div class="stats-chart-row"><div id="statsDonut" class="stats-donut" role="img" aria-label="Hours by category"><span id="statsHours"></span></div><div id="statsLegend"></div></div><h3>Classes by school and class</h3><div class="stats-table-wrap"><table class="stats-table"><thead><tr><th scope="col">School</th><th scope="col">Class</th><th scope="col">Lessons</th><th scope="col">Hours</th></tr></thead><tbody id="statsClassRows"></tbody></table></div><p id="statsNote" class="helper-text"></p></div><p class="helper-text">Statistics use saved Calendar events and the filters above, independently of the calendar view. Completed means the event’s end time has passed; it does not confirm attendance. Lesson counts include Class events starting in the selected range. Hours include only the portion within the range. Suggested periods and working-hours backgrounds are excluded. Overlapping events are counted separately.</p></div></section></div>
 
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-ui></script>
+    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
 
-<script src="../assets/js/school-settings.js?v=teacher-tools-2026-11-13-calendar-round-add-1" data-teacher-tools-school-settings></script>
+<script src="../assets/js/school-settings.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-school-settings></script>
 <script>
 
 </script>
@@ -767,6 +772,8 @@ Object.assign(CALENDAR_TRANSLATIONS.en,{"calendar.error.ambiguousTime":"This clo
 Object.assign(CALENDAR_TRANSLATIONS.ja,{"calendar.error.ambiguousTime":"夏時間の変更により、この時刻は2回発生します。曖昧でない時刻を選んでください。","calendar.error.missingTime":"選択したタイムゾーンにはこの時刻が存在しません。別の時刻を選んでください。","calendar.settings.invalidZone":"Asia/Tokyoなど、有効なIANAタイムゾーンを入力してください。","calendar.settings.overnightZone":"この変更により日をまたぐ予定ができます。タイムゾーンを変更する前に、その予定を調整してください。","calendar.settings.changeZone":"{count}件の予定について、{from}から{to}へ変更しますか？処理方法：{policy}。","calendar.settings.saveError":"このブラウザにカレンダー設定を保存できませんでした。","calendar.settings.preferenceError":"このブラウザに設定を保存できませんでした。","calendar.settings.allSaved":"すべての変更を保存しました。","calendar.import.fileSize":"5MB未満のICSファイルを選んでください。","calendar.import.invalidLine":"カレンダーファイルに無効な行があります。","calendar.import.validCalendar":"有効なVCALENDARファイルを選んでください。","calendar.import.oneCalendar":"カレンダーを1つ含むファイルを選んでください。","calendar.import.nested":"カレンダー予定の入れ子が無効です。","calendar.import.sections":"カレンダーファイルの構成が不完全または一致していません。","calendar.import.limit":"一度に読み込める予定は5,000件までです。","calendar.import.incomplete":"カレンダーファイルが不完全です。","calendar.import.missingTime":"開始時刻または終了時刻がありません。","calendar.import.allDay":"終日予定にはまだ対応していません。","calendar.import.dateFormat":"未対応の日付・時刻形式です。","calendar.import.invalidDateTime":"日付・時刻が無効か、秒未満の精度が含まれています。","calendar.import.unsupportedZone":"未対応のタイムゾーン：{zone}","calendar.import.duplicateProperty":"{name}プロパティが重複しています。","calendar.import.recurring":"繰り返し予定にはまだ対応していません。","calendar.import.cancelled":"キャンセル済みの予定です。","calendar.import.invalidId":"カレンダーIDがないか無効です。","calendar.import.duplicateId":"読み込み済み・カレンダーIDが重複しています。","calendar.import.bothEndDuration":"終了時刻と所要時間の両方が含まれています。","calendar.import.duration":"未対応の所要時間です。","calendar.import.subMinute":"1分未満の所要時間には対応していません。","calendar.import.noEnd":"終了時刻または所要時間がありません。","calendar.import.overnight":"このカレンダーのタイムゾーンで日をまたぐ、または複数日にわたる予定です。","calendar.import.endBeforeStart":"終了時刻は開始時刻より後にしてください。","calendar.import.defaultTitle":"読み込んだ予定","calendar.import.summary":"読み込み準備完了{ready}件、スキップ{skipped}件（重複{duplicates}件）。時刻は{zone}で表示しています。","calendar.import.skipped":"スキップ：{title} — {reason}","calendar.import.button":"{count}件の予定を読み込む","calendar.import.zoneChanged":"タイムゾーンが変更されました。変換後の時刻を確認するため、ファイルをもう一度選んでください。","calendar.import.savedAttention":"読み込み前に、保存済みカレンダーデータの確認が必要です。","calendar.import.zoneOtherTab":"別のタブでタイムゾーンが変更されました。ファイルをもう一度選んでください。","calendar.import.schoolMissing":"選択した学校が存在しません。別の学校を選んでください。","calendar.import.saveError":"読み込んだ予定を保存できませんでした。既存の予定は保持されています。","calendar.import.done":"{count}件の予定を読み込みました。現在の絞り込みでは一部が非表示になる場合があります。"});
 Object.assign(CALENDAR_TRANSLATIONS.en,{"calendar.export.counts":"{saved} saved events and {work} working-hours blocks.","calendar.export.entireSummary":"Entire calendar; school, class, and category filters are ignored.","calendar.export.filteredSummary":"{school}; {classes}; {categories}. {dates}","calendar.export.selectedClasses":"{count} selected classes","calendar.export.allClasses":"all classes","calendar.export.allCategories":"all categories","calendar.export.visibleDates":"Currently displayed dates.","calendar.export.allMatchingDates":"All matching dates.","calendar.export.selectedRange":"Selected date range.","calendar.export.workingIncluded":"Working hours are included, as displayed; class and category filters apply only to saved events.","calendar.export.workingExcluded":"Working hours are hidden and excluded."});
 Object.assign(CALENDAR_TRANSLATIONS.ja,{"calendar.export.counts":"保存済み予定{saved}件、勤務時間ブロック{work}件。","calendar.export.entireSummary":"カレンダー全体。学校、クラス、カテゴリーの絞り込みは無視されます。","calendar.export.filteredSummary":"{school}、{classes}、{categories}。{dates}","calendar.export.selectedClasses":"選択中のクラス{count}件","calendar.export.allClasses":"すべてのクラス","calendar.export.allCategories":"すべてのカテゴリー","calendar.export.visibleDates":"現在表示中の日付。","calendar.export.allMatchingDates":"条件に一致するすべての日付。","calendar.export.selectedRange":"選択した日付範囲。","calendar.export.workingIncluded":"勤務時間は表示どおり含まれます。クラスとカテゴリーの絞り込みは保存済み予定だけに適用されます。","calendar.export.workingExcluded":"勤務時間は非表示のため除外されます。"});
+Object.assign(CALENDAR_TRANSLATIONS.en,{"calendar.layout.label":"Schedule layout","calendar.layout.hourly":"Hourly","calendar.layout.compact":"Compact"});
+Object.assign(CALENDAR_TRANSLATIONS.ja,{"calendar.layout.label":"予定の表示形式","calendar.layout.hourly":"時間別","calendar.layout.compact":"コンパクト"});
 UI.registerTranslations(CALENDAR_TRANSLATIONS);
 const calendarT=(key,fallback,replacements)=>UI.translate(key,fallback,replacements);
 function applyCalendarStatic(){
@@ -892,6 +899,7 @@ function renderHourlyGrid(root){
  allDaySizeObserver=new ResizeObserver(()=>{const width=root.getBoundingClientRect().width;if(width!==previousWidth){previousWidth=width;alignAllDay();}});allDaySizeObserver.observe(root);
 }
 function render(){
+ syncLayoutSwitch();
  allDaySizeObserver?.disconnect();
  hideConflictTooltip();const conflicts=eventConflicts(state.events);
  visibleDates=dates();const view=state.preferences.view,root=$('calendar');root.replaceChildren();root.className='calendar '+view;root.style.setProperty('--days',view==='month'?7:visibleDates.length);$('customDays').hidden=view!=='custom';$('jump').value=anchor;
@@ -1043,7 +1051,19 @@ try{$('timeZones').replaceChildren(...Intl.supportedValuesOf('timeZone').map(z=>
 function saveCalendarSettings(){try{const zone=$('timeZone').value.trim();if(!validZone(zone))throw Error(calendarT('calendar.settings.invalidZone','Enter a valid IANA zone, such as Asia/Tokyo.'));const n=clone(state);if(zone!==state.timeZone&&n.events.length){for(const e of n.events){if($('zonePolicy').value==='instant'){const start=parts(instant(e.date,e.start,state.timeZone),zone),end=parts(instant(endDate(e),e.end,state.timeZone),zone);e.date=start.date;e.endDate=end.date;e.start=start.time;e.end=end.time;e.allDay=false;e.mode='custom';e.period=null;}instant(e.date,e.start,zone);instant(endDate(e),e.end,zone);e.modified=new Date().toISOString();}if(!confirm(calendarT('calendar.settings.changeZone','Change from {from} to {to} for {count} events? {policy}.',{from:state.timeZone,to:zone,count:n.events.length,policy:$('zonePolicy').selectedOptions[0].text}))) {$('timeZone').value=state.timeZone;return;}}n.timeZone=zone;if(persist(n)){render();$('settingsError').textContent='';$('calendarSaveStatus').textContent=calendarT('calendar.settings.allSaved','All changes saved.');}else throw Error(calendarT('calendar.settings.saveError','Calendar settings could not be saved in this browser.'));}catch(e){$('settingsError').textContent=e.message;}}
 $('settingsForm').onsubmit=e=>{e.preventDefault();saveCalendarSettings();};
 $('timeZone').onchange=saveCalendarSettings;
-for(const id of ['weekStart','eventLayout'])$(id).onchange=()=>{const n=clone(state);n.preferences[id]=id==='weekStart'?Number($(id).value):$(id).value;if(persist(n)){renderDays();render();$('settingsError').textContent='';$('calendarSaveStatus').textContent='All changes saved.';}else $('settingsError').textContent='Could not save this preference.';};
+function syncLayoutSwitch(){
+ const value=state.preferences.eventLayout==='grid'?'grid':'stacked';
+ $('eventLayout').value=value;
+ document.querySelectorAll('[data-calendar-layout]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.calendarLayout===value)));
+}
+function saveCalendarPreference(id,value){
+ const next=clone(state);next.preferences[id]=value;
+ if(persist(next)){renderDays();render();$('settingsError').textContent='';$('calendarSaveStatus').textContent=calendarT('calendar.settings.allSaved','All changes saved.');}
+ else{$('settingsError').textContent=calendarT('calendar.settings.preferenceError','Could not save this preference.');syncLayoutSwitch();}
+}
+for(const id of ['weekStart','eventLayout'])$(id).onchange=()=>saveCalendarPreference(id,id==='weekStart'?Number($(id).value):$(id).value);
+document.querySelectorAll('[data-calendar-layout]').forEach(button=>button.addEventListener('click',()=>saveCalendarPreference('eventLayout',button.dataset.calendarLayout)));
+
 $('zonePolicy').onchange=()=>{const n=clone(state);n.preferences.zonePolicy=$('zonePolicy').value;if(persist(n)){$('settingsError').textContent='';$('calendarSaveStatus').textContent=calendarT('calendar.settings.allSaved','All changes saved.');}else $('settingsError').textContent=calendarT('calendar.settings.preferenceError','Could not save this preference in this browser.');};
 // RFC 5545 timed-event import; unsupported components are reported.
 function parseICS(text,zone,existing=[]){

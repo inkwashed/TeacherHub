@@ -240,30 +240,25 @@ version and body-level copyright footer. Progress/Points/Notes tabs sit in the s
 control row beside help/settings, separate from the tracking panel; introductory
 copy and the former inner header/footer are removed.
 The functional class picker and Progress/Points/Notes panels remain tool-local,
-including their responsive stacking. Tracker v1.1 adds a tracking-focused presentation mode: the class/textbook
-picker and copyright footer are hidden, the selected class remains visible, and
-Progress/Points/Notes remain editable. The existing app controls move into the
-shared title/version header; help/settings buttons are hidden during presentation.
-Native fullscreen and a viewport fallback both support exit/focus restoration.
-Tracker dialogs move inside the fullscreen element while active, then return to
-their original positions, so school settings remain reachable from tracking flows. School and Tracker storage schemas, recovery,
+including their responsive stacking. Tracker v1.2 replaces the temporary fullscreen mode with a Class overview modal.
+It summarizes current progress per class and active notes/unchecked tasks, with
+school and assigned-textbook filters and links into the class Notes view. The
+statistics glyph is shared with Calendar via the icon registry. Fullscreen-only
+markup, layout, event handling and its obsolete test were removed.
+School and Tracker storage schemas, recovery,
 checklists, points and notes are unchanged. `check_tracker_layout.cjs` covers
 HTTP/file appearance, themes, languages, dashboard views and dialogs;
 `check_tracker.cjs` and the browser Tracker recovery checks cover stored data.
 Physical iPad Safari touch, scrolling, dialogs and safe areas need device testing.
 
-`check_tracker_fullscreen.cjs` covers presentation at phone/tablet/desktop sizes
-in both languages, live checklist edits, dashboard views, dialog containment,
-Escape behavior and persisted checks after returning to normal mode. Physical
-iPad Safari fullscreen/touch, scrolling and keyboard behavior need device testing.
 
 ### Embedded Class Calendar (v0.7)
 
 Calendar opts into `body.app-page`, reusing the theme surface, transparent shell,
 shared 56px control row/144px utility column, canonical help/settings icons and
-inline toolbar version. The date range now occupies the control row beside
-help/statistics/settings. Existing date navigation, view selection, Add event
-and filters remain below it; the original inner header/footer are removed.
+inline toolbar version. Hourly/Compact layout buttons occupy the control row beside
+help/statistics/settings. The date range sits left-aligned on the next row, with
+date navigation, view selection and Add event right-aligned; filters remain below; the original inner header/footer are removed.
 The copyright footer lives outside the scroll region at the viewport bottom.
 
 Calendar retains tool-local grid/container behavior within the shared 1060px
@@ -276,3 +271,26 @@ before translating labels, so Japanese category labels do not alter saved values
 `check_calendar_layout.cjs` covers HTTP/file layouts, languages/themes, views,
 dialogs, event creation and reload persistence. Physical iPad Safari still needs
 touch/grid scrolling, date-picker, dialog and safe-area verification.
+
+The header Hourly/Compact buttons and Settings' Event layout dropdown share one
+`preferences.eventLayout` value (`grid`/`stacked`) and the same save path. Render
+synchronizes both controls, including reloads and storage events. A failed save
+restores the previous selection and preserves saved data. Hourly applies to Week,
+Custom Days and Agenda; Month retains its compact grid, matching existing behavior.
+`check_calendar_layout_switch.cjs` covers synchronization, keyboard activation,
+responsive alignment, both languages, persistence and failed-write preservation.
+
+### Class overview counting and ownership
+
+Overview is a read-only projection of the existing school roster, Tracker
+assignments/templates/checkmarks/notes and Calendar notes. No new storage format
+or migration is introduced. Completion counts all assigned textbook items using
+the same truthy-check rule as Progress; percentages are not averaged across
+textbooks. Missing/unassigned textbooks have no percentage. Active notes exclude
+archived Tracker notes and archived synced Calendar IDs. Open tasks count `[]`
+and `[ ]` markers in active note bodies; completed, bullet and numbered markers
+are excluded. Opening/filtering the modal writes nothing. Choosing a Notes link
+uses the normal class-selection flow; filters are session-only. Storage events
+and language changes refresh an open overview. No completion-time trends or
+points rankings are inferred. `check_tracker_overview.cjs` verifies these counts,
+filters, read-only behavior, navigation, themes and keyboard/dialog behavior.

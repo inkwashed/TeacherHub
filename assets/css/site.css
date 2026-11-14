@@ -696,6 +696,8 @@ html[data-theme="custom"] .site-brand-mark { color: var(--accent-contrast); }
     .app-page .site-identity .site-brand-title { font-size: 14px; }
 }
 
+:root svg[data-shared-icon="statistics"] { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
 /* Canonical utility icon styles: Bag of Tricks fullscreen, Timer settings. */
 :root svg[data-shared-icon="presentation"] {
     width: 21px; height: 21px; flex-shrink: 0;
@@ -712,4 +714,4 @@ button:enabled:is(:hover, :focus-visible) > svg[data-shared-icon="settings"] { t
     :root svg[data-shared-icon="settings"] { transition: none; }
 }
 
-/* teacher-tools-release: teacher-tools-2026-11-13-calendar-round-add-1 */
+/* teacher-tools-release: teacher-tools-2026-11-14-selfie-transfer-shape-1 */

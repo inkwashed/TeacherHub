@@ -144,7 +144,10 @@ function normalize(avatar) {
     }
     return {schemaVersion:1, choices};
 }
+// Transfer accepts the current sender's exact choice map, while storage/backups
+// retain the canonical versioned record and the same strict catalog validation.
+const normalizeTransfer = avatar => normalize(avatar) || normalize({schemaVersion:1, choices:avatar});
 const validProfile = value => plain(value) && typeof value.name === 'string' && value.name.length <= 80 && (value.avatar === undefined || value.avatar === '') && (value.selfie === undefined || !!normalize(value.selfie));
 function freeze(value) { if (value && typeof value === 'object') { Object.values(value).forEach(freeze); Object.freeze(value); } return value; }
-window.TeacherToolsSelfieSchema = Object.freeze({normalize,validProfile,catalog:freeze(catalog)});
+window.TeacherToolsSelfieSchema = Object.freeze({normalize,normalizeTransfer,validProfile,catalog:freeze(catalog)});
 })();
