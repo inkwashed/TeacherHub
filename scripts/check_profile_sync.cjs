@@ -72,6 +72,7 @@ async function openSync(page) {await page.evaluate(() => window.TeacherToolsProf
         await page.clock.install();await page.locator('#siteProfileNameEdit').click();await page.locator('#siteProfileName').fill('Autosaved Name');await page.locator('#siteProfileNameForm button[type=submit]').click();
         await page.clock.fastForward(14*60*1000);
         assert.equal(await page.evaluate(async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())).records.appearance.profile.name),'Sync Test','Do not write before the 15-minute interval');
+<<<<<<< HEAD
         await page.reload();await openSync(page);await page.locator('#siteDataFileTab').click();
         await poll(page,()=>document.getElementById('siteLinkedDataDisconnect').disabled,value=>value===false,'resume scheduled save after reload');
         await page.clock.fastForward(61*1000);
@@ -111,6 +112,10 @@ async function openSync(page) {await page.evaluate(() => window.TeacherToolsProf
         await poll(page,()=>document.getElementById('siteLinkedDataStatus').textContent,value=>value.includes('Both this browser'),'autosave conflict');
         assert.equal(await page.evaluate(async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())).records.appearance.profile.name),'External conflict','Autosave must not overwrite external changes');
         console.log('PASS 15-minute timing, permission pause/re-enable, unchanged skip, failed-write retry, hidden/return and conflict protection.');
+=======
+        await page.clock.fastForward(61*1000);
+        await poll(page,async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())),value=>value?.records?.appearance?.profile?.name==='Autosaved Name','linked autosave');
+>>>>>>> 42f8153032d21c691c6210e12a8e28845eb7b6a1
         await page.clock.resume();
         await page.evaluate(async()=>{const handle=await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json');const data=JSON.parse(await (await handle.getFile()).text());data.records.appearance.profile.name='Pulled Name';const writable=await handle.createWritable();await writable.write(JSON.stringify(data));await writable.close();});
         await Promise.all([page.waitForEvent('load'),page.locator('#siteLinkedDataLoad').click()]);
