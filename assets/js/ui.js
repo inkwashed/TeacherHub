@@ -1730,7 +1730,56 @@ window.TeacherToolsCalendarValidate = value => {
         }
     });
 
+        const NOTE_MARKERS={
+            G:{label:"Goal",svg:'<circle cx="12" cy="12" r="8.5"/><path d="m8 12 2.6 2.6L16.5 9"/>'},
+            W:{label:"Watch",svg:'<circle cx="12" cy="12" r="8.5"/><circle cx="9" cy="10.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="15" cy="10.5" r="1.1" fill="currentColor" stroke="none"/>'},
+            L:{label:"Listen",svg:'<path d="M5 13v-2a7 7 0 0 1 14 0v2"/><path d="M5 12.5H4a1.5 1.5 0 0 0-1.5 1.5v3A1.5 1.5 0 0 0 4 18.5h2v-6Zm14 0h1a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-2v-6Z"/>'},
+            R:{label:"Read",svg:'<circle cx="12" cy="4.8" r="2.1"/><path d="M7.3 10.5c.8-2 2.4-3 4.7-3s3.9 1 4.7 3"/><path d="M12 12c-2.6-1.9-5.2-1.6-8-.6v6.8c3-.8 5.6-.4 8 1.6m0-7.8c2.6-1.9 5.2-1.6 8-.6v6.8c-3-.8-5.6-.4-8 1.6Z"/>'},
+            S:{label:"Speak",svg:'<circle cx="8.5" cy="13" r="5.5"/><circle cx="6.7" cy="11.5" r=".65" fill="currentColor" stroke="none"/><circle cx="10.3" cy="11.5" r=".65" fill="currentColor" stroke="none"/><path d="M6.2 14.5c.5 2.2 4.1 2.2 4.6 0Z" fill="currentColor" stroke="none"/><path d="M14 4.5h6a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1.2l-2.7 2v-2H14a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2Z"/>'},
+            LS:{label:"Let’s Sing",svg:'<path d="M16 4.5v11.8"/><path d="m16 5 4-1"/><ellipse cx="12.5" cy="17" rx="3.5" ry="2.5" transform="rotate(-12 12.5 17)" fill="currentColor" stroke="none"/>'},
+            LC:{label:"Let’s Chant",svg:'<path d="M6.2 16.5h11.6l-1.3-1.8V10a4.5 4.5 0 0 0-9 0v4.7Z"/><path d="M10 19a2.2 2.2 0 0 0 4 0M12 4V2.8"/>'},
+            ST:{label:"Small Talk",svg:'<path d="M4 5.5h10a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H9l-3.5 2.5v-2.5H4a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2Z"/><path d="M16 9.5h3a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-.5V20L15 17.5h-3a2 2 0 0 1-2-2"/>'},
+            P:{label:"Write",svg:'<path d="m5 16-.8 3.8L8 19l10.7-10.7-3-3Z"/><path d="m13.8 7.2 3 3M5 16l3 3"/>'},
+            ES:{label:"Elementary School",svg:'<path d="M11.4 3.3Q12 2.5 12.6 3.3L14.7 6.2Q15.3 7 16.2 7.3L19.6 8.4Q20.6 8.7 20 9.5L17.9 12.4Q17.3 13.2 17.3 14.2L17.3 17.8Q17.3 18.8 16.3 18.5L13 17.4Q12 17.1 11 17.4L7.7 18.5Q6.7 18.8 6.7 17.8L6.7 14.2Q6.7 13.2 6.1 12.4L4 9.5Q3.4 8.7 4.4 8.4L7.8 7.3Q8.7 7 9.3 6.2Z"/><path d="M12 7.5v5.7q0 1-1.3 1.3M10 9.8l-1.4 2m5.4-2 1.4 2"/>'},
+            D:{label:"Dictionary",svg:'<path d="M4 17V6a2 2 0 0 1 2-2h14v13H7c-1.7 0-3 1.2-3 2.1S5.3 20 7 20h13v-3M8 4v13"/>'},
+            KS:{label:"Key Sentences",svg:'<path d="M12 11V8.5a3.5 3.5 0 0 1 7 0V11"/><rect x="10" y="11" width="11" height="9" rx="2"/><circle cx="5.3" cy="15.5" r="2.2"/><path d="M7.5 15.5h8m-3.2 0v2m2.2-2v2"/>'}
+        };
+        function circledNumber(number){
+            if(number===0) return "⓪";
+            if(number<=20) return String.fromCodePoint(0x2460+number-1);
+            if(number<=35) return String.fromCodePoint(0x3251+number-21);
+            if(number<=50) return String.fromCodePoint(0x32b1+number-36);
+            return String(number)+"\u20dd";
+        }
+
+    // Only fixed marker artwork is HTML; user note content always becomes text nodes.
+    function renderNoteLines(body,{readOnly=true,label='',markerLabel:labelMarker=code=>translate('note.marker.'+code,NOTE_MARKERS[code].label),checklistLabel='Checklist item',onToggle}={}){
+        let offset=0, ordinal=0;
+        return String(body||'').split('\n').map(line=>{
+            const row=document.createElement('div');row.className='note-line';
+            const pattern=/\[(x|X| |-)?\]|\[(\d{1,6})\]|\[(LS|LC|ST|ES|KS|G|W|L|R|S|P|D)\]/g;let last=0;
+            for(const match of line.matchAll(pattern)){
+                row.append(document.createTextNode(line.slice(last,match.index)));
+                if(match[0]==='[-]')row.append(document.createTextNode('•'));
+                else if(match[2]!==undefined)row.append(document.createTextNode(circledNumber(Number(match[2]))));
+                else if(match[3]){
+                    const icon=document.createElementNS('http://www.w3.org/2000/svg','svg');icon.setAttribute('viewBox','0 0 24 24');icon.setAttribute('class','check-marker-icon');icon.setAttribute('role','img');icon.setAttribute('aria-label',labelMarker(match[3]));icon.innerHTML=NOTE_MARKERS[match[3]].svg;row.append(icon);
+                }else{
+                    const input=document.createElement('input');input.type='checkbox';input.checked=/x/i.test(match[0]);input.disabled=readOnly;
+                    input.setAttribute('aria-label',[label,line.slice(match.index+match[0].length).trim()||checklistLabel].filter(Boolean).join(': '));
+                    const position=offset+match.index,length=match[0].length,index=ordinal++;
+                    if(!readOnly&&onToggle)input.addEventListener('change',()=>onToggle(position,length,input.checked,index));row.append(input);
+                }
+                last=match.index+match[0].length;
+            }
+            const boxes=[...row.querySelectorAll('input')];row.classList.toggle('complete',boxes.length>0&&boxes.every(box=>box.checked));
+            row.append(document.createTextNode(line.slice(last)));offset+=line.length+1;return row;
+        });
+    }
+    registerTranslations({en:Object.fromEntries(Object.entries(NOTE_MARKERS).map(([code,m])=>['note.marker.'+code,m.label])),ja:Object.fromEntries(Object.entries({G:'目標',W:'見る',L:'聞く',R:'読む',S:'話す',LS:'歌う',LC:'チャンツ',ST:'スモールトーク',P:'書く',ES:'小学校英語',D:'辞書',KS:'キーセンテンス'}).map(([code,label])=>['note.marker.'+code,label]))});
     window.TeacherToolsUI = Object.freeze({
+        noteMarkers: Object.freeze(NOTE_MARKERS),
+        renderNoteLines,
         applyGlobalTheme,
         resetCustomTheme: () => applyGlobalTheme("custom", true, DEFAULT_CUSTOM_COLORS),
         closeSiteOverlays,
@@ -1759,4 +1808,4 @@ window.TeacherToolsCalendarValidate = value => {
 })();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-14-selfie-transfer-shape-1 */
+/* teacher-tools-release: teacher-tools-2026-11-16-spinner-help-shortcut-1 */

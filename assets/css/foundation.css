@@ -149,11 +149,16 @@ summary,
 }
 
 /* Opt-in scrolling regions: shared theme-aware treatment for page/panel bodies. */
-.themed-scroll { scrollbar-gutter: stable; scrollbar-color: var(--accent-border) transparent; scrollbar-width: auto; }
-.themed-scroll::-webkit-scrollbar { width: 12px; height: 12px; }
-.themed-scroll::-webkit-scrollbar-track { background: transparent; }
-.themed-scroll::-webkit-scrollbar-thumb { background: var(--accent-border); border: 3px solid var(--scrollbar-surface, var(--surface)); border-radius: 999px; }
-@media (forced-colors: active) { .themed-scroll { scrollbar-color: auto; } }
+/* Theme scrollbar paint applies to every semantic dialog and nested scroller.
+   Only explicit .themed-scroll regions reserve a gutter; dialogs retain their existing geometry. */
+.themed-scroll { scrollbar-gutter: stable; }
+:where(.themed-scroll, dialog, dialog *, [role="dialog"], [role="dialog"] *) { scrollbar-color: var(--accent-border) transparent; scrollbar-width: auto; }
+:where(.themed-scroll, dialog, dialog *, [role="dialog"], [role="dialog"] *)::-webkit-scrollbar { width: 12px; height: 12px; }
+:where(.themed-scroll, dialog, dialog *, [role="dialog"], [role="dialog"] *)::-webkit-scrollbar-track { background: transparent; }
+:where(.themed-scroll, dialog, dialog *, [role="dialog"], [role="dialog"] *)::-webkit-scrollbar-thumb { background: var(--accent-border); border: 3px solid var(--scrollbar-surface, var(--surface)); border-radius: 999px; }
+@media (forced-colors: active) {
+    :where(.themed-scroll, dialog, dialog *, [role="dialog"], [role="dialog"] *) { scrollbar-color: auto; }
+}
 
 /* Page content scrolls beneath shared navigation; tool internals retain their layouts. */
 html.site-scroll-page { height: 100%; overflow: hidden; scrollbar-gutter: auto; }
@@ -162,4 +167,4 @@ html.site-scroll-page { height: 100%; overflow: hidden; scrollbar-gutter: auto; 
 .site-page-scroll { position: relative; --scrollbar-surface: var(--bg); flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
 .site-scroll-page body:is(.site-profile-open, .modal-open) .site-page-scroll { overflow: hidden; }
 
-/* teacher-tools-release: teacher-tools-2026-11-14-selfie-transfer-shape-1 */
+/* teacher-tools-release: teacher-tools-2026-11-16-spinner-help-shortcut-1 */

@@ -294,3 +294,106 @@ uses the normal class-selection flow; filters are session-only. Storage events
 and language changes refresh an open overview. No completion-time trends or
 points rankings are inferred. `check_tracker_overview.cjs` verifies these counts,
 filters, read-only behavior, navigation, themes and keyboard/dialog behavior.
+
+
+### Shared Help dialogs
+
+All six app Help dialogs use the Help-only rules in `assets/css/components.css`
+(`#helpModal` / `#tutorialModal`). The shared shell is capped at 620px, with a
+consistent header, 44px circular close target, step cards and pill action buttons.
+The header and footer do not shrink or scroll; only the instruction body scrolls.
+Put confirmation/dismiss actions in `.modal-actions` (or Scheduler's
+`.tutorial-footer`), outside `.modal-content` / `.tutorial-scroll`. Contextual
+setup shortcuts remain beside their relevant instruction. Keep content and
+translations local; do not add local tutorial styling or change other modal sizes
+to adjust Help. Help wording is task-focused in both languages: use “How to use” / “使い方” and a footer “Done” / “閉じる”. Omit generic introductions and storage/sync advice; those belong in Profile/settings. Keep useful task-specific exceptions and setup shortcuts.
+
+Run `python3 scripts/check_styles.py` plus `node scripts/check_help_modals.cjs`
+(with `PLAYWRIGHT_MODULE` and `CHROME_PATH` when needed). The browser check uses
+isolated profiles, both languages, all six themes, and short narrow/desktop
+viewports, checking footer visibility, scroll containment and Escape focus return.
+Help shares the existing offline CSS dependency; no new resource is required.
+Bump the shared release when changing these cached rules. Physical iPad Safari
+scrolling, touch and rotation remain device verification.
+
+Current verification: 36 app/language/size cases at 390/768/1280px and
+144 short-screen app/language/theme cases at 390/1280 × 480px passed.
+Required internal scrolling occurred in 96 short-screen cases without moving
+the footer outside the visible area. The shared-style inventory check and
+offline preparation/update suite passed, including incomplete-resource rejection,
+failed-update retention and all eight pages opening from the prepared cache.
+These browser checks use isolated profiles and do not reset owner data.
+
+The instruction audit revision removes redundant introductions and storage/sync
+content from all six Help dialogs. Bag of Tricks has two steps; Timer and Spinner
+have three; Calendar, Tracker and Scheduler have four. Tracker covers Progress,
+Points, Notes and Class overview; Scheduler explains creating and saving the
+Google Calendar event. English/Japanese labels and copy were checked in 24
+rendered cases; 144 theme/short-screen cases passed with fixed footers and Escape
+focus restoration. No user data is changed by these copy updates.
+
+The Calendar Help replacement left an orphaned old notice/action footer after
+the dialog; these elements and their unmatched closing tags have been removed.
+`check_help_modals.cjs` now checks for orphaned modal actions, dismiss controls
+and tutorial steps in the normal page as well as testing the open dialog.
+
+### Calendar: previous class note
+
+The event editor shows a read-only previous-note panel beneath the lesson-note
+controls when category is Class and a school/class are selected. It chooses the
+latest earlier event start (date, then time) with nonblank notes for the exact
+school ID and class name. The event being edited, future/same-start events, other
+categories and other schools/classes are excluded. Empty intervening lessons do
+not hide the latest noted lesson. Creation time and ID provide deterministic
+ties; editing an old note does not move its lesson forward in the history.
+The panel updates with editor selections and language, shows source date/time,
+and renders note text safely with preserved line breaks and bounded scrolling.
+It never writes data or fills the current event's note. Tracker-only notes are
+not included. No storage schema change or new offline resource is needed.
+
+Run `node scripts/check_previous_class_note.cjs` with Playwright/Chrome settings
+to test lookup, add/edit, no-match/category changes, safe text, save/next lesson,
+both languages, phone/tablet/desktop and long notes across themes. Owner data
+is untouched. Physical iPad Safari scroll/touch behavior remains a device check.
+
+Previous-note verification passed six size/language flows (including all six
+themes and long-note scrolling), plus the existing 72 Calendar HTTP/direct-file
+layout cases and six event save/reload flows. Offline incomplete-resource,
+failed-update retention and prepared navigation checks passed. The older layout
+check now explicitly returns to its fixture date after reload instead of assuming
+the current week will always contain that date.
+
+Calendar's event editor now keeps its action footer outside the scrolling fields.
+The native form wraps the scrolling body and footer, preserving validation and
+submission. Save, duplicate, delete and export actions remain visible without
+overlaying the fields. Previous-note display uses the shared Tracker renderer
+(activity icons, bullets, circled numbers and disabled checkboxes), with localized
+icon labels. Long notes keep bounded scrolling and unknown/HTML-like text remains
+literal. `check_previous_class_note.cjs` covers footer visibility while scrolling,
+all edit actions, localized icons and read-only controls. Tracker overview checks
+also verify editable-checkbox persistence and focus with the shared renderer.
+
+### Themed scrollbars in dialogs
+
+`assets/css/foundation.css` owns scrollbar paint for `.themed-scroll`, native
+`dialog` elements, and `[role="dialog"]` elements plus their descendants. This
+covers modal bodies, nested previous-note panels, Help, school settings and
+Profile without copying scrollbar rules or adding JavaScript. Use semantic
+dialog markup and give the intended inner scroll region `min-height: 0` and
+`overflow-y: auto`; keep stationary headers/footers outside that region.
+
+Scroll thumbs use `--accent-border`, transparent tracks, the existing 12px
+WebKit size and rounded thumbs. `--scrollbar-surface` optionally specifies the
+background behind a thumb's inset border (defaults to `--surface`; use
+`--panel` for panel-backed scrollers). Do not hard-code theme colors. Dialogs
+do not automatically reserve a stable gutter: existing `.themed-scroll` regions
+(such as Profile) keep theirs. This is paint, not a layout change. High-contrast forced colors revert to native scrollbar colors. OS and
+browser settings can hide or override scrollbars; physical iPad Safari uses
+platform-controlled overlay indicators and needs device verification.
+
+The CSS remains an existing required offline dependency. Run the shared style
+check and bump the release identifier whenever these cached rules change.
+
+Run `node scripts/check_modal_scrollbars.cjs` (with Playwright/Chrome settings)
+for theme-colored dialog/nested-scroll thumbs, existing gutter preservation and
+forced-color fallback across Home and all six apps at narrow/desktop sizes.

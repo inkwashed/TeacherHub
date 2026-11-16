@@ -270,3 +270,13 @@ with the existing hover/focus rotation (no animation under reduced motion).
 Page-local `.presentation-icon`, `.settings-icon` and Home gear variants were
 removed; marker styling also covers Home and Scheduler without special classes.
 Do not copy geometry or override these standard icons per page.
+
+### Shared note display
+
+`assets/js/ui.js` owns `noteMarkers` and `renderNoteLines`; Tracker and Calendar
+use the same fixed activity artwork and bracket-tag parser. User text is created
+with text nodes, never interpreted as HTML. Supported tokens remain case-sensitive
+activity tags, `[-]`, circled numbers, and checkbox tags. Unknown tags stay literal.
+Calendar previous notes use disabled checkboxes; Tracker supplies its existing
+localized labels and save callback for editable notes. Shared note-line styling
+belongs in `assets/css/components.css`. No new offline dependency is introduced.

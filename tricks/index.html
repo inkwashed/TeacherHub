@@ -17,13 +17,13 @@ Copyright © 2026 letseigo.com. All rights reserved.
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="../assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-bootstrap></script>
+    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-16-spinner-help-shortcut-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
 
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-14-selfie-transfer-shape-1">
-    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-14-selfie-transfer-shape-1">
-    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-14-selfie-transfer-shape-1">
-    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-14-selfie-transfer-shape-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-16-spinner-help-shortcut-1">
+    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-16-spinner-help-shortcut-1">
+    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-16-spinner-help-shortcut-1">
+    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-16-spinner-help-shortcut-1">
     <style>
 
         .button-row,
@@ -352,11 +352,6 @@ Copyright © 2026 letseigo.com. All rights reserved.
         .modal-title { margin: 0; font-size: 16px; }
 
         .modal-intro { margin: 0 0 14px; color: var(--muted); font-size: 13px; line-height: 1.5; }
-        .help-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-        .help-list li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
-        .help-number { width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--accent); background: var(--accent-soft); font-size: 12px; font-weight: 800; }
-        .help-list strong { display: block; margin-bottom: 2px; font-size: 13px; }
-        .help-list p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
         .modal-actions { display: flex; justify-content: flex-end; padding: 12px 16px; border-top: 1px solid var(--line); }
 
         @media (max-width: 620px) {
@@ -393,9 +388,9 @@ Copyright © 2026 letseigo.com. All rights reserved.
 </head>
 <body data-tool="tricks" class="app-page">
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-tools></script>
-    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-toolbar data-page="tricks"></script>
-    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-profile></script>
+    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-16-spinner-help-shortcut-1" data-teacher-tools-tools></script>
+    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-16-spinner-help-shortcut-1" data-teacher-tools-toolbar data-page="tricks"></script>
+    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-16-spinner-help-shortcut-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 <div class="site-page-scroll themed-scroll">
 
@@ -420,7 +415,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     <button type="button" id="presentationButton" class="icon-button" aria-label="Enter presentation mode" aria-pressed="false" title="Presentation mode">
                         <svg class="presentation-icon" viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="presentation"></svg>
                     </button>
-                    <button type="button" class="icon-button" data-modal-open="helpModal" aria-label="Open getting started help" aria-haspopup="dialog" title="Getting started" data-i18n-aria-label="tricks.help.open" data-i18n-title="tricks.help.title"><span class="help-button-mark" aria-hidden="true">?</span></button>
+                    <button type="button" class="icon-button" data-modal-open="helpModal" aria-label="Open How to use help" aria-haspopup="dialog" title="How to use" data-i18n-aria-label="tricks.help.open" data-i18n-title="tricks.help.title"><span class="help-button-mark" aria-hidden="true">?</span></button>
                     <button type="button" id="settingsPlaceholder" class="icon-button" disabled aria-label="Settings (not available yet)" title="Settings (not available yet)" data-i18n-aria-label="tricks.settings.unavailable" data-i18n-title="tricks.settings.unavailable">
                         <svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="settings"></svg>
                     </button>
@@ -512,25 +507,23 @@ Copyright © 2026 letseigo.com. All rights reserved.
     <footer class="app-copyright">Let’s EiGo! Teacher Tools © 2026 letseigo.com · All rights reserved.</footer>
 
     <div id="helpModal" class="modal-backdrop" data-shared-modal data-first-use-storage-key="teacherTools.bagOfTricks.tutorialSeen.v1" aria-hidden="true">
-        <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="helpTitle" aria-describedby="helpIntro">
+        <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
             <header class="modal-header">
-                <h2 id="helpTitle" class="modal-title" data-i18n="tricks.help.title">Getting started</h2>
-                <button type="button" class="close-button" data-modal-close aria-label="Close getting started help" data-i18n-aria-label="tricks.help.close">×</button>
+                <h2 id="helpTitle" class="modal-title" data-i18n="tricks.help.title">How to use</h2>
+                <button type="button" class="close-button" data-modal-close aria-label="Close How to use help" data-i18n-aria-label="tricks.help.close">×</button>
             </header>
             <div class="modal-content">
-                <p id="helpIntro" class="modal-intro tutorial-intro" data-i18n="tricks.help.intro">Bag of Tricks keeps quick random classroom tools together in one place.</p>
                 <ol class="help-list tutorial-steps">
-                    <li class="tutorial-step"><span class="help-number tutorial-number" aria-hidden="true">1</span><div><h3 data-i18n="tricks.help.step1Title">Choose a mode</h3><p data-i18n="tricks.help.step1Body">Switch between Coin, Dice, and Cards using the tabs at the top.</p></div></li>
-                    <li class="tutorial-step"><span class="help-number tutorial-number" aria-hidden="true">2</span><div><h3 data-i18n="tricks.help.step2Title">Run the randomizer</h3><p data-i18n="tricks.help.step2Body">Flip the coin, choose one or two dice and roll, or draw a card from the deck.</p></div></li>
-                    <li class="tutorial-step"><span class="help-number tutorial-number" aria-hidden="true">3</span><div><h3 data-i18n="tricks.help.step3Title">Reset the cards</h3><p data-i18n="tricks.help.step3Body">Cards are not returned after a draw. Shuffle the deck to restore all 52 cards and clear the recent draws.</p></div></li>
+                    <li class="tutorial-step"><span class="help-number tutorial-number" aria-hidden="true">1</span><div><h3 data-i18n="tricks.help.step1Title">Choose a tool</h3><p data-i18n="tricks.help.step1Body">Select Coin, Dice or Cards. Choose a coin design or one or two dice, then flip, roll or draw.</p></div></li>
+                    <li class="tutorial-step"><span class="help-number tutorial-number" aria-hidden="true">2</span><div><h3 data-i18n="tricks.help.step2Title">Shuffle to reset the cards</h3><p data-i18n="tricks.help.step2Body">Drawn cards stay out of the deck. Shuffle to restore all 52 cards and clear the recent draws.</p></div></li>
                 </ol>
             </div>
-            <div class="modal-actions"><button type="button" class="button button-primary" data-modal-close data-i18n="tricks.help.start">Start using Bag of Tricks</button></div>
+            <div class="modal-actions"><button type="button" class="button button-primary" data-modal-close data-i18n="tricks.help.start">Done</button></div>
         </section>
     </div>
 
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-ui></script>
+    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-16-spinner-help-shortcut-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
 
     <script>
@@ -543,9 +536,9 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "tricks.meta.description": "Quick classroom coin, dice, and card randomizers.",
                     "tricks.title": "Bag of Tricks",
                     "tricks.settings.unavailable": "Settings (not available yet)",
-                    "tricks.help.open": "Open getting started help",
-                    "tricks.help.title": "Getting started",
-                    "tricks.help.close": "Close getting started help",
+                    "tricks.help.open": "Open How to use help",
+                    "tricks.help.title": "How to use",
+                    "tricks.help.close": "Close How to use help",
 
 
                     "tricks.mode.aria": "Bag of Tricks modes",
@@ -604,14 +597,14 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "tricks.card.diamonds": "Diamonds",
                     "tricks.card.hearts": "Hearts",
                     "tricks.card.spades": "Spades",
-                    "tricks.help.intro": "Bag of Tricks keeps quick random classroom tools together in one place.",
-                    "tricks.help.step1Title": "Choose a mode",
-                    "tricks.help.step1Body": "Switch between Coin, Dice, and Cards using the tabs at the top.",
-                    "tricks.help.step2Title": "Run the randomizer",
-                    "tricks.help.step2Body": "Flip the coin, choose one or two dice and roll, or draw a card from the deck.",
-                    "tricks.help.step3Title": "Reset the cards",
-                    "tricks.help.step3Body": "Cards are not returned after a draw. Shuffle the deck to restore all 52 cards and clear the recent draws.",
-                    "tricks.help.start": "Start using Bag of Tricks"
+
+                    "tricks.help.step1Title": "Choose a tool",
+                    "tricks.help.step1Body": "Select Coin, Dice or Cards. Choose a coin design or one or two dice, then flip, roll or draw.",
+                    "tricks.help.step2Title": "Shuffle to reset the cards",
+                    "tricks.help.step2Body": "Drawn cards stay out of the deck. Shuffle to restore all 52 cards and clear the recent draws.",
+
+
+                    "tricks.help.start": "Done"
                 },
                 ja: {
                     "tricks.meta.title": "お楽しみツール · Teacher Tools",
@@ -619,7 +612,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "tricks.title": "お楽しみツール",
                     "tricks.settings.unavailable": "設定（現在は利用できません）",
                     "tricks.help.open": "使い方を開く",
-                    "tricks.help.title": "はじめに",
+                    "tricks.help.title": "使い方",
                     "tricks.help.close": "使い方を閉じる",
 
 
@@ -679,14 +672,14 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "tricks.card.diamonds": "ダイヤ",
                     "tricks.card.hearts": "ハート",
                     "tricks.card.spades": "スペード",
-                    "tricks.help.intro": "お楽しみツールには、授業ですぐ使えるランダム機能が1か所にまとまっています。",
-                    "tricks.help.step1Title": "モードを選ぶ",
-                    "tricks.help.step1Body": "上部のタブでコイン、サイコロ、カードを切り替えます。",
-                    "tricks.help.step2Title": "ランダムに決める",
-                    "tricks.help.step2Body": "コインを投げる、1個または2個のサイコロを振る、山札からカードを引く、のいずれかを使います。",
-                    "tricks.help.step3Title": "カードをリセットする",
-                    "tricks.help.step3Body": "引いたカードは山札に戻りません。シャッフルすると52枚に戻り、最近引いたカードも消去されます。",
-                    "tricks.help.start": "お楽しみツールを使う"
+
+                    "tricks.help.step1Title": "ツールを選ぶ",
+                    "tricks.help.step1Body": "コイン・サイコロ・カードを選びます。コインの絵柄やサイコロの数を選んで、投げる・振る・引くボタンを押します。",
+                    "tricks.help.step2Title": "シャッフルでカードをリセット",
+                    "tricks.help.step2Body": "引いたカードは山札に戻りません。シャッフルすると52枚に戻り、最近引いたカードの表示も消えます。",
+
+
+                    "tricks.help.start": "閉じる"
                 }
             };
             const { registerTranslations, translate } = window.TeacherToolsUI;

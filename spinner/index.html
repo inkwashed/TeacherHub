@@ -17,13 +17,13 @@ Copyright © 2026 letseigo.com. All rights reserved.
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="../assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-bootstrap></script>
+    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-16-spinner-help-shortcut-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
 
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-14-selfie-transfer-shape-1">
-    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-14-selfie-transfer-shape-1">
-    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-14-selfie-transfer-shape-1">
-    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-14-selfie-transfer-shape-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-16-spinner-help-shortcut-1">
+    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-16-spinner-help-shortcut-1">
+    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-16-spinner-help-shortcut-1">
+    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-16-spinner-help-shortcut-1">
     <style>
 
         /* Spinner visuals remain local; converted shells use shared components. */
@@ -480,13 +480,6 @@ Copyright © 2026 letseigo.com. All rights reserved.
             line-height: 1.45;
         }
 
-        .help-intro { margin: 0 0 13px; color: var(--muted); font-size: 12px; line-height: 1.5; }
-        .help-steps { display: grid; gap: 9px; }
-        .help-step { padding: 11px 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; }
-        .help-step h3 { margin: 0 0 3px; font-size: 12.5px; }
-        .help-step p { margin: 0; color: var(--muted); font-size: 10.8px; line-height: 1.45; }
-        .help-link { display: inline-flex; margin-top: 7px; padding: 0; color: var(--accent); background: transparent; border: 0; font-size: 10.5px; font-weight: 750; cursor: pointer; }
-
         @media (max-width: 620px) {
 
             .wheel-card { padding: 11px; }
@@ -543,9 +536,9 @@ Copyright © 2026 letseigo.com. All rights reserved.
 </head>
 <body data-tool="spinner" class="app-page">
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-tools></script>
-    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-toolbar data-page="spinner"></script>
-    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-profile></script>
+    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-16-spinner-help-shortcut-1" data-teacher-tools-tools></script>
+    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-16-spinner-help-shortcut-1" data-teacher-tools-toolbar data-page="spinner"></script>
+    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-16-spinner-help-shortcut-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 <div class="site-page-scroll themed-scroll">
 
@@ -612,30 +605,28 @@ Copyright © 2026 letseigo.com. All rights reserved.
     <footer class="app-copyright">Let’s EiGo! Teacher Tools © 2026 letseigo.com · All rights reserved.</footer>
 
     <div id="helpModal" class="modal-backdrop" data-shared-modal aria-hidden="true">
-        <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="helpTitle" aria-describedby="helpIntro">
+        <section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
             <header class="modal-header">
-                <h2 id="helpTitle" class="modal-title" data-i18n="spinner.help.title">Spinner Wheel help</h2>
+                <h2 id="helpTitle" class="modal-title" data-i18n="spinner.help.title">How to use</h2>
                 <button type="button" class="close-button" data-modal-close aria-label="Close Spinner Wheel help" data-i18n-aria-label="spinner.help.close">×</button>
             </header>
 
             <div class="modal-content">
-                <p id="helpIntro" class="help-intro" data-i18n="spinner.help.intro">Choose a saved class number set or one of your reusable custom lists, then spin.</p>
                 <div class="help-steps tutorial-steps">
                     <section class="help-step tutorial-step">
-                        <span class="tutorial-number" aria-hidden="true">1</span><div><h3 data-i18n="spinner.help.step1Title">Choose the wheel mode</h3>
-                        <p data-i18n="spinner.help.step1Body">Use Numbers to choose a school and class from Scheduler. New class ranges use the saved student count when available, and you can still adjust the minimum, maximum, or exclusions. Use Custom Choices to keep a reusable bank of named lists.</p>
-                        <button type="button" class="help-link" data-modal-switch="settingsModal" data-i18n="spinner.help.openSettings">Open Settings</button></div>
+                        <span class="tutorial-number" aria-hidden="true">1</span><div><h3 data-i18n="spinner.help.step1Title">Choose your entries</h3>
+                        <p data-i18n="spinner.help.step1Body">In Settings, use Numbers for a school/class number range or Custom Choices for a named list. Adjust the entries before spinning.</p>
+                        </div>
                     </section>
                     <section class="help-step tutorial-step">
-                        <span class="tutorial-number" aria-hidden="true">2</span><div><h3 data-i18n="spinner.help.step2Title">Decide what happens after a spin</h3>
-                        <p data-i18n="spinner.help.step2Body">Selections can stay available for repeats or be removed temporarily for the current round. Removed choices return when you restore the round, change wheel entries, or reload the page.</p></div>
+                        <span class="tutorial-number" aria-hidden="true">2</span><div><h3 data-i18n="spinner.help.step2Title">Choose whether results can repeat</h3>
+                        <p data-i18n="spinner.help.step2Body">Enable removal in Settings to keep selected entries out for this round. Restore all brings them back; changing entries or reloading also resets the round.</p></div>
                     </section>
                     <section class="help-step tutorial-step">
-                        <span class="tutorial-number" aria-hidden="true">3</span><div><h3 data-i18n="spinner.help.step3Title">Spin and announce the result</h3>
-                        <p data-i18n="spinner.help.step3Body">The selected choice is shown in full and announced for screen readers. Presentation mode enlarges the wheel for smartboards and landscape displays, while reduced-motion preferences replace the long spin with a brief transition.</p></div>
+                        <span class="tutorial-number" aria-hidden="true">3</span><div><h3 data-i18n="spinner.help.step3Title">Spin the wheel</h3>
+                        <p data-i18n="spinner.help.step3Body">Press Spin the wheel, then Spin again for another result. Use fullscreen for a larger classroom display.</p></div>
                     </section>
                 </div>
-                <div class="privacy-note" role="note" data-i18n="spinner.help.privacy">Your settings and custom choices are saved only in this browser. Clearing site data can remove them; export a backup if the list is important.</div>
             </div>
 
             <div class="modal-actions">
@@ -792,7 +783,6 @@ Copyright © 2026 letseigo.com. All rights reserved.
                         <button type="button" id="resetButton" class="button button-danger button-small" data-i18n="spinner.reset.button">Reset applet</button>
                     </div>
                     <p id="dataStatus" class="data-status" role="status" aria-live="polite"></p>
-                    <div class="privacy-note" role="note" data-i18n="spinner.reset.privacy">Custom entries may contain student names. Nothing is uploaded, but exported Teacher Tools backup files should still be handled carefully.</div>
                 </section>
             </div>
 
@@ -803,7 +793,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
     </div>
 
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-14-selfie-transfer-shape-1" data-teacher-tools-ui></script>
+    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-16-spinner-help-shortcut-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
 
     <!-- Spinner Wheel-specific behavior begins here. -->
@@ -824,7 +814,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "spinner.presentation.exit": "Exit presentation mode",
                     "spinner.presentation.title": "Presentation mode",
                     "spinner.help.open": "Open Spinner Wheel help",
-                    "spinner.help.title": "Spinner Wheel help",
+                    "spinner.help.title": "How to use",
                     "spinner.help.close": "Close Spinner Wheel help",
                     "spinner.settings.open": "Open Spinner Wheel settings",
                     "spinner.settings.title": "Spinner Wheel settings",
@@ -837,15 +827,14 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "spinner.restoreAll": "Restore all",
 
 
-                    "spinner.help.intro": "Choose a saved class number set or one of your reusable custom lists, then spin.",
-                    "spinner.help.step1Title": "Choose the wheel mode",
-                    "spinner.help.step1Body": "Use Numbers to choose a school and class from Scheduler. New class ranges use the saved student count when available, and you can still adjust the minimum, maximum, or exclusions. Use Custom Choices to keep a reusable bank of named lists.",
-                    "spinner.help.openSettings": "Open Settings",
-                    "spinner.help.step2Title": "Decide what happens after a spin",
-                    "spinner.help.step2Body": "Selections can stay available for repeats or be removed temporarily for the current round. Removed choices return when you restore the round, change wheel entries, or reload the page.",
-                    "spinner.help.step3Title": "Spin and announce the result",
-                    "spinner.help.step3Body": "The selected choice is shown in full and announced for screen readers. Presentation mode enlarges the wheel for smartboards and landscape displays, while reduced-motion preferences replace the long spin with a brief transition.",
-                    "spinner.help.privacy": "Your settings and custom choices are saved only in this browser. Clearing site data can remove them; export a backup if the list is important.",
+
+                    "spinner.help.step1Title": "Choose your entries",
+                    "spinner.help.step1Body": "In Settings, use Numbers for a school/class number range or Custom Choices for a named list. Adjust the entries before spinning.",
+                    "spinner.help.step2Title": "Choose whether results can repeat",
+                    "spinner.help.step2Body": "Enable removal in Settings to keep selected entries out for this round. Restore all brings them back; changing entries or reloading also resets the round.",
+                    "spinner.help.step3Title": "Spin the wheel",
+                    "spinner.help.step3Body": "Press Spin the wheel, then Spin again for another result. Use fullscreen for a larger classroom display.",
+
                     "spinner.done": "Done",
                     "spinner.settings.modeTitle": "Wheel mode",
                     "spinner.settings.modeHelp": "Changes update the wheel immediately. Switching modes keeps the other mode's entries for later.",
@@ -950,7 +939,7 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "spinner.presentation.exit": "プレゼンテーション表示を終了",
                     "spinner.presentation.title": "プレゼンテーション表示",
                     "spinner.help.open": "スピナーホイールの使い方を開く",
-                    "spinner.help.title": "スピナーホイールの使い方",
+                    "spinner.help.title": "使い方",
                     "spinner.help.close": "スピナーホイールの使い方を閉じる",
                     "spinner.settings.open": "スピナーホイール設定を開く",
                     "spinner.settings.title": "スピナーホイール設定",
@@ -963,16 +952,15 @@ Copyright © 2026 letseigo.com. All rights reserved.
                     "spinner.restoreAll": "すべて戻す",
 
 
-                    "spinner.help.intro": "保存済みクラスの数字セットまたは再利用できるカスタムリストを選び、ホイールを回します。",
-                    "spinner.help.step1Title": "ホイールのモードを選ぶ",
-                    "spinner.help.step1Body": "「数字」では、スケジューラーの学校とクラスを選びます。保存済みの生徒数があれば新しい範囲に使われ、最小値・最大値・除外する数字も調整できます。「カスタム選択肢」では、名前付きリストを繰り返し使えます。",
-                    "spinner.help.openSettings": "設定を開く",
-                    "spinner.help.step2Title": "回した後の動作を決める",
-                    "spinner.help.step2Body": "選ばれた項目を繰り返し使えるよう残すか、現在のラウンドだけ一時的に外すかを選べます。外した項目は、ラウンドを戻す、項目を変更する、またはページを再読み込みすると戻ります。",
-                    "spinner.help.step3Title": "回して結果を伝える",
-                    "spinner.help.step3Body": "選ばれた項目は大きく表示され、スクリーンリーダーにも通知されます。プレゼンテーション表示ではスマートボードや横長画面向けにホイールが拡大され、動きを減らす設定では短い切り替えになります。",
-                    "spinner.help.privacy": "設定とカスタム選択肢はこのブラウザだけに保存されます。サイトデータを消去すると失われる場合があるため、大切なリストはバックアップを書き出してください。",
-                    "spinner.done": "完了",
+
+                    "spinner.help.step1Title": "項目を選ぶ",
+                    "spinner.help.step1Body": "設定で、学校・クラスの番号範囲には「番号」、名前付きリストには「カスタム選択肢」を使います。回す前に項目を調整してください。",
+                    "spinner.help.step2Title": "同じ項目を繰り返すか決める",
+                    "spinner.help.step2Body": "設定で選択済み項目の除外を有効にすると、そのラウンドでは再び選ばれません。「すべて戻す」で復元できます。項目の変更や再読み込みでもラウンドがリセットされます。",
+                    "spinner.help.step3Title": "ホイールを回す",
+                    "spinner.help.step3Body": "「ホイールを回す」を押し、次は「もう一度回す」で選びます。教室で大きく表示するには全画面表示を使います。",
+
+                    "spinner.done": "閉じる",
                     "spinner.settings.modeTitle": "ホイールのモード",
                     "spinner.settings.modeHelp": "変更はすぐにホイールへ反映されます。モードを切り替えても、もう一方の項目は後で使えるよう残ります。",
                     "spinner.mode.numbers": "数字",

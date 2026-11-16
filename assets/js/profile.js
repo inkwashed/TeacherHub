@@ -417,4 +417,4 @@
     }
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-14-selfie-transfer-shape-1 */
+/* teacher-tools-release: teacher-tools-2026-11-16-spinner-help-shortcut-1 */

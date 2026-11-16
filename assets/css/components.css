@@ -507,6 +507,97 @@ body .app-shell .app-header .icon-button:focus-visible {
     border-color: transparent;
 }
 
+/* Help only: shell stays fixed while instructions scroll. Other dialogs keep their own sizes. */
+:is(#helpModal, #tutorialModal) { padding: 16px; }
+:is(#helpModal, #tutorialModal) .modal-card {
+    box-sizing: border-box;
+    width: min(620px, 100%);
+    height: auto;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, .25);
+}
+:is(#helpModal, #tutorialModal) .modal-header {
+    flex: 0 0 auto;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 10px 8px 16px;
+    border-bottom: 1px solid var(--line);
+}
+:is(#helpModal, #tutorialModal) .modal-title { margin: 0; font-size: 16px; font-weight: 750; }
+:is(#helpModal, #tutorialModal) .close-button {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+:is(#helpModal, #tutorialModal) .close-button:hover { color: var(--accent); background: var(--accent-soft); }
+:is(#helpModal, #tutorialModal) :is(.modal-content, .tutorial-scroll) {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 16px;
+}
+:is(#helpModal, #tutorialModal) :is(.modal-actions, .tutorial-footer) {
+    flex: 0 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+    background: var(--surface);
+}
+:is(#helpModal, #tutorialModal) :is(.modal-actions, .tutorial-footer) button,
+:is(#helpModal, #tutorialModal) :is(.help-link, .tutorial-step-action) {
+    min-height: 44px;
+    max-width: 100%;
+    padding: 10px 18px;
+    border: 1px solid var(--accent-border);
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font: 700 12px/1.4 var(--font-ui);
+    white-space: normal;
+    cursor: pointer;
+}
+:is(#helpModal, #tutorialModal) :is(.modal-actions, .tutorial-footer) button {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--tooltip-text);
+}
+:is(#helpModal, #tutorialModal) button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+:is(#helpModal, #tutorialModal) :is(.modal-actions, .tutorial-footer) button:hover { filter: brightness(.95); }
+@media (max-width: 620px) {
+    :is(#helpModal, #tutorialModal) { padding: 6px; }
+    :is(#helpModal, #tutorialModal) .modal-card {
+        max-height: calc(100vh - 12px);
+        max-height: calc(100dvh - 12px);
+    }
+}
+
 #helpModal .tutorial-intro,
 #helpModal .help-intro,
 #helpModal .modal-intro,
@@ -563,6 +654,7 @@ body .app-shell .app-header .icon-button:focus-visible {
 #helpModal .tutorial-step h3,
 #helpModal .help-step h3,
 #helpModal .help-list h3,
+#helpModal .help-list strong,
 #tutorialModal .tutorial-step h3 {
     margin: 1px 0 3px;
     color: var(--text);
@@ -807,4 +899,12 @@ body.app-page .app-shell:not(.is-presenting) .app-control-row > .app-actions {
     body.app-page .app-shell:not(.is-presenting) .app-control-content { grid-row: 2; }
 }
 
-/* teacher-tools-release: teacher-tools-2026-11-14-selfie-transfer-shape-1 */
+
+
+/* Shared Tracker/Calendar note rendering. Unknown tags remain literal text. */
+.note-line { white-space: pre-wrap; overflow-wrap: anywhere; min-height: 1.5em; line-height: 1.7; }
+.note-line.complete { text-decoration: line-through; color: var(--muted); }
+.note-line .check-marker-icon { display: inline-block; vertical-align: middle; margin: 0 3px; color: var(--accent); width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+.note-line input { vertical-align: middle; width: 18px; height: 18px; margin: 0 5px; accent-color: var(--accent); }
+
+/* teacher-tools-release: teacher-tools-2026-11-16-spinner-help-shortcut-1 */
