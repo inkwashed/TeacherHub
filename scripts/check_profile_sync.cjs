@@ -69,8 +69,12 @@ async function openSync(page) {await page.evaluate(() => window.TeacherToolsProf
         await target.close();console.log('PASS selected restore preserves unrelated records; invalid/cancelled imports do not write; legacy Spinner import still works.');
         await page.bringToFront();await page.locator('#siteDataFileTab').click();await page.locator('#siteLinkedDataCreate').click();
         await poll(page,async()=>{try{return JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text()));}catch{return null;}},value=>value?.records?.appearance?.profile?.name==='Sync Test','linked file creation');
-        await page.locator('#siteProfileNameEdit').click();await page.locator('#siteProfileName').fill('Autosaved Name');await page.locator('#siteProfileNameForm button[type=submit]').click();
+        await page.clock.install();await page.locator('#siteProfileNameEdit').click();await page.locator('#siteProfileName').fill('Autosaved Name');await page.locator('#siteProfileNameForm button[type=submit]').click();
+        await page.clock.fastForward(14*60*1000);
+        assert.equal(await page.evaluate(async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())).records.appearance.profile.name),'Sync Test','Do not write before the 15-minute interval');
+        await page.clock.fastForward(61*1000);
         await poll(page,async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())),value=>value?.records?.appearance?.profile?.name==='Autosaved Name','linked autosave');
+        await page.clock.resume();
         await page.evaluate(async()=>{const handle=await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json');const data=JSON.parse(await (await handle.getFile()).text());data.records.appearance.profile.name='Pulled Name';const writable=await handle.createWritable();await writable.write(JSON.stringify(data));await writable.close();});
         await Promise.all([page.waitForEvent('load'),page.locator('#siteLinkedDataLoad').click()]);
         await poll(page,()=>JSON.parse(localStorage.getItem('teacherTools.sitePreferences.v1'))?.profile?.name,value=>value==='Pulled Name','linked pull');

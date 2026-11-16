@@ -134,7 +134,7 @@
                         <h4 id="siteLinkedDataTitle" data-i18n="linked.title">Linked data file</h4>
                         <span class="site-beta-badge" data-i18n="linked.beta">CHROME/EDGE BETA</span>
                     </div>
-                    <p class="site-data-note" data-i18n="linked.help">Keep the browser's saved data connected to one JSON file. Available in desktop Chrome and Edge.</p>
+                    <p class="site-data-note" data-i18n="linked.help">Desktop Chrome/Edge can save changes to your linked JSON file about every 15 minutes while Teacher Tools is open and active with write access. Saves pause while hidden, closed or asleep and resume when you return. Use Save changes to save sooner. File sync does not upload files or guarantee cloud delivery.</p>
                     <p id="siteLinkedDataFile" class="site-linked-data-file" data-i18n="linked.none">No file linked</p>
                     <p id="siteLinkedDataLastSaved" class="site-linked-data-last-saved" hidden></p>
                     <p id="siteLinkedDataPermissionHelp" class="site-linked-data-permission" data-i18n="linked.permissionHelp" hidden>Chrome may require one additional confirmation before automatic saving can begin.</p>
@@ -417,4 +417,4 @@
     }
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-16-spinner-help-shortcut-1 */
+/* teacher-tools-release: teacher-tools-2026-11-16-file-autosave-interval-1 */
