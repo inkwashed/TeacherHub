@@ -397,3 +397,7 @@ check and bump the release identifier whenever these cached rules change.
 Run `node scripts/check_modal_scrollbars.cjs` (with Playwright/Chrome settings)
 for theme-colored dialog/nested-scroll thumbs, existing gutter preservation and
 forced-color fallback across Home and all six apps at narrow/desktop sizes.
+
+File sync runtime updates retain the same required `ui.js`/Profile dependencies.
+The shared release was advanced for the 15-minute autosave schedule and explicit
+permission/status wording; see shared-assets.md for behavior and verification.

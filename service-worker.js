@@ -1,4 +1,4 @@
-const RELEASE = "teacher-tools-2026-11-16-spinner-help-shortcut-1";
+const RELEASE = "teacher-tools-2026-11-16-file-autosave-interval-1";
 const CACHE = `teacher-tools-${RELEASE}`;
 const APP_SHELL = [
   "/",

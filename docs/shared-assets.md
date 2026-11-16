@@ -280,3 +280,32 @@ activity tags, `[-]`, circled numbers, and checkbox tags. Unknown tags stay lite
 Calendar previous notes use disabled checkboxes; Tracker supplies its existing
 localized labels and save callback for editable notes. Shared note-line styling
 belongs in `assets/css/components.css`. No new offline dependency is introduced.
+
+### Linked-file automatic saves
+
+`assets/js/ui.js` schedules a write of changed data approximately 15 minutes
+after the last successful file save, with a five-second foreground check. The
+existing saved timestamp carries the deadline across app navigation/reloads.
+Unchanged data is not rewritten. Hidden pages pause; focus/visibility return
+checks overdue work. Closing the site or sleeping the device cannot guarantee
+a file write, and timers may be delayed by the browser. Save changes remains
+available for an immediate manual write. There is no guaranteed unload save.
+
+Automatic work only queries permissions; it never requests them. Read access
+alone is insufficient for readiness. Missing read/write access displays a paused
+status and an Allow file access action, which requests permission on a user
+click and writes pending data. A stored handle does not promise persisted access.
+This follows Chrome's File System Access guidance:
+https://developer.chrome.com/docs/capabilities/web-apis/file-system-access
+
+Autosave retains external-file conflict checks, does not advance Last saved on
+failed writes, and retries overdue work on subsequent checks. File sync writes
+the selected JSON file; any cloud-folder transport is handled independently by
+the user's storage provider. No new storage schema or offline dependency is
+introduced. The bilingual explanation lives in Profile → Sync → File sync.
+
+`check_profile_sync.cjs` uses accelerated browser time and isolated OPFS handles:
+no write before 15 minutes, unattended save after the deadline, no-change skip,
+permission pause/manual renewal, failed-write retry, hidden/return behavior and
+conflict protection. Permission loss is simulated; native OS pickers, actual
+Chrome/Edge permission persistence and cloud-folder delivery need manual checks.

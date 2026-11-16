@@ -124,20 +124,20 @@ window.TeacherToolsCalendarValidate = value => {
             "backup.importError": "The backup could not be imported.",
             "linked.title": "Linked data file",
             "linked.beta": "CHROME/EDGE BETA",
-            "linked.help": "Keep the browser's saved data connected to one JSON file. Available in desktop Chrome and Edge.",
+            "linked.help": "Desktop Chrome/Edge can save changes to your linked JSON file about every 15 minutes while Teacher Tools is open and active with write access. Saves pause while hidden, closed or asleep and resume when you return. Use Save changes to save sooner. File sync does not upload files or guarantee cloud delivery.",
             "linked.none": "No file linked",
             "linked.create": "Create file",
             "linked.link": "Link existing",
             "linked.load": "Pull synced data",
             "linked.save": "Save changes",
-            "linked.enable": "Enable autosave",
+            "linked.enable": "Allow file access",
             "linked.disconnect": "Disconnect",
             "linked.unsupported": "Linked files require desktop Chrome or Edge. In Safari and Firefox, use backup export and import instead.",
             "linked.lastSaved": "Last saved: {time}",
             "linked.linkCancelled": "Linking cancelled. Your previous connection was not changed.",
-            "linked.ready": "Linked to {name}. Changes save automatically while permission remains available.",
-            "linked.permission": "Permission required. Choose Enable autosave and approve access to {name}.",
-            "linked.permissionHelp": "Chrome may require one additional confirmation before automatic saving can begin.",
+            "linked.ready": "Linked to {name}. Changed data saves about every 15 minutes while this page is active and write access is allowed.",
+            "linked.permission": "Automatic saving is paused. Choose Allow file access to approve writing to {name}; access may need renewing after reopening the site.",
+            "linked.permissionHelp": "A linked file is not necessarily writable. If access expires, click Allow file access to resume saving. Nothing saves while the site is closed.",
             "linked.created": "Created and linked {name}.",
             "linked.loaded": "Loaded {name}. Reloading this page…",
             "linked.saved": "Saved current Teacher Tools data to {name}.",
@@ -145,7 +145,7 @@ window.TeacherToolsCalendarValidate = value => {
             "linked.disconnected": "Linked file disconnected. The file itself was not deleted.",
             "linked.invalid": "The selected file is not a valid current Teacher Tools data file.",
             "linked.fileChanged": "Synced changes are waiting. Choose Pull synced data to use them, or Save changes to replace them.",
-            "linked.pending": "Browser changes are waiting to be saved to {name}.",
+            "linked.pending": "Changes are waiting for the next automatic save to {name}. Keep Teacher Tools active with file access, or choose Save changes now.",
             "linked.conflict": "Both this browser and the linked file changed. Choose Pull synced data or Save changes; nothing was overwritten.",
             "linked.loadConfirm": "Pull synced data from {name}? This replaces the browser's supported Teacher Tools records with the file's records, then reloads the page.",
             "linked.autoPullConfirm": "New synced data was detected in {name}, possibly from another browser. Load it now? This browser's Teacher Tools data will be overwritten. Choose Cancel to review and use Pull synced data or Save changes manually.",
@@ -240,20 +240,20 @@ window.TeacherToolsCalendarValidate = value => {
             "backup.importError": "バックアップを読み込めませんでした。",
             "linked.title": "リンク済みデータファイル",
             "linked.beta": "CHROME/EDGE ベータ",
-            "linked.help": "ブラウザの保存データを1つのJSONファイルに接続します。デスクトップ版ChromeとEdgeで利用できます。",
+            "linked.help": "デスクトップ版Chrome・Edgeでは、書き込み権限がありTeacher Toolsを開いて操作できる間、変更を約15分ごとにリンク済みJSONファイルへ保存します。非表示・終了・スリープ中は停止し、戻ると再開します。すぐに保存するには「変更を保存」を使ってください。ファイルのアップロードやクラウドへの反映を保証する機能ではありません。",
             "linked.none": "ファイル未接続",
             "linked.create": "ファイルを作成",
             "linked.link": "既存ファイルを接続",
             "linked.load": "同期データを取り込む",
             "linked.save": "変更を保存",
-            "linked.enable": "自動保存を有効にする",
+            "linked.enable": "ファイルへのアクセスを許可",
             "linked.disconnect": "接続を解除",
             "linked.unsupported": "リンク済みファイルにはデスクトップ版ChromeまたはEdgeが必要です。SafariとFirefoxではバックアップの書き出し・読み込みを利用してください。",
             "linked.lastSaved": "最終保存：{time}",
             "linked.linkCancelled": "接続をキャンセルしました。以前の接続は変更されていません。",
-            "linked.ready": "{name}に接続しました。権限が有効な間は変更を自動保存します。",
-            "linked.permission": "権限が必要です。「自動保存を有効にする」を選び、{name}へのアクセスを許可してください。",
-            "linked.permissionHelp": "自動保存を開始する前に、Chromeで追加の確認が必要になる場合があります。",
+            "linked.ready": "{name}に接続しています。このページがアクティブで書き込みが許可されている間、変更を約15分ごとに保存します。",
+            "linked.permission": "自動保存は停止中です。「ファイルへのアクセスを許可」で{name}への書き込みを許可してください。サイトを開き直した後などに再度許可が必要になることがあります。",
+            "linked.permissionHelp": "ファイルを接続しても、書き込み権限が継続するとは限りません。権限が切れたら「ファイルへのアクセスを許可」で保存を再開してください。サイトを閉じている間は保存されません。",
             "linked.created": "{name}を作成して接続しました。",
             "linked.loaded": "{name}を読み込みました。ページを再読み込みしています…",
             "linked.saved": "現在のTeacher Toolsデータを{name}に保存しました。",
@@ -261,7 +261,7 @@ window.TeacherToolsCalendarValidate = value => {
             "linked.disconnected": "ファイルとの接続を解除しました。ファイル自体は削除されていません。",
             "linked.invalid": "選択したファイルは、現在のTeacher Toolsデータファイルとして有効ではありません。",
             "linked.fileChanged": "同期された変更があります。「同期データを取り込む」で反映するか、「変更を保存」で置き換えてください。",
-            "linked.pending": "ブラウザの変更は{name}への保存待ちです。",
+            "linked.pending": "{name}への次回の自動保存を待っています。ファイルへのアクセスを許可してTeacher Toolsをアクティブにするか、「変更を保存」を押してください。",
             "linked.conflict": "このブラウザとリンク済みファイルの両方が変更されています。「同期データを取り込む」または「変更を保存」を選んでください。データは上書きされていません。",
             "linked.loadConfirm": "{name}から同期データを取り込みますか？ ファイル内の対応データでブラウザの保存データを置き換え、ページを再読み込みします。",
             "linked.autoPullConfirm": "{name}に新しい同期データが見つかりました。別のブラウザからの変更かもしれません。今すぐ取り込みますか？ このブラウザのTeacher Toolsデータは上書きされます。キャンセルすると、「同期データを取り込む」または「変更を保存」で手動確認できます。",
@@ -627,7 +627,9 @@ window.TeacherToolsCalendarValidate = value => {
         ));
     }
 
+    const LINKED_AUTOSAVE_INTERVAL_MS = 15 * 60 * 1000;
     const linkedDataState = {
+        autosaveStartedAt: Date.now(),
         supported: location.protocol !== "file:" && "showOpenFilePicker" in window && "showSaveFilePicker" in window && "indexedDB" in window,
         handle: null,
         fileFingerprint: null,
@@ -709,7 +711,7 @@ window.TeacherToolsCalendarValidate = value => {
         }
         const saveButton = document.getElementById("siteLinkedDataSave");
         if (saveButton) saveButton.textContent = linkedDataState.permissionRequired
-            ? translate("linked.enable", "Enable autosave")
+            ? translate("linked.enable", "Allow file access")
             : translate("linked.save", "Save changes");
         const permissionHelp = document.getElementById("siteLinkedDataPermissionHelp");
         if (permissionHelp) permissionHelp.hidden = !linked || !linkedDataState.permissionRequired;
@@ -767,7 +769,7 @@ window.TeacherToolsCalendarValidate = value => {
         try {
             if (!await linkedDataPermission(true, !automatic)) {
                 linkedDataState.permissionRequired = true;
-                setLinkedDataStatus(translate("linked.permission", `Permission required. Choose Enable autosave and approve access to ${linkedDataState.handle.name}.`, { name: linkedDataState.handle.name }));
+                setLinkedDataStatus(translate("linked.permission", `Automatic saving is paused. Choose Allow file access to approve writing to ${linkedDataState.handle.name}; access may need renewing after reopening the site.`, { name: linkedDataState.handle.name }));
                 return false;
             }
             linkedDataState.permissionRequired = false;
@@ -932,10 +934,10 @@ window.TeacherToolsCalendarValidate = value => {
         const now = Date.now();
         if (now - linkedDataState.lastExternalCheck < 4000) return;
         linkedDataState.lastExternalCheck = now;
-        if (!await linkedDataPermission(false, false)) {
+        if (!await linkedDataPermission(true, false)) {
             linkedDataState.permissionRequired = true;
             updateLinkedDataControls();
-            setLinkedDataStatus(translate("linked.permission", `Permission required. Choose Enable autosave and approve access to ${linkedDataState.handle.name}.`, { name: linkedDataState.handle.name }));
+            setLinkedDataStatus(translate("linked.permission", `Automatic saving is paused. Choose Allow file access to approve writing to ${linkedDataState.handle.name}; access may need renewing after reopening the site.`, { name: linkedDataState.handle.name }));
             return;
         }
         const payload = await readLinkedDataFile();
@@ -962,6 +964,9 @@ window.TeacherToolsCalendarValidate = value => {
         if (linkedDataState.conflict || linkedDataState.externalChange) return;
         const local = linkedDataFingerprint();
         if (local === linkedDataState.localFingerprint) return;
+        const lastSaved = Date.parse(linkedDataState.lastSavedAt);
+        const baseline = Number.isFinite(lastSaved) ? lastSaved : linkedDataState.autosaveStartedAt;
+        if (Date.now() - baseline < LINKED_AUTOSAVE_INTERVAL_MS) return;
         await writeLinkedDataFile(true);
     }
 
@@ -989,7 +994,7 @@ window.TeacherToolsCalendarValidate = value => {
                 linkedDataState.localFingerprint = saved.localFingerprint ?? linkedDataFingerprint();
                 linkedDataState.lastSavedAt = saved.lastSavedAt ?? null;
                 updateLinkedDataControls();
-                if (await linkedDataPermission(false, false)) {
+                if (await linkedDataPermission(true, false)) {
                     const payload = await readLinkedDataFile();
                     const fileNow = linkedDataFingerprint(payload);
                     const localNow = linkedDataFingerprint();
@@ -1004,18 +1009,18 @@ window.TeacherToolsCalendarValidate = value => {
                     } else if (localChanged) {
                         setLinkedDataStatus(translate("linked.pending", `Browser changes are waiting to be saved to ${saved.handle.name}.`, { name: saved.handle.name }));
                     } else {
-                        setLinkedDataStatus(translate("linked.ready", `Linked to ${saved.handle.name}. Changes save automatically while permission remains available.`, { name: saved.handle.name }));
+                        setLinkedDataStatus(translate("linked.ready", `Linked to ${saved.handle.name}. Changed data saves about every 15 minutes while this page is active and write access is allowed.`, { name: saved.handle.name }));
                     }
                 } else {
                     linkedDataState.permissionRequired = true;
-                    setLinkedDataStatus(translate("linked.permission", `Permission required. Choose Enable autosave and approve access to ${saved.handle.name}.`, { name: saved.handle.name }));
+                    setLinkedDataStatus(translate("linked.permission", `Automatic saving is paused. Choose Allow file access to approve writing to ${saved.handle.name}; access may need renewing after reopening the site.`, { name: saved.handle.name }));
                 }
             }
         } catch (error) {
             setLinkedDataStatus(translate("linked.error", "The linked file could not be accessed."), true);
         }
         updateLinkedDataControls();
-        linkedDataState.timer = window.setInterval(linkedDataAutosaveCheck, 1800);
+        linkedDataState.timer = window.setInterval(linkedDataAutosaveCheck, 5000);
         document.addEventListener("visibilitychange", () => {
             if (document.visibilityState === "visible") linkedDataAutosaveCheck();
         });
@@ -1808,4 +1813,4 @@ window.TeacherToolsCalendarValidate = value => {
 })();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-16-spinner-help-shortcut-1 */
+/* teacher-tools-release: teacher-tools-2026-11-16-file-autosave-interval-1 */
