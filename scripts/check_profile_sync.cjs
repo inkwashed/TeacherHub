@@ -72,6 +72,8 @@ async function openSync(page) {await page.evaluate(() => window.TeacherToolsProf
         await page.clock.install();await page.locator('#siteProfileNameEdit').click();await page.locator('#siteProfileName').fill('Autosaved Name');await page.locator('#siteProfileNameForm button[type=submit]').click();
         await page.clock.fastForward(14*60*1000);
         assert.equal(await page.evaluate(async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())).records.appearance.profile.name),'Sync Test','Do not write before the 15-minute interval');
+        await page.reload();await openSync(page);await page.locator('#siteDataFileTab').click();
+        await poll(page,()=>document.getElementById('siteLinkedDataDisconnect').disabled,value=>value===false,'resume scheduled save after reload');
         await page.clock.fastForward(61*1000);
         await poll(page,async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())),value=>value?.records?.appearance?.profile?.name==='Autosaved Name','linked autosave');
         // A background permission check must never request user approval itself.
