@@ -52,3 +52,10 @@ Root-relative `/assets/css/...` under `file://` pointed to the computer's root r
 - Tests used isolated Chrome profiles and temporary fixtures, not the owner's browser storage. Existing data was not reset. Safari/physical-device behavior is not established by these Chrome results.
 
 Physical iPad Safari remains necessary for Home Screen installation and update lifecycle, offline relaunch after OS suspension, storage access/eviction, portrait/landscape/split view, short-screen dialog scrolling, touch/native controls, and external-keyboard focus. Direct-file behavior on iPad also depends on how the OS opens the file; a file-manager preview is not the hosted app.
+
+
+Home-screen icon setup is independent of offline preparation. Every page links
+the local 180px Apple PNG; normal HTTP/HTTPS visits expose the shared manifest
+through the head bootstrap. No manual download is needed for the icon. Offline
+preparation remains a separate explicit feature and reports readiness separately.
+See shared-assets.md for all source/generated icon files and the logo-update checklist.

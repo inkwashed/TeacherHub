@@ -309,3 +309,50 @@ no write before 15 minutes, unattended save after the deadline, no-change skip,
 permission pause/manual renewal, failed-write retry, hidden/return behavior and
 conflict protection. Permission loss is simulated; native OS pickers, actual
 Chrome/Edge permission persistence and cloud-folder delivery need manual checks.
+
+### Site logo and mobile home-screen icons
+
+Canonical site-logo artwork: `assets/pwa/teacher-tools-icon.svg`. It is also the
+Home header mark and Home/offline browser favicon; individual tool browser favicons are derived from
+`assets/js/tools.js` by `scripts/build_favicons.py` and retain their own identities.
+Do not replace app favicons with the site logo when updating installation icons.
+
+`scripts/build_app_icons.cjs` generates these derivatives from the site SVG:
+
+- `assets/pwa/apple-touch-icon.png`: 180×180, explicitly linked in all eight page heads.
+- `assets/pwa/teacher-tools-icon-192.png`: 192×192 manifest icon.
+- `assets/pwa/teacher-tools-icon-512.png`: 512×512 manifest icon.
+
+All PNGs have an opaque white square background and 8% inset for the vector
+viewport. Do not bake in rounded corners; the device supplies its own mask.
+The PNGs are generated assets, not separate artwork to edit by hand. The favicon
+SVG keeps its transparent appearance. There is no runtime ActivityHub dependency.
+
+The synchronous theme bootstrap attaches `offline.webmanifest` on ordinary
+HTTP/HTTPS visits to every page, before offline preparation. Direct-file visits
+keep explicit local icon paths but do not attach the installation manifest.
+Adding to Home Screen and preparing offline resources are separate actions; a
+visible icon does not mean resources have been downloaded or are offline ready.
+
+Future logo update checklist:
+
+1. Edit the canonical SVG (keep its 64×64 viewBox, or review generator padding).
+2. Run `node scripts/build_app_icons.cjs` with Playwright/Chrome available;
+   `PLAYWRIGHT_MODULE` and `CHROME_PATH` may specify local installations.
+3. Review all three generated PNGs at actual icon sizes on white backgrounds.
+4. Keep every page's Apple link, the manifest icon list and worker APP_SHELL
+   consistent if filenames change. The three PNGs and the source SVG are cached.
+5. If tool artwork also changes, update `tools.js` and run
+   `python3 scripts/build_favicons.py` separately.
+6. Advance the shared release with `python3 scripts/check_styles.py --release ...`.
+   Run its normal check, `python3 scripts/build_favicons.py --check`,
+   `node scripts/check_mobile_icons.cjs`, and the offline preparation/update check.
+7. After the user publishes, physically test a fresh Add to Home Screen from Home
+   in iPhone/iPad Safari without preparing offline. Review the system mask and
+   installed launch. Existing home-screen icons may retain cached artwork; test
+   a new shortcut before removing any existing installed app or its saved data.
+
+The mobile-icon test checks all eight pages over HTTP/direct files, no offline
+cache prerequisite, Apple dimensions/opaque padding, manifest discovery/file
+guard and preservation of independent browser favicons. `check_styles.py` guards
+Apple links, PNG dimensions and the new offline dependency.

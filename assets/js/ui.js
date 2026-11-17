@@ -1813,4 +1813,4 @@ window.TeacherToolsCalendarValidate = value => {
 })();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-16-file-autosave-interval-1 */
+/* teacher-tools-release: teacher-tools-2026-11-17-mobile-home-icon-1 */

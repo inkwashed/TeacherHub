@@ -1,4 +1,4 @@
-const RELEASE = "teacher-tools-2026-11-16-file-autosave-interval-1";
+const RELEASE = "teacher-tools-2026-11-17-mobile-home-icon-1";
 const CACHE = `teacher-tools-${RELEASE}`;
 const APP_SHELL = [
   "/",
@@ -24,6 +24,7 @@ const APP_SHELL = [
   `/assets/js/tools.js?v=${RELEASE}`,
   `/assets/js/toolbar.js?v=${RELEASE}`,
   "/assets/pwa/teacher-tools-icon.svg",
+  "/assets/pwa/apple-touch-icon.png",
   "/assets/pwa/teacher-tools-icon-192.png",
   "/assets/pwa/teacher-tools-icon-512.png",
   "/assets/tricks/cards/ace-suits-v1.png",

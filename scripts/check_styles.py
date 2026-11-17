@@ -5,6 +5,7 @@ from pathlib import Path
 import re
 import json
 import posixpath
+import struct
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -22,6 +23,7 @@ class Page(HTMLParser):
         self.tool = None
         self.shared_icons, self.tool_icons = [], []
         self.favicons = []
+        self.touch_icons = []
         self.in_style = False
         self.feed(text)
 
@@ -33,6 +35,8 @@ class Page(HTMLParser):
                 self.local_links.append(value)
         if tag == 'link' and 'icon' in attrs.get('rel', '').split():
             self.favicons.append(attrs)
+        if tag == 'link' and attrs.get('rel') == 'apple-touch-icon':
+            self.touch_icons.append(attrs)
         if tag == 'svg' and 'data-shared-icon' in attrs:
             self.shared_icons.append(attrs['data-shared-icon'])
         if 'data-tool-icon' in attrs:
@@ -170,12 +174,21 @@ def check():
     for tool in catalog:
         assert tool['href'] in home_links, f"Tool missing from the full Home catalogue: {tool['id']}"
         assert (ROOT / tool['href']).is_file(), f"Missing tool page: {tool['id']}"
+    for size, name in [(180, 'apple-touch-icon.png'), (192, 'teacher-tools-icon-192.png'), (512, 'teacher-tools-icon-512.png')]:
+        png = (ROOT / 'assets/pwa' / name).read_bytes()
+        assert png[:8] == b'\x89PNG\r\n\x1a\n' and struct.unpack('>II', png[16:24]) == (size, size), f'{name}: wrong PNG dimensions; regenerate app icons'
     pages = [ROOT / 'index.html', *sorted(ROOT.glob('*/index.html'))]
     for path in pages:
         page = Page(path.read_text())
         assert set(page.shared_icons) <= set(icons), f'{path}: unknown shared icon'
         used_icons.update(page.shared_icons)
         assert len(page.favicons) == 1, f'{path}: keep exactly one favicon declaration'
+        assert len(page.touch_icons) == 1, f'{path}: declare one mobile home-screen icon independently of offline preparation'
+        touch = page.touch_icons[0]
+        assert touch.get('sizes') == '180x180', f'{path}: Apple icon size must match the generated PNG'
+        assert (path.parent / touch.get('href', '')).resolve() == ROOT / 'assets/pwa/apple-touch-icon.png', f'{path}: wrong home-screen icon'
+        assert '/assets/pwa/apple-touch-icon.png' in urls, 'Apple icon missing from offline inventory'
+
         assert page.favicons[0].get('href') == expected_href(path, catalog), f'{path}: wrong/stale favicon; run python3 scripts/build_favicons.py'
         assert page.favicons[0].get('type') == 'image/svg+xml', f'{path}: wrong favicon type'
         for script in page.inline_scripts:

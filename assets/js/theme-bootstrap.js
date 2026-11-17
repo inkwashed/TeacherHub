@@ -1,4 +1,12 @@
 (() => {
+    // Home-screen identity is available on ordinary visits, without offline preparation.
+    // Direct-file opening keeps local styling/navigation but does not install a web app.
+    if (/^https?:$/.test(location.protocol) && !document.querySelector('link[rel="manifest"]')) {
+        const manifest = document.createElement('link');
+        manifest.rel = 'manifest';
+        manifest.href = new URL('../../offline.webmanifest', document.currentScript.src).href;
+        document.head.append(manifest);
+    }
     const key = "teacherTools.sitePreferences.v1";
     const languageKey = "teacherTools.siteLanguage.v1";
     // Browser preferences are the web-visible system language settings.
@@ -59,4 +67,4 @@
     }
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-16-file-autosave-interval-1 */
+/* teacher-tools-release: teacher-tools-2026-11-17-mobile-home-icon-1 */

@@ -401,3 +401,9 @@ forced-color fallback across Home and all six apps at narrow/desktop sizes.
 File sync runtime updates retain the same required `ui.js`/Profile dependencies.
 The shared release was advanced for the 15-minute autosave schedule and explicit
 permission/status wording; see shared-assets.md for behavior and verification.
+
+Mobile home-screen identity uses the canonical site logo with generated opaque,
+padded 180/192/512 PNGs. The 180px Apple icon is now an additional required offline
+resource (31 total). All pages declare it before preparation, and ordinary HTTP
+visits expose the shared manifest. Source/derivative ownership, rebuild commands
+and the complete future-logo checklist are documented in shared-assets.md.

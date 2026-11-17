@@ -8,27 +8,18 @@
     <meta name="description" content="Install Teacher Tools, prepare it for offline use, and safely move locally saved teaching data.">
     <meta name="theme-color" content="#1e40af">
     <title>Install & Offline Use · Teacher Tools</title>
-    <script>
-        // Local files can display the tools, but cannot install a service worker/app.
-        if (location.protocol !== "file:") {
-            const manifest = document.createElement("link");
-            manifest.rel = "manifest";
-            manifest.href = "../offline.webmanifest";
-            document.head.append(manifest);
-        }
-    </script>
-    <link rel="apple-touch-icon" href="../assets/pwa/teacher-tools-icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/pwa/apple-touch-icon.png">
     <!-- TEACHER-TOOLS:FAVICON:START -->
     <link rel="icon" type="image/svg+xml" href="../assets/pwa/teacher-tools-icon.svg">
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="../assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-16-file-autosave-interval-1" data-teacher-tools-bootstrap></script>
+    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-17-mobile-home-icon-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-16-file-autosave-interval-1">
-    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-16-file-autosave-interval-1">
-    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-16-file-autosave-interval-1">
-    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-16-file-autosave-interval-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-17-mobile-home-icon-1">
+    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-17-mobile-home-icon-1">
+    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-17-mobile-home-icon-1">
+    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-17-mobile-home-icon-1">
     <style>
 
         .offline-page { width: min(940px, 100%); margin: 0 auto; padding: 32px 18px 54px; }
@@ -89,9 +80,9 @@
 </head>
 <body>
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-16-file-autosave-interval-1" data-teacher-tools-tools></script>
-    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-16-file-autosave-interval-1" data-teacher-tools-toolbar data-page="offline"></script>
-    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-16-file-autosave-interval-1" data-teacher-tools-profile></script>
+    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-17-mobile-home-icon-1" data-teacher-tools-tools></script>
+    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-17-mobile-home-icon-1" data-teacher-tools-toolbar data-page="offline"></script>
+    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-17-mobile-home-icon-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 <div class="site-page-scroll themed-scroll">
 
@@ -146,7 +137,7 @@
 </div>
 
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-16-file-autosave-interval-1" data-teacher-tools-ui></script>
+    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-17-mobile-home-icon-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
     <script>
     (() => {
