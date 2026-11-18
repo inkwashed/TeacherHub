@@ -105,7 +105,7 @@ const root = path.resolve(__dirname, '..');
             assert.equal(await page.locator('#siteThemePanel').count(),1);
             assert.equal(await page.locator('#siteProfileSync').count(),1);
             assert.equal(await page.locator('#siteDataButton,#siteDataGoogleTab').count(),0);
-            assert.equal(await page.locator('#siteProfileSync [role=tab]').count(),2);
+            assert.equal(await page.locator('.site-profile-details #siteDataExportTab, .site-profile-details #siteDataFileTab').count(),2);
             assert.equal(await page.locator('.site-profile-details .site-theme-options').count(),1);
             await page.locator('#siteSettingsButton').click();assert(await page.locator('#siteThemePanel').evaluate(e=>e.open));assert.equal(await page.locator('.site-theme-preview').first().evaluate(e=>e.offsetWidth),22);await page.keyboard.press('Escape');
         }

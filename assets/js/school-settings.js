@@ -202,4 +202,4 @@
     window.TeacherToolsSchoolSettings = Object.freeze({ create });
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-17-mobile-home-icon-1 */
+/* teacher-tools-release: teacher-tools-2026-11-18-update-arrow-1 */

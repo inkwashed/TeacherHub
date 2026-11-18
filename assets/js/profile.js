@@ -38,8 +38,8 @@
                             <form id="siteProfileNameForm" hidden>
                                 <input id="siteProfileName" type="text" aria-labelledby="siteProfileNameLabel" autocomplete="given-name" maxlength="80">
                                 <div class="site-profile-name-actions">
-                                    <button type="submit" class="site-profile-action" ><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="confirm"></svg><span data-i18n="profile.save">Save</span></button>
-                                    <button type="button" id="siteProfileNameCancel" class="site-profile-action" ><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="cancel"></svg><span data-i18n="profile.cancelName">Cancel</span></button>
+                                    <button type="submit" class="site-profile-action" aria-label="Save name" title="Save name" data-i18n-aria-label="profile.saveName" data-i18n-title="profile.saveName"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="confirm"></svg></button>
+                                    <button type="button" id="siteProfileNameCancel" class="site-profile-action" aria-label="Cancel name editing" title="Cancel name editing" data-i18n-aria-label="profile.cancelName" data-i18n-title="profile.cancelName"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="cancel"></svg></button>
                                 </div>
                             </form>
                         </div>
@@ -113,10 +113,10 @@
                         </a>
                     </div>
                     <section id="siteProfileSync" class="site-profile-sync" aria-labelledby="siteProfileSyncTitle">
-                        <h3 id="siteProfileSyncTitle" class="site-profile-sync-title" data-i18n="profile.sync">Sync</h3>
+                        <h3 id="siteProfileSyncTitle" class="site-profile-sync-title" data-i18n="profile.sync">File Sync</h3>
                 <div class="site-data-tabs" role="tablist" aria-label="Backup and synchronization options" data-i18n-aria-label="backup.tabsAria">
-                    <button type="button" id="siteDataExportTab" class="site-data-tab" role="tab" aria-selected="true" aria-controls="siteDataExportPanel" tabindex="0" data-site-data-tab="export" data-i18n="backup.tabExport">Export</button>
-                    <button type="button" id="siteDataFileTab" class="site-data-tab" role="tab" aria-selected="false" aria-controls="siteDataFilePanel" tabindex="-1" data-site-data-tab="file" data-i18n="backup.tabFile">File sync</button>
+                    <button type="button" id="siteDataExportTab" class="site-data-tab" role="tab" aria-selected="true" aria-controls="siteDataExportPanel" tabindex="0" data-site-data-tab="export" data-i18n="backup.tabExport">Export &amp; Import Backup</button>
+                    <button type="button" id="siteDataFileTab" class="site-data-tab" role="tab" aria-selected="false" aria-controls="siteDataFilePanel" tabindex="-1" data-site-data-tab="file" data-i18n="backup.tabFile">File Sync</button>
                 </div>
                 <section id="siteDataExportPanel" class="site-data-tab-panel" role="tabpanel" aria-labelledby="siteDataExportTab" data-site-data-panel="export">
                     <p class="site-data-help" data-i18n="backup.help">Choose which saved data to include in one local backup file. Nothing is uploaded.</p>
@@ -152,6 +152,65 @@
 
                 </div>
             </dialog>`;
+    // Move tools, custom colors and data editors once; Name and the palette stay on the left.
+    const content = template.content;
+    const details = content.querySelector('.site-profile-details');
+    const workspace = content.querySelector('#siteProfileSync');
+    const heading = content.querySelector('#siteProfileSyncTitle');
+    heading.removeAttribute('data-i18n');
+    const placeholder = document.createElement('p');
+    placeholder.id = 'siteProfileEditorHint';
+    placeholder.dataset.i18n = 'profile.chooseEditor';
+    placeholder.textContent = 'Choose a setting to edit.';
+    function editorPanel(name, child) {
+        const panel = document.createElement('section');
+        panel.id = 'siteProfileEditor-' + name;
+        panel.className = 'site-profile-editor-panel';
+        panel.dataset.profileEditor = name;
+        panel.setAttribute('aria-labelledby', 'siteProfileSyncTitle');
+        panel.hidden = true;
+        if (child) panel.append(child);
+        return panel;
+    }
+    function settingRow(title, titleKey, button, name, editKey) {
+        const row = document.createElement('section'); row.className = 'site-profile-setting-row';
+        const label = document.createElement('span'); label.dataset.i18n = titleKey; label.textContent = title;
+        button.className = 'site-profile-setting-link';
+        button.removeAttribute('role'); button.removeAttribute('aria-selected'); button.removeAttribute('tabindex');
+        button.removeAttribute('data-i18n'); button.removeAttribute('data-site-data-tab');
+        button.dataset.profileSetting = name;
+        button.dataset.i18nAriaLabel = editKey;
+        button.setAttribute('aria-label', title);
+        button.setAttribute('aria-controls', 'siteProfileEditor-' + name);
+        button.setAttribute('aria-expanded', 'false');
+        button.innerHTML = name === 'file'
+            ? '<svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="file-sync"></svg>'
+            : '<svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="backup"></svg>';
+        button.prepend(label);
+        row.append(button); return row;
+    }
+    const customPanel = editorPanel('custom', content.querySelector('#siteCustomThemeControls'));
+    const toolsPanel = editorPanel('tools', content.querySelector('#siteNavigationEditor'));
+    content.querySelector('#siteNavigationEdit').dataset.profileSetting = 'tools';
+    content.querySelector('#siteNavigationEdit').setAttribute('aria-controls', toolsPanel.id);
+    const file = content.querySelector('#siteDataFilePanel'), exported = content.querySelector('#siteDataExportPanel');
+    [file, exported].forEach(panel => { panel.removeAttribute('role'); panel.removeAttribute('data-site-data-panel'); panel.classList.add('site-profile-editor-panel'); });
+    file.dataset.profileEditor = 'file'; exported.dataset.profileEditor = 'export';
+    const fileButton = content.querySelector('#siteDataFileTab'), exportButton = content.querySelector('#siteDataExportTab');
+    const fileRow = settingRow('File Sync', 'profile.sync', fileButton, 'file', 'profile.editFile');
+    const exportRow = settingRow('Export & Import Backup', 'backup.tabExport', exportButton, 'export', 'profile.editExport');
+    fileButton.setAttribute('aria-controls', file.id); exportButton.setAttribute('aria-controls', exported.id);
+    const install = details.querySelector('#siteInstallButton');
+    install.before(fileRow, exportRow);
+    const installRow = document.createElement('section'); installRow.className = 'site-profile-setting-row';
+    install.before(installRow); installRow.append(install);
+    install.className = 'site-profile-setting-link';
+    install.append(install.querySelector('svg'));
+
+    content.querySelector('.site-data-tabs').remove();
+    workspace.replaceChildren(heading, placeholder, customPanel, toolsPanel, file, exported);
+    const navigationStatus = content.querySelector('#siteNavigationStatus');
+    toolsPanel.append(navigationStatus);
     template.content.querySelector('#siteInstallButton').href = new URL('../../offline/index.html', mount.src).href;
     mount.before(template.content);
     function initializeProfile() {
@@ -161,13 +220,15 @@
         const key = 'teacherTools.sitePreferences.v1';
         const en = {
             'profile.title': 'Profile', 'profile.open': 'Open profile settings', 'profile.close': 'Close profile settings',
-            'profile.sync': 'Sync', 'profile.name': 'Name', 'profile.save': 'Save', 'profile.remove': 'Remove avatar',
+            'profile.chooseEditor':'Choose a setting to edit.', 'profile.editor':'Settings', 'profile.editFile':'Edit file sync', 'profile.editExport':'Export or restore data',
+            'profile.sync': 'File Sync', 'profile.name': 'Name', 'profile.saveName':'Save name', 'profile.save': 'Save', 'profile.remove': 'Remove avatar',
             'profile.colors': 'Color theme', 'profile.saved': 'Name saved.',
             'profile.removed': 'Profile avatar removed.', 'profile.failed': 'Could not save your profile on this device. Your previous profile has been kept.',
         };
         const ja = {
             'profile.title': 'プロフィール', 'profile.open': 'プロフィール設定を開く', 'profile.close': 'プロフィール設定を閉じる',
-            'profile.sync': '同期', 'profile.name': '名前', 'profile.save': '保存', 'profile.remove': 'アバターを削除',
+            'profile.chooseEditor':'編集する設定を選んでください。', 'profile.editor':'設定', 'profile.editFile':'ファイル同期を設定', 'profile.editExport':'データの書き出し・復元',
+            'profile.sync': 'ファイル同期', 'profile.name': '名前', 'profile.saveName':'名前を保存', 'profile.save': '保存', 'profile.remove': 'アバターを削除',
             'profile.colors': 'カラーテーマ', 'profile.saved': '名前を保存しました。',
             'profile.removed': 'プロフィール画像を削除しました。', 'profile.failed': 'この端末に保存できませんでした。以前のプロフィールは変更されていません。',
         };
@@ -210,9 +271,44 @@
         const remove = document.getElementById('siteProfileRemove');
         const status = document.getElementById('siteProfileStatus');
         const trigger = document.getElementById('siteSettingsButton');
-        function setProfileOpen(open) {
+        let activeEditor = null;
+        const editorTitles = {custom:'theme.custom', tools:'toolbar.settings', file:'backup.tabFile', export:'backup.tabExport'};
+        function selectEditor(name, focus = false) {
+            activeEditor = name;
+            dialog.querySelectorAll('[data-profile-editor]').forEach(panel => { panel.hidden = panel.dataset.profileEditor !== name; });
+            dialog.querySelectorAll('[data-profile-setting]').forEach(button => button.setAttribute('aria-expanded', String(button.dataset.profileSetting === name)));
+            document.getElementById('siteProfileSyncTitle').textContent = ui.translate(editorTitles[name] || 'profile.editor');
+            document.getElementById('siteProfileEditorHint').hidden = !!name;
+            if (name) {
+                const panel = dialog.querySelector('[data-profile-editor="'+name+'"]');
+                if (focus) {
+                    const target = panel.querySelector('input:checked, button:not(:disabled), input:not([type="file"]), select');
+                    target?.focus();
+                    panel.scrollIntoView({block:'nearest'});
+                }
+            }
+        }
+        const customChoice = dialog.querySelector('[name=siteThemeChoice][value=custom]');
+        customChoice.setAttribute('aria-controls', 'siteProfileEditor-custom');
+        customChoice.addEventListener('click', () => {
+            selectEditor('custom');
+            if (!customChoice.matches(':focus-visible')) queueMicrotask(() => { if (activeEditor === 'custom') document.getElementById('siteProfileEditor-custom').scrollIntoView({block:'nearest'}); });
+        });
+        document.getElementById('siteDataFileTab').addEventListener('click', () => selectEditor('file', true));
+        document.getElementById('siteDataExportTab').addEventListener('click', () => selectEditor('export', true));
+        window.addEventListener('teacher-tools:navigationediting', event => {
+            if (event.detail.active) selectEditor('tools');
+            else if (activeEditor === 'tools') selectEditor(null);
+        });
+        window.addEventListener('teacher-tools:languagechange', () => selectEditor(activeEditor));
+        selectEditor(null);
+        let profileOpener = trigger;
+        function setProfileOpen(open, opener = trigger) {
             if (open) {
-                if (!dialog.open) ui.closeSiteOverlays();
+                if (!dialog.open) {
+                    profileOpener = opener instanceof HTMLElement && opener.isConnected ? opener : trigger;
+                    ui.closeSiteOverlays();
+                }
                 ui.refreshSiteData();
             }
             dialog.hidden = !open;
@@ -233,7 +329,11 @@
         });
         dialog.querySelectorAll('input[name="siteThemeChoice"]').forEach(input => {
             input.addEventListener('change', () => {
-                if (input.checked) ui.applyGlobalTheme(input.value, true, input.value === 'custom' ? customColorsFromInputs() : null);
+                if (input.checked) {
+                    ui.applyGlobalTheme(input.value, true, input.value === 'custom' ? customColorsFromInputs() : null);
+                    if (input.value === 'custom') selectEditor('custom');
+                    else if (activeEditor === 'custom') selectEditor(null);
+                }
             });
         });
         dialog.querySelectorAll('.site-custom-theme-pickers input').forEach(input => {
@@ -310,7 +410,8 @@
             if (focus) editName.focus();
         }
         editName.addEventListener('click', () => {
-            editingName = true; message(); name.value = read().name;
+            if (!editingName) name.value = read().name;
+            editingName = true; message();
             nameDisplay.hidden = true; nameEditor.hidden = false;
             editName.setAttribute('aria-expanded', 'true'); name.focus(); name.select();
         });
@@ -366,9 +467,10 @@
             // A queued close event may belong to the previous opening of this dialog.
             if (dialog.open) return;
             transfer.cancel();
-            finishNameEditing(false);
+            finishNameEditing(false); selectEditor(null);
             dialog.hidden = true; trigger.setAttribute('aria-expanded', 'false');
-            document.body.classList.remove('site-profile-open'); message(); trigger.focus();
+            document.body.classList.remove('site-profile-open'); message();
+            (profileOpener?.isConnected && profileOpener.getClientRects().length ? profileOpener : trigger).focus();
         });
         dialog.addEventListener('click', event => {
             event.stopPropagation();
@@ -397,15 +499,15 @@
             open: () => setProfileOpen(true),
             openNavigation: () => {
                 setProfileOpen(true);
-                const settings = document.getElementById('siteNavigationSettings');
                 document.getElementById('siteNavigationEdit').click();
-                settings.querySelector('.site-navigation-handle')?.focus();
-                settings.scrollIntoView({block:'nearest'});
+                const editor = document.getElementById('siteNavigationEditor');
+                editor.querySelector('.site-navigation-handle')?.focus();
+                editor.scrollIntoView({block:'nearest'});
             },
-            openSync: () => {
-                setProfileOpen(true);
-                document.getElementById('siteDataExportTab').click();
-                document.getElementById('siteDataExportTab').focus();
+            openSync: (tab = 'export', opener = trigger) => {
+                setProfileOpen(true, opener);
+                const syncTab = document.getElementById(tab === 'file' ? 'siteDataFileTab' : 'siteDataExportTab');
+                syncTab.click();
                 document.getElementById('siteProfileSync').scrollIntoView({block:'nearest'});
             }
         });
@@ -417,4 +519,4 @@
     }
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-17-mobile-home-icon-1 */
+/* teacher-tools-release: teacher-tools-2026-11-18-update-arrow-1 */

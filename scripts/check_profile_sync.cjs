@@ -18,6 +18,7 @@ async function poll(page, read, check, label) {
     throw Error('Timed out: '+label);
 }
 async function openSync(page) {await page.evaluate(() => window.TeacherToolsProfile.openSync());}
+async function state(page,value){await poll(page,()=>document.getElementById('siteSyncStatusButton').dataset.syncState,current=>current===value,'header sync state '+value);}
 (async () => {
     const browser = await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});
     try {
@@ -35,7 +36,7 @@ async function openSync(page) {await page.evaluate(() => window.TeacherToolsProf
         const page=await context.newPage();const errors=[];let accept=true;
         page.on('pageerror',error=>errors.push(error.message));
         page.on('dialog',dialog=>dialog.type()==='confirm'&&!accept?dialog.dismiss():dialog.accept());
-        await page.goto(origin+'/');await openSync(page);
+        await page.goto(origin+'/');await state(page,'disabled');await page.locator('#siteSyncStatusButton').click();assert.equal(await page.locator('#siteDataFileTab').getAttribute('aria-expanded'),'true');await openSync(page);
         const downloadPromise=page.waitForEvent('download');await page.locator('#siteDataExportButton').click();
         const backup=JSON.parse(await fs.readFile(await (await downloadPromise).path(),'utf8'));
         assert.equal(backup.app,'teacher-tools-site-backup');assert.equal(backup.schemaVersion,1);
@@ -68,37 +69,38 @@ async function openSync(page) {await page.evaluate(() => window.TeacherToolsProf
         await poll(restored,()=>JSON.parse(localStorage.getItem('teacherTools.spinnerWheel.state.v1')),value=>value?.maximum==='10','legacy Spinner restore');
         await target.close();console.log('PASS selected restore preserves unrelated records; invalid/cancelled imports do not write; legacy Spinner import still works.');
         await page.bringToFront();await page.locator('#siteDataFileTab').click();await page.locator('#siteLinkedDataCreate').click();
-        await poll(page,async()=>{try{return JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text()));}catch{return null;}},value=>value?.records?.appearance?.profile?.name==='Sync Test','linked file creation');
-        await page.clock.install();await page.locator('#siteProfileNameEdit').click();await page.locator('#siteProfileName').fill('Autosaved Name');await page.locator('#siteProfileNameForm button[type=submit]').click();
+        await poll(page,async()=>{try{return JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text()));}catch{return null;}},value=>value?.records?.appearance?.profile?.name==='Sync Test','linked file creation');await state(page,'saved');assert.match(await page.locator('#siteSyncStatusButton').getAttribute('title'),/Last saved:/);
+        await page.clock.install();await page.locator('#siteProfileNameEdit').click();await page.locator('#siteProfileName').fill('Autosaved Name');await page.locator('#siteProfileNameForm button[type=submit]').click();await state(page,'pending');
         await page.clock.fastForward(14*60*1000);
         assert.equal(await page.evaluate(async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())).records.appearance.profile.name),'Sync Test','Do not write before the 15-minute interval');
-<<<<<<< HEAD
         await page.reload();await openSync(page);await page.locator('#siteDataFileTab').click();
         await poll(page,()=>document.getElementById('siteLinkedDataDisconnect').disabled,value=>value===false,'resume scheduled save after reload');
         await page.clock.fastForward(61*1000);
-        await poll(page,async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())),value=>value?.records?.appearance?.profile?.name==='Autosaved Name','linked autosave');
+        await poll(page,async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())),value=>value?.records?.appearance?.profile?.name==='Autosaved Name','linked autosave');await state(page,'saved');
         // A background permission check must never request user approval itself.
         await page.evaluate(()=>{
             window.syncTest={deny:true,requests:0,writes:0,fail:false};
             const original=FileSystemFileHandle.prototype.createWritable;
-            FileSystemFileHandle.prototype.createWritable=async function(...args){syncTest.writes++;if(syncTest.fail)throw new Error('Simulated write failure');return original.apply(this,args);};
+            FileSystemFileHandle.prototype.createWritable=async function(...args){syncTest.writes++;if(syncTest.fail)throw new Error('Simulated write failure');if(syncTest.pause)await new Promise(resolve=>window.finishSyncWrite=resolve);return original.apply(this,args);};
             FileSystemHandle.prototype.queryPermission=async function(options){return options?.mode==='readwrite'&&syncTest.deny?'prompt':'granted';};
             FileSystemHandle.prototype.requestPermission=async function(){syncTest.requests++;syncTest.deny=false;return 'granted';};
             const value=JSON.parse(localStorage.getItem('teacherTools.sitePreferences.v1'));value.profile.name='Permission pending';localStorage.setItem('teacherTools.sitePreferences.v1',JSON.stringify(value));
         });
         await page.clock.fastForward(16*60*1000);
-        await poll(page,()=>document.getElementById('siteLinkedDataSave').textContent,value=>value==='Allow file access','permission pause label');
+        await poll(page,()=>document.getElementById('siteLinkedDataSave').textContent,value=>value==='Allow file access','permission pause label');await state(page,'permission');
         assert.equal(await page.evaluate(()=>syncTest.requests),0,'Autosave cannot request permission without a gesture');
         assert.equal(await page.evaluate(async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())).records.appearance.profile.name),'Autosaved Name');
-        await page.locator('#siteLinkedDataSave').click();
-        await poll(page,async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())),value=>value.records.appearance.profile.name==='Permission pending','permission resume/manual save');
+        await page.evaluate(()=>syncTest.pause=true);
+        await page.locator('#siteLinkedDataSave').click();await state(page,'saving');await page.waitForFunction(()=>typeof window.finishSyncWrite==='function');
+        await page.evaluate(()=>{syncTest.pause=false;finishSyncWrite();});
+        await poll(page,async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())),value=>value.records.appearance.profile.name==='Permission pending','permission resume/manual save');await state(page,'saved');
         assert.equal(await page.evaluate(()=>syncTest.requests),1);
         const unchangedWrites=await page.evaluate(()=>syncTest.writes);await page.clock.fastForward(16*60*1000);await page.waitForTimeout(200);
         assert.equal(await page.evaluate(()=>syncTest.writes),unchangedWrites,'Unchanged data must not write');
         const savedLabel=await page.locator('#siteLinkedDataLastSaved').textContent();
         await page.evaluate(()=>{syncTest.fail=true;const value=JSON.parse(localStorage.getItem('teacherTools.sitePreferences.v1'));value.profile.name='Retry pending';localStorage.setItem('teacherTools.sitePreferences.v1',JSON.stringify(value));});
         await page.clock.fastForward(16*60*1000);
-        await poll(page,()=>document.getElementById('siteLinkedDataStatus').textContent,value=>value.includes('Simulated write failure'),'write error');
+        await poll(page,()=>document.getElementById('siteLinkedDataStatus').textContent,value=>value.includes('Simulated write failure'),'write error');await state(page,'error');
         assert.equal(await page.locator('#siteLinkedDataLastSaved').textContent(),savedLabel,'A failed write must not advance Last saved');
         await page.evaluate(()=>syncTest.fail=false);await page.clock.fastForward(6000);
         await poll(page,async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())),value=>value.records.appearance.profile.name==='Retry pending','retry after failed write');
@@ -109,13 +111,9 @@ async function openSync(page) {await page.evaluate(() => window.TeacherToolsProf
         await poll(page,async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())),value=>value.records.appearance.profile.name==='Visible again','save overdue changes on return');
         await page.evaluate(async()=>{const handle=await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json');const data=JSON.parse(await (await handle.getFile()).text());data.records.appearance.profile.name='External conflict';const writable=await handle.createWritable();await writable.write(JSON.stringify(data));await writable.close();const value=JSON.parse(localStorage.getItem('teacherTools.sitePreferences.v1'));value.profile.name='Local conflict';localStorage.setItem('teacherTools.sitePreferences.v1',JSON.stringify(value));});
         await page.clock.fastForward(16*60*1000);
-        await poll(page,()=>document.getElementById('siteLinkedDataStatus').textContent,value=>value.includes('Both this browser'),'autosave conflict');
+        await poll(page,()=>document.getElementById('siteLinkedDataStatus').textContent,value=>value.includes('Both this browser'),'autosave conflict');await state(page,'conflict');
         assert.equal(await page.evaluate(async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())).records.appearance.profile.name),'External conflict','Autosave must not overwrite external changes');
         console.log('PASS 15-minute timing, permission pause/re-enable, unchanged skip, failed-write retry, hidden/return and conflict protection.');
-=======
-        await page.clock.fastForward(61*1000);
-        await poll(page,async()=>JSON.parse(await (await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile().then(f=>f.text())),value=>value?.records?.appearance?.profile?.name==='Autosaved Name','linked autosave');
->>>>>>> 42f8153032d21c691c6210e12a8e28845eb7b6a1
         await page.clock.resume();
         await page.evaluate(async()=>{const handle=await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json');const data=JSON.parse(await (await handle.getFile()).text());data.records.appearance.profile.name='Pulled Name';const writable=await handle.createWritable();await writable.write(JSON.stringify(data));await writable.close();});
         await Promise.all([page.waitForEvent('load'),page.locator('#siteLinkedDataLoad').click()]);
@@ -123,12 +121,12 @@ async function openSync(page) {await page.evaluate(() => window.TeacherToolsProf
         await page.waitForLoadState();await openSync(page);await page.locator('#siteDataFileTab').click();
         await poll(page,()=>document.getElementById('siteLinkedDataDisconnect').disabled,value=>value===false,'stored file handle reconnect');
         await page.locator('#siteLinkedDataDisconnect').click();
-        await poll(page,()=>document.getElementById('siteLinkedDataLoad').disabled,value=>value===true,'disconnect completion');
+        await poll(page,()=>document.getElementById('siteLinkedDataLoad').disabled,value=>value===true,'disconnect completion');await state(page,'disabled');
         assert(await page.evaluate(async()=>!!(await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile()));
         await Promise.all([page.waitForEvent('load'),page.locator('#siteLinkedDataLink').click()]);
         await poll(page,()=>document.getElementById('siteLinkedDataDisconnect').disabled,value=>value===false,'link existing file');
         await page.waitForLoadState();await page.goto(origin+'/offline/index.html');await page.locator('#backupButton').click();
-        assert(await page.locator('#siteThemePanel').evaluate(e=>e.open));assert.equal(await page.locator('#siteDataExportTab').getAttribute('aria-selected'),'true');
+        assert(await page.locator('#siteThemePanel').evaluate(e=>e.open));assert.equal(await page.locator('#siteDataExportTab').getAttribute('aria-expanded'),'true');
         assert.deepEqual(errors,[]);await context.close();
         console.log('PASS linked-file create, autosave, pull/reload, saved handle, disconnect without deletion, link existing, and offline-page Sync shortcut. Native OS picker UI was not exercised.');
     } finally {await browser.close();}

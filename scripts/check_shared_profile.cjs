@@ -43,26 +43,21 @@ async function closeTutorial(page) {
                 assert.equal(await page.locator('#siteProfileNameText').textContent(), 'Component Test');
                 assert.equal(await page.locator('[name=siteThemeChoice]').count(), themes.length);
                 assert.equal(await page.locator('#siteDataButton,#siteDataPanel,#siteDataGoogleTab,#siteDataGooglePanel').count(), 0);
-                assert.equal(await page.locator('#siteProfileSync [role=tab]').count(), 2);
-                assert.equal(await page.locator('#siteProfileSyncTitle').textContent(), language === 'ja' ? '同期' : 'Sync');
-                const palette = await page.locator('.site-profile-themes').boundingBox();
-                const nameField = await page.locator('.site-profile-name-field').boundingBox();
-                assert(palette.y >= nameField.y + nameField.height && Math.abs(palette.x - nameField.x) < 1, 'Themes must sit directly below Name');
-                const dot = await page.locator('.site-theme-preview').first().evaluate(e=>({width:e.offsetWidth,height:e.offsetHeight,radius:getComputedStyle(e).borderRadius,gradient:getComputedStyle(e).backgroundImage}));
+                assert.equal(await page.locator('[data-profile-setting]').count(),3);
+                assert(await page.locator('#siteDataExportPanel').isVisible());
+                await page.locator('#siteDataFileTab').click();
+                assert.equal(await page.locator('#siteDataFileTab').getAttribute('aria-expanded'), 'true');
+                assert(await page.locator('#siteDataFilePanel').isVisible());
+                if(protocol==='file')assert(await page.locator('#siteLinkedDataCreate').isDisabled());
+                await page.locator('#siteDataExportTab').click();
+                assert(await page.locator('#siteDataExportPanel').isVisible());
+                assert.equal(await page.locator('#siteProfileColorsEdit').count(),0);
+                const palette=await page.locator('.site-profile-themes').boundingBox(),field=await page.locator('.site-profile-name-field').boundingBox();
+                assert(palette.y>=field.y+field.height&&Math.abs(palette.x-field.x)<1,'Theme choices stay below Name');
+                const dot=await page.locator('.site-theme-preview').first().evaluate(e=>({width:e.offsetWidth,height:e.offsetHeight,radius:getComputedStyle(e).borderRadius,gradient:getComputedStyle(e).backgroundImage}));
                 assert.equal(dot.width,22);assert.equal(dot.height,22);assert.equal(dot.radius,'50%');assert(dot.gradient.includes('linear-gradient(135deg'));
                 assert.equal(await page.locator('.site-theme-option').first().evaluate(e=>e.offsetWidth),44);
-                const sync = await page.locator('#siteProfileSync').boundingBox();
-                const field = await page.locator('.site-profile-name-field').boundingBox();
-                assert(width <= 760 ? sync.y > field.y + field.height : sync.x >= field.x + field.width, 'Sync must be beside Name or stacked below it');
-                assert(await page.locator('#siteThemePanel').evaluate(e => e.scrollWidth <= e.clientWidth + 1));
-                await page.locator('#siteDataExportTab').focus();
-                await page.keyboard.press('ArrowRight');
-                assert.equal(await page.locator('#siteDataFileTab').getAttribute('aria-selected'), 'true');
-                assert(await page.locator('#siteDataFilePanel').isVisible());
-                if (protocol === 'file') assert(await page.locator('#siteLinkedDataCreate').isDisabled());
-                await page.keyboard.press('ArrowRight');
-                assert.equal(await page.locator('#siteDataExportTab').getAttribute('aria-selected'), 'true', protocol+' '+file+' '+width+' Sync arrow wrap');
-                assert(await page.locator('#siteDataExportPanel').isVisible());
+                assert(await page.locator('#siteThemePanel').evaluate(e=>e.scrollWidth<=e.clientWidth+1));
                 for (const theme of themes) {
                     await page.locator(`[data-theme-option="${theme}"]`).click();
                     assert.equal(await page.evaluate(() => document.documentElement.dataset.theme || 'modern-blue'), theme);
@@ -82,7 +77,7 @@ async function closeTutorial(page) {
                 assert(box.x >= 0 && box.y >= 0 && box.x + box.width <= width + 1 && box.y + box.height <= 901);
                 await page.locator('#siteThemeCloseButton').focus();
                 await page.keyboard.press('Shift+Tab');
-                assert.equal(await page.evaluate(() => document.activeElement.id), 'siteDataImportButton');
+                assert.equal(await page.evaluate(() => document.activeElement.id), 'siteCustomThemeReset');
                 await page.keyboard.press('Tab');
                 assert.equal(await page.evaluate(() => document.activeElement.id), 'siteThemeCloseButton');
                 if (protocol === 'file') {
@@ -99,7 +94,7 @@ async function closeTutorial(page) {
                 await page.locator('#siteSettingsButton').click();
                 assert(await page.locator('#siteLanguagePanel').evaluate(e => e.hidden));
                 await page.keyboard.press('Escape');
-                if(file==='tricks/index.html'){await page.locator('#diceTab').click();assert(await page.locator('#dicePanel').isVisible());await page.locator('#siteSettingsButton').click();assert.equal(await page.locator('#siteDataExportTab').getAttribute('aria-selected'),'true');assert(await page.locator('#siteDataExportPanel').isVisible());await page.keyboard.press('Escape');}
+                if(file==='tricks/index.html'){await page.locator('#diceTab').click();assert(await page.locator('#dicePanel').isVisible());await page.locator('#siteSettingsButton').click();await page.locator('#siteDataExportTab').click();assert.equal(await page.locator('#siteDataExportTab').getAttribute('aria-expanded'),'true');assert(await page.locator('#siteDataExportPanel').isVisible());await page.keyboard.press('Escape');}
                 cases++;
             }
             assert.deepEqual(errors, []);

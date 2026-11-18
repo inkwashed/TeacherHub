@@ -907,4 +907,31 @@ body.app-page .app-shell:not(.is-presenting) .app-control-row > .app-actions {
 .note-line .check-marker-icon { display: inline-block; vertical-align: middle; margin: 0 3px; color: var(--accent); width: 22px; height: 22px; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; fill: none; }
 .note-line input { vertical-align: middle; width: 18px; height: 18px; margin: 0 5px; accent-color: var(--accent); }
 
-/* teacher-tools-release: teacher-tools-2026-11-17-mobile-home-icon-1 */
+/* Amber notice icon: CSS decoration survives translated/dynamic text replacement.
+   Keep the message semantics (including live regions) on the existing element. */
+:root :is(.notice, .storage-warning, .protocol-warning, #helpModal .privacy-note, #tutorialModal .privacy-note, body[data-tool="spinner"] .privacy-note):not(:empty) {
+    position: relative;
+    padding-inline-start: 40px;
+}
+:root :is(.notice, .storage-warning, .protocol-warning, #helpModal .privacy-note, #tutorialModal .privacy-note, body[data-tool="spinner"] .privacy-note):not(:empty)::before {
+    content: "!" / "";
+    position: absolute;
+    inset-inline-start: 12px;
+    top: 10px;
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    border: 1.5px solid currentColor;
+    border-radius: 50%;
+    color: var(--warning-text);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1;
+    pointer-events: none;
+}
+
+/* teacher-tools-release: teacher-tools-2026-11-18-update-arrow-1 */

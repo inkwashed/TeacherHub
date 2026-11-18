@@ -26,7 +26,7 @@ Put a genuinely common rule in the shared stylesheet that owns it. Keep a tool-o
 
 ## Offline preparation and updates
 
-Installation prepares all eight pages, the three shared stylesheets, local registry/toolbar/Profile/Selfie scripts, theme bootstrap, shared UI and school-settings modules, icons, four Bag of Tricks card-art atlases, and manifest (30 required files), even when users have only opened the install/offline page. Stylesheet URLs include the release identifier.
+Installation prepares all eight pages, the three shared stylesheets, local registry/toolbar/Profile/Selfie scripts, theme bootstrap, shared UI and school-settings modules, icons, four Bag of Tricks card-art atlases, and manifest (31 required files), even when users have only opened the install/offline page. Stylesheet URLs include the release identifier.
 
 The worker validates the complete download before writing it to its release cache. Missing/non-success responses, redirected resources, incorrect CSS/HTML content types, old release markers, and incomplete documents/stylesheets fail preparation. Readiness rechecks the required cache entries rather than assuming a successful installation remains complete. A failed refresh leaves an existing complete cache available; interrupted writes or evicted required files cannot pass readiness.
 
@@ -407,3 +407,112 @@ padded 180/192/512 PNGs. The 180px Apple icon is now an additional required offl
 resource (31 total). All pages declare it before preparation, and ordinary HTTP
 visits expose the shared manifest. Source/derivative ownership, rebuild commands
 and the complete future-logo checklist are documented in shared-assets.md.
+
+### Header edge alignment
+
+Teacher Tools' shared `site.css` header follows the Let's EiGo! Home edge
+spacing reviewed in ActivityHub `home.css`, without a runtime dependency. The
+inner shell is capped at 1144px including 24px side padding, yielding a 1096px
+content span on large desktops. Below that cap, side padding is 24px; at 620px
+and below it is 20px; at 380px and below it is 12px. The header is 56px tall
+with 6px vertical padding, a 38px identity mark and an 8px mark/title gap
+(6px at widths up to 380px, matching the reference compact spacing).
+The left identity/back control and right permanent-action group share these
+edges. The compact-menu button precedes language/Profile in DOM and keyboard
+order, keeping the avatar at the outer right edge on phones too. Tab follows
+that DOM order; Arrow Down on the compact-menu button opens/focuses its first
+link, and Escape returns focus to the trigger. Tool shortcuts and their existing compact-menu behavior remain local
+to Teacher Tools. Typography and the Home domain line retain their identity.
+
+Change the owning shared rules rather than adding per-page offsets. Run
+`node scripts/check_header_alignment.cjs` for edge, height, title position and
+containment across eight pages, both languages and widths 320–1920px, and the
+existing toolbar check for menus/Profile, saved shortcuts and direct-file use.
+
+Profile keeps Name and the theme circles on the left. My tools, Sync, Export
+and custom-color inputs use the wider right-hand editor workspace. The theme picker has no fixed width
+cap: six 44px hit targets with 4px gaps fit on one row when space permits and
+wrap naturally on narrower columns. The portrait column, small-screen stacking,
+22px previews and accessible focus rings remain unchanged. Run
+`node scripts/check_profile_theme_row.cjs` for bilingual 320–1280px layout,
+selection/focus and touch-target checks.
+
+Header permanent-action order is now Language → File-sync status → Profile,
+with the compact navigation button preceding that group. The Profile avatar
+still defines the right edge. The sync status uses shared SVG artwork and
+44px button sizing, localized hover/accessibility text, hollow/filled checks
+and distinct attention symbols. See shared-assets.md for state semantics and
+engine ownership. All code remains in existing required offline assets.
+
+Profile workspace layout: shared `site.css` uses portrait + settings + editor
+columns on desktop, and a full-row editor below the settings up to 860px. The
+settings column has a 284px desktop minimum to fit all six theme hit areas; the editor flexes without imposing
+a mobile overflow width. The single existing Profile template relocates its
+My tools, custom-color and data editors once before mounting; Name and the
+main palette stay in place. Keep this structure shared across every page;
+see shared-assets.md for draft, focus and public-entry-point behavior.
+
+Profile Name uses a wrapping flex row: input (80px minimum) followed by two 44px
+icon-only actions with an 8px gap. The actions stay together when wrapping.
+Do not shrink touch targets to keep the row on narrow phone layouts; localized
+`aria-label` and title text must remain even though button captions are omitted.
+
+The title-side offline-status link uses `data-shared-icon="offline-status"`. It
+keeps application-cache readiness separate from the File Sync status button on
+the right. State geometry/style belongs in shared `tools.js`/`site.css`, never
+local app copies. The shared runtime only verifies existing registrations; it
+does not initiate first-time downloads. See shared-assets.md for status meanings
+and update behavior. Narrow headers (up to 480px) wrap into two rows rather than
+shrinking targets or hiding app versions; this is the responsive exception to
+the normal 56px single-row header.
+
+Profile File Sync, Export & Import Backup, and Install & offline use share the
+full-width `.site-profile-setting-link` row style: a text label left, a canonical
+24px SVG right, at least a 44px target (64px row minimum), themed hover/focus,
+and expanded selection for editor buttons. Keep Install as a link and the other
+two as buttons; do not reintroduce nested pencil buttons. My tools retains its
+separate preview/pencil behavior.
+
+## Install/offline guidance (November 2026)
+
+`offline/index.html` owns the English/Japanese user instructions. Keep the three
+preparation steps separate from optional web app installation: an icon or standalone
+window does not prove offline readiness. Users should confirm **Ready** in the
+browser/app they will use, then test without internet. That page currently starts
+preparation automatically when supported; the preparation button is the retry path.
+
+The update paragraph describes **Check for updates → Apply update**, saving work
+first and reloading other open pages afterward. Refreshing an app through its title
+does not activate a waiting update. Installation cards contain only platform-specific
+web app installation steps; avoid duplicating backup and File Sync guidance in them.
+
+The backup shortcut opens Profile → **Export & Import Backup**, with a three-step
+export/restore/verify workflow. Cached tool files are not teacher-data backups.
+External services still need internet, and browser eviction remains possible.
+Direct-file limitations remain described in the status panel; use HTTP/HTTPS for
+preparation and updates.
+
+Platform wording was checked against official [Apple iPhone guidance](https://support.apple.com/en-az/guide/iphone/iphea86e5236/26/ios/26),
+[Safari web apps on Mac](https://support.apple.com/en-us/104996),
+[Chrome web apps](https://support.google.com/chrome/answer/9658361?hl=en) and
+[Edge app guidance](https://support.microsoft.com/en-gb/edge/install-manage-or-uninstall-apps-in-microsoft-edge).
+Menu labels vary by OS/browser version; keep optional controls conditional.
+
+`scripts/check_offline_copy.cjs` checks both languages at phone/desktop widths with
+four emulated platform identities, current Profile backup access and focus return.
+Emulation does not verify native installation menus or iPad/iPhone standalone
+storage/lifecycle; those require physical-device checks.
+
+The shared toolbar right-aligns My Tools within its flexible middle column, so
+shortcuts grow leftward toward the identity. The title-side cloud uses the identity
+row’s vertical centering without a Home-specific upward offset.
+
+## Offline guidance styling — November 18, 2026
+
+Offline remains a Home-style guidance page, rather than an `app-page` activity conversion. Its local styles now follow Home's 1060px content width, responsive gutters, open introduction, 34–58px title, 20px introductory copy, 26px section headings, 20px panel corners, and pill action buttons with at least 44px height. Device recommendations use an in-flow badge to avoid collisions with longer headings. Existing themes, instructions, readiness/progress states, installation/update behavior and Profile backup entry point are retained. All Offline-specific visuals stay in `offline/index.html`; no new shared or runtime dependency was introduced.
+
+Current checks passed: 16 emulated-device/language/size instruction and backup-focus cases; 12 light/dark, English/Japanese, phone/tablet/desktop styling cases; offline resource fault/repair and prior-cache update followed by all-page Profile access offline. Visual review covered phone and desktop; native installation dialogs and physical iPad/Safari still require device testing.
+
+## Amber notice icon
+
+Shared `components.css` adds a decorative circled exclamation marker before notice, storage-warning and protocol-warning text, plus amber help/tutorial and Spinner privacy notes. The CSS decoration survives translation and dynamic text replacement, leaves live-region semantics unchanged, reserves space for wrapped text, uses the warning text color, and stays absent on empty notices. Tinted form panels and non-amber privacy panels are not treated as notices. Verified 32 page/theme/size cases and a real Timer settings notice; offline update/fault checks passed.

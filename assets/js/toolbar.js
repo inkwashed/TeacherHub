@@ -7,17 +7,23 @@
     const tool=tools.catalog.find(tool=>tool.id===pageId);
     const root=new URL('../../',mount.src);
     const home=new URL('index.html',root).href;
+    const identityHref=new URL(tool?tool.href:pageId==='offline'?'offline/index.html':'index.html',root).href;
     const header=document.createElement('header');header.className='site-header';header.dataset.teacherToolsHeader='';header.dataset.page=pageId;
     header.innerHTML=`<div class="site-header-inner">
         <div class="site-identity">
             ${pageId!=='home'?`<a class="site-back" href="${home}" aria-label="Home" title="Home"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 6-6 6 6 6M8 12h12"/></svg></a>`:''}
-            <a class="site-brand" href="${home}" aria-label="Home">
+            <a class="site-brand" href="${identityHref}" aria-label="Reload page">
                 <span class="site-brand-mark" aria-hidden="true">${tool?tool.icon:'<img alt="" width="42" height="42">'}</span>
                 <span class="site-brand-copy">${tool?'<h1 id="siteAppName" class="site-brand-title"></h1>':'<span id="siteAppName" class="site-brand-title"></span>'}<span id="siteAppVersion" class="site-app-version" hidden></span>${pageId==='home'?'<span class="site-brand-domain">tools.letseigo.com</span>':''}</span>
             </a>
+            <a id="siteOfflineStatusButton" class="site-offline-status" href="${new URL('offline/index.html',root).href}" data-offline-state="online" aria-label="Online. Open Install &amp; offline use" title="Online. Open Install &amp; offline use"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="offline-status"></svg></a>
         </div>
         <nav id="sitePinnedTools" class="site-pinned-tools" aria-label="My tools"></nav>
-        <div class="site-header-actions"><button type="button" id="siteLanguageButton" class="site-language-button" aria-label="Open language settings" aria-expanded="false" aria-controls="siteLanguagePanel" title="Language" data-i18n-aria-label="language.open" data-i18n-title="language.title">
+        <div class="site-header-actions"><button type="button" id="siteMobileMenuButton" class="site-mobile-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="siteToolsMenu" data-i18n-aria-label="nav.open">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M5 7h14M5 12h14M5 17h14" />
+                    </svg>
+                </button><button type="button" id="siteLanguageButton" class="site-language-button" aria-label="Open language settings" aria-expanded="false" aria-controls="siteLanguagePanel" title="Language" data-i18n-aria-label="language.open" data-i18n-title="language.title">
                     <svg viewBox="0 0 32 32" aria-hidden="true">
                         <path d="M16 17H9L5 20V17Q2 17 2 14V5Q2 2 5 2H16Q19 2 19 5V11" />
                         <path d="M17 13H27Q30 13 30 16V25Q30 28 27 28H26L22 31V28H17Q14 28 14 25V16Q14 13 17 13Z" fill="var(--bg)" />
@@ -25,13 +31,9 @@
                     </svg>
                 </button>
 
+                 <button type="button" id="siteSyncStatusButton" class="site-sync-status" data-sync-state="checking" aria-label="Checking file sync status" title="Checking file sync status"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="file-sync"></svg></button>
                  <button type="button" id="siteSettingsButton" class="site-settings-button" aria-label="Open profile settings" aria-haspopup="dialog" aria-expanded="false" aria-controls="siteThemePanel" title="Profile" data-i18n-aria-label="profile.open" data-i18n-title="profile.title">
                     <span id="siteProfileHeaderAvatar" class="site-profile-header-avatar" aria-hidden="true"></span>
-                </button>
-                 <button type="button" id="siteMobileMenuButton" class="site-mobile-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="siteToolsMenu" data-i18n-aria-label="nav.open">
-                    <svg viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M5 7h14M5 12h14M5 17h14" />
-                    </svg>
                 </button>
 </div>
         <nav id="siteToolsMenu" class="site-tools-menu" aria-label="My tools" hidden></nav>
@@ -52,13 +54,15 @@
     header.querySelector('.site-brand-mark img')?.setAttribute('src',new URL('assets/pwa/teacher-tools-icon.svg',root).href);
     function initialize() {
         const ui=window.TeacherToolsUI;
-        ui.registerTranslations({en:{'toolbar.home':'Home','toolbar.all':'All tools on Home','toolbar.customize':'Customize My tools','toolbar.menu':'My tools','toolbar.offline':'Offline'},ja:{'toolbar.home':'ホーム','toolbar.all':'ホームですべてのツールを見る','toolbar.customize':'マイツールを設定','toolbar.menu':'マイツール','toolbar.offline':'オフライン'}});
+        ui.registerTranslations({en:{'toolbar.home':'Home','toolbar.reload':'Reload {name}','toolbar.all':'All tools on Home','toolbar.customize':'Customize My tools','toolbar.menu':'My tools','toolbar.offline':'Offline'},ja:{'toolbar.home':'ホーム','toolbar.reload':'{name}を再読み込み','toolbar.all':'ホームですべてのツールを見る','toolbar.customize':'マイツールを設定','toolbar.menu':'マイツール','toolbar.offline':'オフライン'}});
         const originalHeader=document.querySelector('.app-shell .app-header');
         const version=document.querySelector('.app-shell[data-app-version]')?.dataset.appVersion || originalHeader?.querySelector('.version-badge')?.textContent?.trim();
         if(tool&&version){document.body.classList.add('has-toolbar-identity');const badge=header.querySelector('#siteAppVersion');badge.textContent=version;badge.hidden=false;}
         function render() {
             header.querySelector('#siteAppName').textContent=tool?tools.name(tool):pageId==='home'?'Teacher Tools':ui.translate('toolbar.offline');
-            header.querySelector('.site-brand').setAttribute('aria-label',ui.translate('toolbar.home'));
+            const brand=header.querySelector('.site-brand'),label=tool?tools.name(tool):ui.translate('toolbar.offline');
+            brand.setAttribute('aria-label',pageId==='home'?ui.translate('toolbar.home'):ui.translate('toolbar.reload','Reload {name}',{name:label}));
+            brand.title=brand.getAttribute('aria-label');
             header.querySelector('#siteAppName').title=tool?tools.name(tool):pageId==='home'?'Teacher Tools':ui.translate('toolbar.offline');
             if(pageId==='home')header.querySelector('.site-brand').setAttribute('aria-current','page');
             const back=header.querySelector('.site-back');if(back){back.title=ui.translate('toolbar.home');back.setAttribute('aria-label',ui.translate('toolbar.home'));}
@@ -105,4 +109,4 @@
     }
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initialize,{once:true});else initialize();
 })();
-/* teacher-tools-release: teacher-tools-2026-11-17-mobile-home-icon-1 */
+/* teacher-tools-release: teacher-tools-2026-11-18-update-arrow-1 */

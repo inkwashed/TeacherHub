@@ -88,8 +88,8 @@ window.TeacherToolsCalendarValidate = value => {
             "language.progress": "English and Japanese are available across all current Teacher Tools pages.",
             "backup.help": "Choose which saved data to include in one local backup file. Nothing is uploaded.",
             "backup.tabsAria": "Backup and synchronization options",
-            "backup.tabExport": "Export",
-            "backup.tabFile": "File sync",
+            "backup.tabExport": "Export & Import Backup",
+            "backup.tabFile": "File Sync",
             "backup.summaryAria": "Saved Teacher Tools data",
             "backup.exportAll": "Export all data",
             "backup.import": "Import backup",
@@ -204,7 +204,7 @@ window.TeacherToolsCalendarValidate = value => {
             "language.progress": "現在のTeacher Tools全ページを英語と日本語で利用できます。",
             "backup.help": "保存済みデータを選び、1つのローカルバックアップファイルにまとめます。データはアップロードされません。",
             "backup.tabsAria": "バックアップと同期のオプション",
-            "backup.tabExport": "書き出し",
+            "backup.tabExport": "バックアップの書き出し・読み込み",
             "backup.tabFile": "ファイル同期",
             "backup.summaryAria": "保存済みのTeacher Toolsデータ",
             "backup.exportAll": "すべてのデータを書き出す",
@@ -396,6 +396,7 @@ window.TeacherToolsCalendarValidate = value => {
     function storageSet(key, value) {
         try {
             localStorage.setItem(key, value);
+            queueMicrotask(refreshLinkedDataIndicator);
             return true;
         } catch (error) {
             return false;
@@ -405,6 +406,7 @@ window.TeacherToolsCalendarValidate = value => {
     function storageRemove(key) {
         try {
             localStorage.removeItem(key);
+            queueMicrotask(refreshLinkedDataIndicator);
             return true;
         } catch (error) {
             return false;
@@ -627,9 +629,13 @@ window.TeacherToolsCalendarValidate = value => {
         ));
     }
 
+    registerTranslations({"en": {"syncIndicator.disabled": "Autosave disabled — no file linked. Open File sync.", "syncIndicator.unsupported": "Automatic file saving is unavailable in this browser. Open File sync.", "syncIndicator.checking": "Checking file sync status…", "syncIndicator.pending": "Data not yet saved to the linked file. Open File sync.", "syncIndicator.saved": "Data matches the linked file. Last saved: {time}. Open File sync.", "syncIndicator.matched": "Data matches the linked file; save time unavailable. Open File sync.", "syncIndicator.saving": "File sync in progress…", "syncIndicator.permission": "Autosave paused — file access required. Open File sync.", "syncIndicator.conflict": "Linked file changed — review before saving. Open File sync.", "syncIndicator.error": "File sync needs attention — changes may not be saved. Open File sync."}, "ja": {"syncIndicator.disabled": "自動保存は無効です。ファイルが接続されていません。ファイル同期を開く。", "syncIndicator.unsupported": "このブラウザではファイルへの自動保存を利用できません。ファイル同期を開く。", "syncIndicator.checking": "ファイル同期の状態を確認中…", "syncIndicator.pending": "変更はまだリンク済みファイルに保存されていません。ファイル同期を開く。", "syncIndicator.saved": "リンク済みファイルと一致しています。最終保存：{time}。ファイル同期を開く。", "syncIndicator.matched": "リンク済みファイルと一致しています。保存時刻は不明です。ファイル同期を開く。", "syncIndicator.saving": "ファイル同期を処理中…", "syncIndicator.permission": "自動保存は停止中です。ファイルへのアクセス許可が必要です。ファイル同期を開く。", "syncIndicator.conflict": "リンク済みファイルに変更があります。保存前に確認してください。ファイル同期を開く。", "syncIndicator.error": "ファイル同期を確認してください。変更が保存されていない可能性があります。ファイル同期を開く。"}});
+
     const LINKED_AUTOSAVE_INTERVAL_MS = 15 * 60 * 1000;
     const linkedDataState = {
         autosaveStartedAt: Date.now(),
+        initializing: true,
+        lastError: false,
         supported: location.protocol !== "file:" && "showOpenFilePicker" in window && "showSaveFilePicker" in window && "indexedDB" in window,
         handle: null,
         fileFingerprint: null,
@@ -692,7 +698,41 @@ window.TeacherToolsCalendarValidate = value => {
         });
     }
 
+    function refreshLinkedDataIndicator() {
+        const button = document.getElementById('siteSyncStatusButton');
+        if (!button) return;
+        let state = 'disabled', key = 'syncIndicator.disabled', time = '';
+        if (!linkedDataState.supported) { state = 'unsupported'; key = 'syncIndicator.unsupported'; }
+        else if (linkedDataState.initializing) { state = 'checking'; key = 'syncIndicator.checking'; }
+        else if (linkedDataState.lastError && !linkedDataState.handle) { state = 'error'; key = 'syncIndicator.error'; }
+        else if (linkedDataState.handle) {
+            if (linkedDataState.busy) { state = 'saving'; key = 'syncIndicator.saving'; }
+            else if (linkedDataState.permissionRequired) { state = 'permission'; key = 'syncIndicator.permission'; }
+            else if (linkedDataState.conflict || linkedDataState.externalChange) { state = 'conflict'; key = 'syncIndicator.conflict'; }
+            else if (linkedDataState.lastError) { state = 'error'; key = 'syncIndicator.error'; }
+            else {
+                try {
+                    if (linkedDataFingerprint() !== linkedDataState.localFingerprint) { state = 'pending'; key = 'syncIndicator.pending'; }
+                    else if (linkedDataState.fileFingerprint === null) { state = 'pending'; key = 'syncIndicator.pending'; }
+                    else {
+                        state = 'saved';
+                        const date = new Date(linkedDataState.lastSavedAt);
+                        if (linkedDataState.lastSavedAt && Number.isFinite(date.getTime())) {
+                            time = date.toLocaleString(document.documentElement.lang || 'en'); key = 'syncIndicator.saved';
+                        } else key = 'syncIndicator.matched';
+                    }
+                } catch { state = 'error'; key = 'syncIndicator.error'; }
+            }
+        }
+        const text = translate(key, key, {time});
+        button.dataset.syncState = state;
+        button.title = text;
+        button.setAttribute('aria-label', text);
+    }
+
     function setLinkedDataStatus(message, error = false) {
+        linkedDataState.lastError = error;
+        refreshLinkedDataIndicator();
         const status = document.getElementById("siteLinkedDataStatus");
         if (!status) return;
         status.textContent = message;
@@ -700,6 +740,7 @@ window.TeacherToolsCalendarValidate = value => {
     }
 
     function updateLinkedDataControls() {
+        refreshLinkedDataIndicator();
         const name = document.getElementById("siteLinkedDataFile");
         const linked = Boolean(linkedDataState.handle);
         if (name) name.textContent = linked
@@ -940,9 +981,20 @@ window.TeacherToolsCalendarValidate = value => {
             setLinkedDataStatus(translate("linked.permission", `Automatic saving is paused. Choose Allow file access to approve writing to ${linkedDataState.handle.name}; access may need renewing after reopening the site.`, { name: linkedDataState.handle.name }));
             return;
         }
+        const permissionRecovered = linkedDataState.permissionRequired;
+        linkedDataState.permissionRequired = false;
         const payload = await readLinkedDataFile();
         const fileNow = linkedDataFingerprint(payload);
-        if (linkedDataState.fileFingerprint === null || fileNow === linkedDataState.fileFingerprint) return;
+        if (permissionRecovered) {
+            setLinkedDataStatus(translate('linked.pending', 'Browser changes are waiting to be saved to {name}.', {name: linkedDataState.handle.name}));
+            updateLinkedDataControls();
+        }
+        if (linkedDataState.fileFingerprint === null || fileNow === linkedDataState.fileFingerprint) {
+            if (linkedDataState.localFingerprint === linkedDataFingerprint() && fileNow === linkedDataState.fileFingerprint && (permissionRecovered || linkedDataState.lastError)) {
+                setLinkedDataStatus(translate('linked.ready', 'Linked to {name}.', {name: linkedDataState.handle.name}));
+            }
+            return;
+        }
         const localChanged = linkedDataFingerprint() !== linkedDataState.localFingerprint;
         if (localChanged) {
             linkedDataState.conflict = true;
@@ -972,6 +1024,11 @@ window.TeacherToolsCalendarValidate = value => {
 
     async function initLinkedDataFile() {
         if (!document.getElementById("siteLinkedDataCreate")) return;
+        document.getElementById('siteSyncStatusButton')?.addEventListener('click', event => { event.stopPropagation(); window.TeacherToolsProfile.openSync('file', event.currentTarget); });
+        window.addEventListener('teacher-tools:languagechange', refreshLinkedDataIndicator);
+        window.addEventListener('storage', refreshLinkedDataIndicator);
+        window.addEventListener('teacher-tools:toolschange', () => queueMicrotask(refreshLinkedDataIndicator));
+        if (!linkedDataState.supported) linkedDataState.initializing = false;
         if (!linkedDataState.supported) {
             updateLinkedDataControls();
             setLinkedDataStatus(translate("linked.unsupported", "Linked files are not supported in this browser. Backup export and import still work normally."), true);
@@ -1019,12 +1076,14 @@ window.TeacherToolsCalendarValidate = value => {
         } catch (error) {
             setLinkedDataStatus(translate("linked.error", "The linked file could not be accessed."), true);
         }
+        linkedDataState.initializing = false;
         updateLinkedDataControls();
-        linkedDataState.timer = window.setInterval(linkedDataAutosaveCheck, 5000);
+        const check = async () => { try { await linkedDataAutosaveCheck(); } finally { refreshLinkedDataIndicator(); } };
+        linkedDataState.timer = window.setInterval(check, 5000);
         document.addEventListener("visibilitychange", () => {
-            if (document.visibilityState === "visible") linkedDataAutosaveCheck();
+            if (document.visibilityState === "visible") check();
         });
-        window.addEventListener("focus", linkedDataAutosaveCheck);
+        window.addEventListener("focus", check);
     }
 
     function readFileText(file) {
@@ -1544,6 +1603,81 @@ window.TeacherToolsCalendarValidate = value => {
         if (preferredFocus) preferredFocus.focus();
     }
 
+    registerTranslations({"en": {"offlineIndicator.online": "Online — offline files not prepared. Open Install & offline use.", "offlineIndicator.ready": "Online — offline files verified and ready. Open Install & offline use.", "offlineIndicator.offline-ready": "Offline — prepared files are ready to use. External services still need internet. Open Install & offline use.", "offlineIndicator.offline": "Offline — no verified offline copy. Open Install & offline use.", "offlineIndicator.update": "Update ready to apply. Your current offline copy is available. Open Install & offline use.", "offlineIndicator.update-only": "Update files are ready. Open Install & offline use to review or apply them.", "offlineIndicator.preparing": "Preparing offline files or downloading an update… Open Install & offline use.", "offlineIndicator.incomplete": "Offline files are incomplete or could not be verified. Open Install & offline use to repair them.", "offlineIndicator.update-error": "Update could not be verified; your current offline copy is still available. Open Install & offline use.", "offlineIndicator.checking": "Checking offline files… Open Install & offline use.", "offlineIndicator.unavailable": "Offline installation requires the hosted site or local server and service-worker support. Open Install & offline use."}, "ja": {"offlineIndicator.online": "オンラインです。オフライン用ファイルは未準備です。インストールとオフライン利用を開く。", "offlineIndicator.ready": "オンラインです。オフライン用ファイルは確認済みで準備完了です。インストールとオフライン利用を開く。", "offlineIndicator.offline-ready": "オフラインです。準備済みのファイルを利用できます。外部サービスにはインターネットが必要です。インストールとオフライン利用を開く。", "offlineIndicator.offline": "オフラインです。確認済みのオフライン用ファイルがありません。インストールとオフライン利用を開く。", "offlineIndicator.update": "適用できる更新があります。現在のオフライン用ファイルは利用できます。インストールとオフライン利用を開く。", "offlineIndicator.update-only": "更新ファイルの準備ができています。インストールとオフライン利用を開いて確認・適用してください。", "offlineIndicator.preparing": "オフライン用ファイルの準備、または更新のダウンロード中です。インストールとオフライン利用を開く。", "offlineIndicator.incomplete": "オフライン用ファイルが不足しているか、確認できませんでした。インストールとオフライン利用を開いて準備し直してください。", "offlineIndicator.update-error": "更新を確認できませんでした。現在のオフライン用ファイルは利用できます。インストールとオフライン利用を開く。", "offlineIndicator.checking": "オフライン用ファイルを確認中です。インストールとオフライン利用を開く。", "offlineIndicator.unavailable": "オフラインの準備には公開サイトまたはローカルサーバーと、サービスワーカー対応ブラウザが必要です。インストールとオフライン利用を開く。"}});
+    registerTranslations({en:{'offlineIndicator.reload':'A newer version is active. Save your work, then reload or open Install & offline use.'},ja:{'offlineIndicator.reload':'新しいバージョンが有効です。作業を保存してから再読み込みするか、インストールとオフライン利用を開いてください。'}});
+    function initOfflineIndicator() {
+        const button = document.getElementById('siteOfflineStatusButton');
+        if (!button) return;
+        const supported = /^https?:$/.test(location.protocol) && 'serviceWorker' in navigator;
+        const state = {ready:false, update:false, reload:false, failed:false, checking:false, preparing:false, manualPreparing:false, busy:false, again:false};
+        let registration = null, lastUpdateCheck = 0;
+        const observed = new WeakSet();
+        function render() {
+            const online = navigator.onLine !== false;
+            let key = !supported ? 'unavailable' : state.preparing ? 'preparing' : state.update ? (state.reload ? 'reload' : state.ready ? 'update' : 'update-only') : state.failed ? (state.ready ? 'update-error' : 'incomplete') : state.checking && !state.ready ? 'checking' : state.ready ? (online ? 'ready' : 'offline-ready') : online ? 'online' : 'offline';
+            button.dataset.offlineState = key;
+            button.dataset.connection = online ? 'online' : 'offline';
+            const text = translate('offlineIndicator.'+key, key);
+            button.title = text; button.setAttribute('aria-label', text);
+        }
+        function ask(worker) {
+            if (!worker) return Promise.resolve({ready:false});
+            return new Promise((resolve,reject) => {
+                const channel = new MessageChannel();
+                const timer = setTimeout(() => { channel.port1.close(); reject(new Error('Offline status timeout')); }, 8000);
+                channel.port1.onmessage = event => { if (event.data?.type === 'PROGRESS') return; clearTimeout(timer); channel.port1.close(); resolve(event.data); };
+                try { worker.postMessage({type:'STATUS'}, [channel.port2]); } catch(error) { clearTimeout(timer); channel.port1.close(); reject(error); }
+            });
+        }
+        function watch(worker) {
+            if (!worker || observed.has(worker)) return;
+            observed.add(worker); worker.addEventListener('statechange', () => refresh(false));
+        }
+        async function refresh(checkUpdates = false) {
+            render();
+            if (!supported || document.visibilityState === 'hidden') return;
+            if (state.busy) { state.again = true; return; }
+            state.busy = true;
+            try {
+                const reg = await navigator.serviceWorker.getRegistration('/');
+                if (!reg) { state.ready=false; state.update=false; state.reload=false; state.failed=false; state.checking=false; state.preparing=state.manualPreparing; return; }
+                if (registration !== reg) { registration=reg; reg.addEventListener('updatefound', () => { watch(reg.installing); refresh(false); }); }
+                watch(reg.installing); watch(reg.waiting); watch(reg.active);
+                state.checking = true; state.preparing = !!reg.installing || state.manualPreparing; render();
+                const active = reg.active ? await ask(reg.active) : {ready:false};
+                state.ready = active.ready === true;
+                state.failed = !!reg.active && !state.ready;
+                state.update = false; state.reload = false;
+                if (reg.waiting) {
+                    const waiting = await ask(reg.waiting);
+                    state.update = waiting.ready === true;
+                    state.failed ||= !state.update;
+                } else {
+                    const pageRelease = document.querySelector('meta[name="teacher-tools-release"]')?.content;
+                    state.update = state.ready && !!pageRelease && active.release !== pageRelease;
+                    state.reload = state.update;
+                }
+                state.preparing = !!reg.installing || state.manualPreparing;
+                state.checking = false;
+                // Never register a worker or request CACHE_NOW here: first visits remain online-only.
+                if (checkUpdates && navigator.onLine !== false && Date.now()-lastUpdateCheck > 15*60*1000) {
+                    lastUpdateCheck=Date.now();
+                    reg.update().then(() => refresh(false)).catch(() => {});
+                }
+            } catch { state.ready=false; state.update=false; state.failed=true; state.checking=false; state.preparing=false; }
+            finally { state.busy=false; render(); if(state.again){state.again=false; queueMicrotask(() => refresh(false));} }
+        }
+        window.addEventListener('online', () => refresh(true));
+        window.addEventListener('offline', () => refresh(false));
+        window.addEventListener('focus', () => refresh(true));
+        window.addEventListener('teacher-tools:languagechange', render);
+        window.addEventListener('teacher-tools:offlinechange', event => { state.manualPreparing=!!event.detail?.preparing; state.preparing=state.manualPreparing||!!registration?.installing; render(); if(!state.manualPreparing)refresh(false); });
+        document.addEventListener('visibilitychange', () => { if(document.visibilityState==='visible')refresh(true); });
+        if(supported)navigator.serviceWorker.addEventListener('controllerchange', () => refresh(false));
+        setInterval(() => refresh(true), 120000);
+        refresh(true);
+    }
+
     function closeSiteOverlays() {
         const toolsMenu = document.getElementById("siteToolsMenu");
         const languagePanel = document.getElementById("siteLanguagePanel");
@@ -1603,6 +1737,14 @@ window.TeacherToolsCalendarValidate = value => {
         }
 
         menuButtons.forEach(button => {
+            // Compact trigger precedes the permanent actions. Tab follows DOM order;
+            // ArrowDown explicitly enters its navigation panel.
+            button.addEventListener("keydown", event => {
+                if (event.key !== "ArrowDown" || !toolsMenu) return;
+                event.preventDefault();
+                setToolsMenu(true);
+                toolsMenu.querySelector('a[href], button:not(:disabled)')?.focus();
+            });
             button.addEventListener("click", event => {
                 event.stopPropagation();
                 setToolsMenu(toolsMenu ? toolsMenu.hidden : false);
@@ -1807,10 +1949,11 @@ window.TeacherToolsCalendarValidate = value => {
         false
     );
     initSiteHeader();
+    initOfflineIndicator();
     initSiteDataBackup();
     initModals();
     initTooltips();
 })();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-17-mobile-home-icon-1 */
+/* teacher-tools-release: teacher-tools-2026-11-18-update-arrow-1 */

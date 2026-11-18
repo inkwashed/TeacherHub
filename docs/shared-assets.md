@@ -90,7 +90,7 @@ Backup and restore now occupy the shared Profile's Sync column rather than a sep
 
 ## Compact theme controls — November 12, 2026
 
-Color choices now sit directly under Name beside the selfie, including custom-color controls when selected. The full-width theme footer is removed. The six local palette previews are 22px circles with a 135-degree primary/tertiary split and a thin secondary divider; the existing third preview color is retained (Custom uses its chosen background). Each circle keeps a transparent 44px hit area, localized radio name/title, selection ring, keyboard focus and forced-color styling. The compact three-by-two arrangement can wrap further if the name column is narrower. No theme colors, stored choices, or Sync behavior changed.
+Color choices now sit directly under Name beside the selfie, including custom-color controls when selected. The full-width theme footer is removed. The six local palette previews are 22px circles with a 135-degree primary/tertiary split and a thin secondary divider; the existing third preview color is retained (Custom uses its chosen background). Each circle keeps a transparent 44px hit area, localized radio name/title, selection ring, keyboard focus and forced-color styling. The six choices use a single row when the Name/theme column has room, and wrap naturally on narrower layouts. There is no fixed three-by-two width cap. No theme colors, stored choices, or Sync behavior changed.
 
 Passed 96 HTTP/file component cases across eight pages, both languages and three widths, including 576 theme selections, under-Name placement, circle geometry, custom editing/reset, saved preferences and focus wrapping. The 48-case name/avatar regression suite passed. Phone and desktop screenshots were visually reviewed. Offline preparation, missing/stale asset rejection, and updating a captured prior cache passed; all eight pages reopened Profile offline with the 22px circles. Shared CSS/component/offline dependency and diff checks pass. Physical iPad Safari color-picker/focus and installed-app lifecycle checks remain.
 
@@ -356,3 +356,137 @@ The mobile-icon test checks all eight pages over HTTP/direct files, no offline
 cache prerequisite, Apple dimensions/opaque padding, manifest discovery/file
 guard and preservation of independent browser favicons. `check_styles.py` guards
 Apple links, PNG dimensions and the new offline dependency.
+
+### Header file-sync status
+
+The shared toolbar places `siteSyncStatusButton` between Language and Profile.
+Its canonical SVG geometry is `file-sync` in `tools.js`; appearance belongs in
+`site.css`. `ui.js` derives `data-sync-state`, title and accessible label from the
+actual linked-file engine, never from whether Profile is open. Shape/state:
+
+- disabled/unavailable/checking: muted hollow check; always actionable for details.
+- pending changes: themed hollow check.
+- saved: filled check, with the last successful save time in the localized tooltip.
+- saving/loading: dashed circle during file work.
+- permission/conflict/error: outlined exclamation with an explanation.
+
+Saved means current browser records match the last known linked-file snapshot,
+not that a cloud provider uploaded it. External checks remain periodic; this is
+not a continuous cloud-presence indicator. Shared storage writes, shortcut changes, cross-tab notifications and existing
+foreground polling refresh status. Failed writes and permission loss never
+produce a fresh successful-save timestamp.
+
+Click/tap/Enter opens Profile → File sync; Escape/close returns focus to the
+actual opener. The 44px status target remains usable even in disabled/unavailable
+states. Labels are English/Japanese, and important states differ in shape as
+well as color. The global Profile opener still defaults to Export for other
+existing callers; `openSync('file')` selects File sync.
+
+Run `check_sync_indicator.cjs`, `check_profile_sync.cjs`, the toolbar/alignment
+checks and offline verification. Real transitions are tested with isolated
+OPFS files and accelerated time; native file-picker/permission dialogs and
+physical iPad touch remain manual checks. No new offline dependency is needed.
+
+### Profile settings workspace (current layout)
+
+Name editing and all six theme circles stay directly beneath Name in the left
+column, without a color-theme pencil. Preset theme changes apply immediately.
+Clicking Custom opens its color inputs in the right workspace; selecting a preset
+closes that custom editor if it was active. Clicking an already-selected Custom
+reopens it after visiting another editor. Touch/pointer selection reveals the
+editor; keyboard radio navigation keeps its focus on the palette.
+
+My tools retains its pencil control. File Sync and Export & Import Backup are
+whole-row buttons selecting their right-hand editors; Install & offline use is
+a matching whole-row navigation link. Their right-aligned icons are the shared
+file-sync check, backup floppy disk and download mark. Hover, focus and expanded
+selection styling belongs to `.site-profile-setting-link` in `site.css`. Its default prompt asks the user to choose a
+setting. At widths up to 860px the editor spans the row below the portrait/settings.
+No nested dialogs or duplicated editor markup are introduced. `profile.js` owns
+selection, titles/focus/visibility; `site.css` owns the shared grid.
+
+My tools drafts survive switching sections. Save commits; Cancel/Escape while
+editing cancels, and closing Profile discards unfinished Name/tools drafts.
+Theme changes remain immediate, and Selfie/status feedback remains visible on
+the left. Pencil controls expose localized labels, `aria-controls` and
+`aria-expanded`. `openSync()` selects Export, `openSync('file')` selects File sync,
+and Home's My tools shortcut opens its editor. The horizontal Export/File sync
+tabs are replaced by separate settings entries. Saved data and file handles
+retain their formats and behavior; no data is reset or migrated.
+
+Run `check_profile_workspace.cjs` for the inline palette, custom editor activation,
+right/stacked layout, retained tools draft, both languages and status shortcut.
+Also run shared Profile, name, theme-row, sync, toolbar and offline checks.
+This supersedes older descriptions of inline My tools editing or permanently
+shown Sync tabs; the Name/preset-theme layout remains unchanged.
+
+Name editing remains inline on the left. Its Save/Cancel actions are icon-only
+check and X buttons with localized accessible labels and hover titles. They
+retain 44px targets and sit to the right of the flexible input, wrapping below
+only when the name column is too narrow. Enter, Escape, save validation and
+Cancel behavior are unchanged. The shared Profile name check covers this layout.
+
+The inline palette and My tools preview omit visible section headings. Their
+existing heading IDs remain visually clipped for accessible section names; do
+not remove those references or the radio/button accessible labels. Editor
+headings on the right remain visible when a setting is opened.
+
+### Header connection and offline-files status
+
+`siteOfflineStatusButton` is a separate link beside the site/app title. Its cloud
+artwork is the canonical `offline-status` shared icon in `tools.js`; `site.css`
+owns badge/slash styling, and `ui.js` owns readiness/update state. Clicking opens
+Install & offline use, not Profile and not File sync. The status concerns cached
+application files, not teacher-data backups. All existing assets remain in the
+same offline inventory; there is no new remote dependency.
+
+- Hollow cloud: browser reports online; no prepared offline copy.
+- Cloud/check: active worker verified its complete required cache.
+- Cloud/check with slash: disconnected, with a verified offline copy.
+- Cloud/up arrow: verified waiting update, or a newer active version awaiting page reload.
+- Cloud/down arrow or dotted outline: preparing/downloading/checking.
+- Cloud/exclamation: incomplete files or verification failure; tooltip distinguishes
+  failed updates from a still-usable current offline copy.
+- Slashed cloud without check: disconnected without verified offline files.
+
+The engine only looks up existing service-worker registrations. It never
+registers a worker, sends CACHE_NOW or applies updates automatically. On existing
+installations, it observes update/state/controller changes, verifies active and
+waiting workers independently through STATUS, and checks for updates online
+on entry/focus (rate-limited per page to 15 minutes). Visible pages revalidate
+readiness every two minutes and on connection/focus/visibility events. The
+offline page announces explicit preparation start/finish to refresh its header.
+Incomplete waiting files never become an update-ready icon; a corrupt active
+cache never becomes an offline-ready check. No icon is a perpetual storage
+guarantee: browser eviction can occur between checks.
+
+Online/offline uses the browser's connection hint, not a probe that guarantees
+reachability of Google or other services. No web-app-installed flag or local
+storage preference can substitute for validated offline resources. Direct-file
+opening and unsupported browsers get an explanatory unavailable state. Labels
+are localized and accessible; the link has a 44px target and visible keyboard
+focus. No active page is forcibly reloaded when an update is found.
+
+At widths up to 480px, the header uses two rows so the title/version/cloud stay
+together and all permanent actions retain their targets. Outer side edges and
+Profile's right alignment are unchanged. Above that width it retains one row.
+
+`check_offline_indicator.cjs` exercises actual isolated workers/caches: online
+without automatic preparation, disconnection, first preparation, cache loss and
+repair, offline navigation, complete/incomplete waiting updates, explicit
+activation and reload, and direct-file limitations. Also run toolbar/header,
+shared-style and offline inventory/update checks. Physical iPhone/iPad Safari
+connection changes, storage eviction and update presentation remain device checks.
+
+The settings rows reuse the existing editor button IDs, localized labels and
+`aria-controls`/`aria-expanded` state. Each row is one native interactive element,
+with no nested buttons or separate pencil target. Install stays a native link
+with its existing file-safe destination. `check_profile_workspace.cjs` covers
+text-area clicks, keyboard activation, right-aligned icons, widths and Install
+navigation in English/Japanese across narrow/desktop layouts.
+
+App title/logo links target their own explicit `tool/index.html` so they can
+refresh a standalone web-app view. The offline-page title likewise targets
+`offline/index.html`. The separate back control still links to Home. The Home
+brand keeps its Home target. Reload labels are localized; paths remain file-safe
+and the worker maps explicit index navigation to the prepared canonical page.

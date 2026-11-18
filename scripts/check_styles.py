@@ -167,7 +167,7 @@ def check():
     home_links = home_page.local_links
     icons = json.loads(re.search(r'const icons = Object.freeze\((\{.*?\})\);', (ROOT / 'assets/js/tools.js').read_text(), re.S)[1])
     assert set(home_page.tool_icons) == {tool['id'] for tool in catalog}, 'Full Home catalogue must reuse registry icons'
-    used_icons = set(Page(component).shared_icons)
+    used_icons = set(Page(component).shared_icons) | set(Page((ROOT / "assets/js/toolbar.js").read_text()).shared_icons)
     assert used_icons <= set(icons), 'Profile uses an unknown shared icon'
     inline_owners = {}
     assert len({tool['id'] for tool in catalog}) == len(catalog), 'Tool IDs must be unique'

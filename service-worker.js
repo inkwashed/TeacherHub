@@ -1,4 +1,4 @@
-const RELEASE = "teacher-tools-2026-11-17-mobile-home-icon-1";
+const RELEASE = "teacher-tools-2026-11-18-update-arrow-1";
 const CACHE = `teacher-tools-${RELEASE}`;
 const APP_SHELL = [
   "/",

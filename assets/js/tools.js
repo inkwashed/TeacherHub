@@ -3,6 +3,9 @@
     'use strict';
     if(window.TeacherToolsTools)return;
     const icons = Object.freeze({
+    "backup": "<path d=\"M3 3h14l4 4v14H3V3Z\"/><path d=\"M7 3v6h9V3M7 21v-7h10v7M10 17h4\"/>",
+    "offline-status": "<path class=\"offline-cloud\" d=\"M6 17a4 4 0 0 1-.5-8 6.5 6.5 0 0 1 12-1.5A4.8 4.8 0 0 1 19 17H6Z\"/><path class=\"offline-slash\" d=\"m3 3 14 14\"/><g class=\"offline-badge\"><circle cx=\"18\" cy=\"17\" r=\"5\"/><path class=\"offline-check\" d=\"m15.5 17 1.7 1.7 3.3-3.4\"/><path class=\"offline-update\" d=\"M18 20v-6m-2 2 2-2 2 2\"/><path class=\"offline-download\" d=\"M18 14v6m-2-2 2 2 2-2\"/><path class=\"offline-alert\" d=\"M18 14.5v3m0 2v.1\"/></g>",
+    "file-sync": "<circle class=\"sync-circle\" cx=\"12\" cy=\"12\" r=\"9\"/><path class=\"sync-check\" d=\"m7.5 12 3 3 6-6\"/><path class=\"sync-attention\" d=\"M12 7v6m0 3v.1\"/>",
     "coin-standard": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9 8v8m6-8v8M9 12h6\"/>",
     "cat-head": "<path d=\"M4 5 8 8q4-2 8 0l4-3v9a8 8 0 0 1-16 0V5Z\"/><g fill=\"currentColor\" stroke=\"none\"><circle cx=\"8.5\" cy=\"12.5\" r=\"1.2\"/><circle cx=\"15.5\" cy=\"12.5\" r=\"1.2\"/><ellipse cx=\"12\" cy=\"15.5\" rx=\"1.5\" ry=\"1\"/></g>",
     "dog-head": "<path d=\"M5 14H4c-2 0-2-2-2-3a10 10 0 0 1 10-9 10 10 0 0 1 10 9c0 1 0 3-2 3h-1M5 8v7a7 7 0 0 0 14 0V8\"/><g fill=\"currentColor\" stroke=\"none\"><circle cx=\"8.5\" cy=\"11.5\" r=\"1.2\"/><circle cx=\"15.5\" cy=\"11.5\" r=\"1.2\"/><ellipse cx=\"12\" cy=\"16\" rx=\"1.7\" ry=\"1.2\"/></g>",
@@ -16,6 +19,8 @@
     "edit": "<path d=\"m4 16-1 5 5-1L21 7l-4-4L4 16Zm10-10 4 4M4 16l4 4\"/>",
     "confirm": "<path d=\"m5 12 4 4L19 6\"/>",
     "cancel": "<path d=\"m6 6 12 12M18 6 6 18\"/>",
+    "install-app": "<rect x=\"3\" y=\"7\" width=\"18\" height=\"12\" rx=\"2\"/><path d=\"M12 3v10m-3-3 3 3 3-3M8 22h8m-4-3v3\"/>",
+    "check-updates": "<path transform=\"rotate(180 12 12)\" d=\"M20 9a8 8 0 1 0-1 8M20 3v6h-6\"/><path d=\"M12 7v5l3 2\"/>",
     "download": "<path d=\"M12 3v10M8 9l4 4 4-4M5 16.5v3h14v-3\"/>"
 });
     const catalog = [
@@ -215,12 +220,12 @@
         }
         function commit(next) {draft=next;statusKey='';renderEditor();}
         const editor=document.getElementById('siteNavigationEditor'),display=document.getElementById('siteNavigationDisplay'),edit=document.getElementById('siteNavigationEdit');
-        function setEditing(active,focus=true){draft=active?read():null;statusKey='';renderEditor();editor.hidden=!active;display.hidden=active;edit.setAttribute('aria-expanded',String(active));if(focus)(active?list.querySelector('button'):edit)?.focus();}
+        function setEditing(active,focus=true){draft=active?(draft||read()):null;statusKey='';renderEditor();editor.hidden=!active;display.hidden=false;edit.setAttribute('aria-expanded',String(active));window.dispatchEvent(new CustomEvent('teacher-tools:navigationediting',{detail:{active}}));if(focus)(active?list.querySelector('button'):edit)?.focus();}
         edit.addEventListener('click',()=>setEditing(true));
         document.getElementById('siteNavigationDone').addEventListener('click',()=>{if(save(editingState())){setEditing(false);}else{statusKey='toolbar.failed';renderEditor();}});
         document.getElementById('siteNavigationCancel').addEventListener('click',()=>setEditing(false));
         const dialog=document.getElementById('siteThemePanel');
-        dialog.addEventListener('keydown',event=>{if(event.key==='Escape'&&!editor.hidden){event.preventDefault();event.stopImmediatePropagation();setEditing(false);}},true);
+        dialog.addEventListener('keydown',event=>{if(event.key==='Escape'&&!editor.hidden&&editor.getClientRects().length>0){event.preventDefault();event.stopImmediatePropagation();setEditing(false);}},true);
         dialog.addEventListener('close',()=>setEditing(false,false));
         document.getElementById('homeToolsSettings')?.addEventListener('click',event=>{event.stopPropagation();window.TeacherToolsProfile.openNavigation();});
         const render=()=>{renderHome();renderEditor();};
@@ -232,4 +237,4 @@
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initialize,{once:true});else initialize();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-17-mobile-home-icon-1 */
+/* teacher-tools-release: teacher-tools-2026-11-18-update-arrow-1 */
