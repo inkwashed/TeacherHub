@@ -67,4 +67,4 @@
     }
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-18-update-arrow-1 */
+/* teacher-tools-release: teacher-tools-2026-11-19-backup-import-notice-1 */

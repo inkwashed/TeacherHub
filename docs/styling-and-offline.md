@@ -516,3 +516,8 @@ Current checks passed: 16 emulated-device/language/size instruction and backup-f
 ## Amber notice icon
 
 Shared `components.css` adds a decorative circled exclamation marker before notice, storage-warning and protocol-warning text, plus amber help/tutorial and Spinner privacy notes. The CSS decoration survives translation and dynamic text replacement, leaves live-region semantics unchanged, reserves space for wrapped text, uses the warning text color, and stays absent on empty notices. Tinted form panels and non-amber privacy panels are not treated as notices. Verified 32 page/theme/size cases and a real Timer settings notice; offline update/fault checks passed.
+
+The offline page footer now uses the Home pattern: a tagline/Use & Copyright row
+above the copyright line. Terms dialog styling is shared in `site.css`;
+`scripts/sync_terms.py` embeds `LICENSE.txt` in both pages for network-independent
+access, and the shared check validates both copies. App pages retain their simple footer.

@@ -490,3 +490,7 @@ refresh a standalone web-app view. The offline-page title likewise targets
 `offline/index.html`. The separate back control still links to Home. The Home
 brand keeps its Home target. Reload labels are localized; paths remain file-safe
 and the worker maps explicit index navigation to the prepared canonical page.
+
+## Profile data settings styling — November 19, 2026
+
+File Sync and Export & Import retain the existing Profile workspace and data behavior. Shared site styles now use 44px data rows, readable summary text/states, larger file/status text, 12px field corners and pill-shaped 44px actions. File Sync's browser badge now says CHROME/EDGE in both languages; its CSS/translation names no longer call it beta. No storage metadata, sync timing, permissions or backup format changed. Checked bilingual responsive workspace flows, full/selected export and restore, invalid/cancelled imports, legacy imports, autosave timing and error handling, and linked-file fixtures. Native OS picker prompts still need manual testing.

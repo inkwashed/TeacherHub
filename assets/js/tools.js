@@ -3,6 +3,7 @@
     'use strict';
     if(window.TeacherToolsTools)return;
     const icons = Object.freeze({
+    "star": "<path d=\"m12 2 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1Z\"/>",
     "backup": "<path d=\"M3 3h14l4 4v14H3V3Z\"/><path d=\"M7 3v6h9V3M7 21v-7h10v7M10 17h4\"/>",
     "offline-status": "<path class=\"offline-cloud\" d=\"M6 17a4 4 0 0 1-.5-8 6.5 6.5 0 0 1 12-1.5A4.8 4.8 0 0 1 19 17H6Z\"/><path class=\"offline-slash\" d=\"m3 3 14 14\"/><g class=\"offline-badge\"><circle cx=\"18\" cy=\"17\" r=\"5\"/><path class=\"offline-check\" d=\"m15.5 17 1.7 1.7 3.3-3.4\"/><path class=\"offline-update\" d=\"M18 20v-6m-2 2 2-2 2 2\"/><path class=\"offline-download\" d=\"M18 14v6m-2-2 2 2 2-2\"/><path class=\"offline-alert\" d=\"M18 14.5v3m0 2v.1\"/></g>",
     "file-sync": "<circle class=\"sync-circle\" cx=\"12\" cy=\"12\" r=\"9\"/><path class=\"sync-check\" d=\"m7.5 12 3 3 6-6\"/><path class=\"sync-attention\" d=\"M12 7v6m0 3v.1\"/>",
@@ -237,4 +238,4 @@
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initialize,{once:true});else initialize();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-18-update-arrow-1 */
+/* teacher-tools-release: teacher-tools-2026-11-19-backup-import-notice-1 */

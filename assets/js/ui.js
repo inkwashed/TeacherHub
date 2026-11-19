@@ -76,7 +76,7 @@ window.TeacherToolsCalendarValidate = value => {
             "tool.slides": "Google Slides Automator",
             "tool.slidesDescription": "Build lesson slides from common fields",
             "offline.open": "Install Teacher Tools or manage offline use",
-            "offline.title": "Install & offline use",
+            "offline.title": "Install & Offline Use",
             "offlinePage.progressLabel": "Preparing offline files",
             "offlinePage.progressAria": "Offline preparation progress",
             "offlinePage.protocolWarning": "This page was opened directly from a file. Installation and offline updates require the hosted site or the local preview server.",
@@ -88,12 +88,12 @@ window.TeacherToolsCalendarValidate = value => {
             "language.progress": "English and Japanese are available across all current Teacher Tools pages.",
             "backup.help": "Choose which saved data to include in one local backup file. Nothing is uploaded.",
             "backup.tabsAria": "Backup and synchronization options",
-            "backup.tabExport": "Export & Import Backup",
+            "backup.tabExport": "Export & Import",
             "backup.tabFile": "File Sync",
             "backup.summaryAria": "Saved Teacher Tools data",
-            "backup.exportAll": "Export all data",
-            "backup.import": "Import backup",
-            "backup.note": "Importing replaces saved data for tools included in the file. Data for other tools remains unchanged. Older Scheduler and Spinner Wheel backup files are supported.",
+            "backup.exportAll": "Export All Data",
+            "backup.import": "Import Backup",
+            "backup.note": "Importing replaces saved data for all tools included in the backup file.",
             "backup.saved": "Saved",
             "backup.invalid": "Needs attention",
             "backup.missing": "No saved data",
@@ -123,13 +123,13 @@ window.TeacherToolsCalendarValidate = value => {
             "backup.successAlert": "Teacher Tools backup imported successfully. This page will now reload.",
             "backup.importError": "The backup could not be imported.",
             "linked.title": "Linked data file",
-            "linked.beta": "CHROME/EDGE BETA",
-            "linked.help": "Desktop Chrome/Edge can save changes to your linked JSON file about every 15 minutes while Teacher Tools is open and active with write access. Saves pause while hidden, closed or asleep and resume when you return. Use Save changes to save sooner. File sync does not upload files or guarantee cloud delivery.",
+            "linked.browser": "CHROME/EDGE",
+            "linked.help": "Desktop Chrome/Edge can save changes to your linked JSON file about every 15 minutes while Teacher Tools is open and active with write access. Saves pause while hidden, closed or asleep and resume when you return. Use Save Changes to save sooner. File sync does not upload files or guarantee cloud delivery.",
             "linked.none": "No file linked",
-            "linked.create": "Create file",
-            "linked.link": "Link existing",
-            "linked.load": "Pull synced data",
-            "linked.save": "Save changes",
+            "linked.create": "Create File",
+            "linked.link": "Link Existing",
+            "linked.load": "Sync Data",
+            "linked.save": "Save Changes",
             "linked.enable": "Allow file access",
             "linked.disconnect": "Disconnect",
             "linked.unsupported": "Linked files require desktop Chrome or Edge. In Safari and Firefox, use backup export and import instead.",
@@ -144,11 +144,11 @@ window.TeacherToolsCalendarValidate = value => {
             "linked.automatic": "Automatically saved to {name}.",
             "linked.disconnected": "Linked file disconnected. The file itself was not deleted.",
             "linked.invalid": "The selected file is not a valid current Teacher Tools data file.",
-            "linked.fileChanged": "Synced changes are waiting. Choose Pull synced data to use them, or Save changes to replace them.",
-            "linked.pending": "Changes are waiting for the next automatic save to {name}. Keep Teacher Tools active with file access, or choose Save changes now.",
-            "linked.conflict": "Both this browser and the linked file changed. Choose Pull synced data or Save changes; nothing was overwritten.",
-            "linked.loadConfirm": "Pull synced data from {name}? This replaces the browser's supported Teacher Tools records with the file's records, then reloads the page.",
-            "linked.autoPullConfirm": "New synced data was detected in {name}, possibly from another browser. Load it now? This browser's Teacher Tools data will be overwritten. Choose Cancel to review and use Pull synced data or Save changes manually.",
+            "linked.fileChanged": "Synced changes are waiting. Choose Sync Data to use them, or Save Changes to replace them.",
+            "linked.pending": "Changes are waiting for the next automatic save to {name}. Keep Teacher Tools active with file access, or choose Save Changes now.",
+            "linked.conflict": "Both this browser and the linked file changed. Choose Sync Data or Save Changes; nothing was overwritten.",
+            "linked.loadConfirm": "Sync Data from {name}? This replaces the browser's supported Teacher Tools records with the file's records, then reloads the page.",
+            "linked.autoPullConfirm": "New synced data was detected in {name}, possibly from another browser. Load it now? This browser's Teacher Tools data will be overwritten. Choose Cancel to review and use Sync Data or Save Changes manually.",
             "linked.saveConfirm": "The linked file changed elsewhere. Replace it with this browser's current data?",
             "linked.error": "The linked file could not be accessed.",
             "record.calendar": "Class Calendar",
@@ -209,7 +209,7 @@ window.TeacherToolsCalendarValidate = value => {
             "backup.summaryAria": "保存済みのTeacher Toolsデータ",
             "backup.exportAll": "すべてのデータを書き出す",
             "backup.import": "バックアップを読み込む",
-            "backup.note": "読み込むと、ファイルに含まれるツールの保存データが置き換わります。その他のツールのデータは変わりません。旧形式のスケジューラーとスピナーホイールのバックアップにも対応しています。",
+            "backup.note": "読み込むと、バックアップファイルに含まれるすべてのツールの保存データが置き換わります。",
             "backup.saved": "保存済み",
             "backup.invalid": "確認が必要",
             "backup.missing": "保存データなし",
@@ -239,7 +239,7 @@ window.TeacherToolsCalendarValidate = value => {
             "backup.successAlert": "Teacher Toolsのバックアップを読み込みました。このページを再読み込みします。",
             "backup.importError": "バックアップを読み込めませんでした。",
             "linked.title": "リンク済みデータファイル",
-            "linked.beta": "CHROME/EDGE ベータ",
+            "linked.browser": "CHROME/EDGE",
             "linked.help": "デスクトップ版Chrome・Edgeでは、書き込み権限がありTeacher Toolsを開いて操作できる間、変更を約15分ごとにリンク済みJSONファイルへ保存します。非表示・終了・スリープ中は停止し、戻ると再開します。すぐに保存するには「変更を保存」を使ってください。ファイルのアップロードやクラウドへの反映を保証する機能ではありません。",
             "linked.none": "ファイル未接続",
             "linked.create": "ファイルを作成",
@@ -566,7 +566,7 @@ window.TeacherToolsCalendarValidate = value => {
         const selectedCount = selectable.filter(checkbox => checkbox.checked).length;
         exportButton.disabled = selectedCount === 0;
         exportButton.textContent = selectedCount === selectable.length && selectable.length > 0
-            ? translate("backup.exportAll", "Export all data")
+            ? translate("backup.exportAll", "Export All Data")
             : selectedCount > 0
                 ? translate("backup.exportCount", `Export (${selectedCount}) ${selectedCount === 1 ? "item" : "items"}`, {
                     count: selectedCount,
@@ -730,13 +730,14 @@ window.TeacherToolsCalendarValidate = value => {
         button.setAttribute('aria-label', text);
     }
 
-    function setLinkedDataStatus(message, error = false) {
+    function setLinkedDataStatus(message, error = false, notice = false) {
         linkedDataState.lastError = error;
         refreshLinkedDataIndicator();
         const status = document.getElementById("siteLinkedDataStatus");
         if (!status) return;
         status.textContent = message;
         status.classList.toggle("error", error);
+        status.classList.toggle("notice", notice);
     }
 
     function updateLinkedDataControls() {
@@ -753,7 +754,7 @@ window.TeacherToolsCalendarValidate = value => {
         const saveButton = document.getElementById("siteLinkedDataSave");
         if (saveButton) saveButton.textContent = linkedDataState.permissionRequired
             ? translate("linked.enable", "Allow file access")
-            : translate("linked.save", "Save changes");
+            : translate("linked.save", "Save Changes");
         const permissionHelp = document.getElementById("siteLinkedDataPermissionHelp");
         if (permissionHelp) permissionHelp.hidden = !linked || !linkedDataState.permissionRequired;
         const lastSaved = document.getElementById("siteLinkedDataLastSaved");
@@ -820,7 +821,7 @@ window.TeacherToolsCalendarValidate = value => {
                 if (linkedDataFingerprint(currentFile) !== linkedDataState.fileFingerprint) {
                     linkedDataState.conflict = true;
                     linkedDataState.externalChange = true;
-                    setLinkedDataStatus(translate("linked.conflict", "Both this browser and the linked file changed. Choose Pull synced data or Save changes; nothing was overwritten."), true);
+                    setLinkedDataStatus(translate("linked.conflict", "Both this browser and the linked file changed. Choose Sync Data or Save Changes; nothing was overwritten."), true);
                     return false;
                 }
             }
@@ -858,7 +859,7 @@ window.TeacherToolsCalendarValidate = value => {
         try {
             if (!await linkedDataPermission(false, true)) throw new Error(translate("linked.error", "The linked file could not be accessed."));
             const payload = await readLinkedDataFile();
-            if (confirmLoad && !window.confirm(translate("linked.loadConfirm", `Pull synced data from ${linkedDataState.handle.name}? This replaces the browser's supported Teacher Tools records with the file's records, then reloads the page.`, { name: linkedDataState.handle.name }))) return false;
+            if (confirmLoad && !window.confirm(translate("linked.loadConfirm", `Sync Data from ${linkedDataState.handle.name}? This replaces the browser's supported Teacher Tools records with the file's records, then reloads the page.`, { name: linkedDataState.handle.name }))) return false;
             const plan = linkedDataImportPlan(payload);
             applyStorageChanges(plan.changes);
             linkedDataState.fileFingerprint = linkedDataFingerprint(payload);
@@ -960,12 +961,12 @@ window.TeacherToolsCalendarValidate = value => {
 
     async function offerExternalLinkedData(fileFingerprint) {
         linkedDataState.externalChange = true;
-        setLinkedDataStatus(translate("linked.fileChanged", "Synced changes are waiting. Choose Pull synced data to use them, or Save changes to replace them."));
+        setLinkedDataStatus(translate("linked.fileChanged", "Synced changes are waiting. Choose Sync Data to use them, or Save Changes to replace them."));
         if (linkedDataState.dismissedFileFingerprint === fileFingerprint) return;
         linkedDataState.dismissedFileFingerprint = fileFingerprint;
         const accepted = window.confirm(translate(
             "linked.autoPullConfirm",
-            `New synced data was detected in ${linkedDataState.handle.name}, possibly from another browser. Load it now? This browser's Teacher Tools data will be overwritten. Choose Cancel to review and use Pull synced data or Save changes manually.`,
+            `New synced data was detected in ${linkedDataState.handle.name}, possibly from another browser. Load it now? This browser's Teacher Tools data will be overwritten. Choose Cancel to review and use Sync Data or Save Changes manually.`,
             { name: linkedDataState.handle.name }
         ));
         if (accepted) await loadLinkedDataFile(false);
@@ -999,7 +1000,7 @@ window.TeacherToolsCalendarValidate = value => {
         if (localChanged) {
             linkedDataState.conflict = true;
             linkedDataState.externalChange = true;
-            setLinkedDataStatus(translate("linked.conflict", "Both this browser and the linked file changed. Choose Pull synced data or Save changes; nothing was overwritten."), true);
+            setLinkedDataStatus(translate("linked.conflict", "Both this browser and the linked file changed. Choose Sync Data or Save Changes; nothing was overwritten."), true);
             return;
         }
         await offerExternalLinkedData(fileNow);
@@ -1031,7 +1032,7 @@ window.TeacherToolsCalendarValidate = value => {
         if (!linkedDataState.supported) linkedDataState.initializing = false;
         if (!linkedDataState.supported) {
             updateLinkedDataControls();
-            setLinkedDataStatus(translate("linked.unsupported", "Linked files are not supported in this browser. Backup export and import still work normally."), true);
+            setLinkedDataStatus(translate("linked.unsupported", "Linked files are not supported in this browser. Backup export and import still work normally."), false, true);
             return;
         }
         document.getElementById("siteLinkedDataCreate").addEventListener("click", createLinkedDataFile);
@@ -1060,7 +1061,7 @@ window.TeacherToolsCalendarValidate = value => {
                     if (fileChanged && localChanged) {
                         linkedDataState.conflict = true;
                         linkedDataState.externalChange = true;
-                        setLinkedDataStatus(translate("linked.conflict", "Both this browser and the linked file changed. Choose Pull synced data or Save changes; nothing was overwritten."), true);
+                        setLinkedDataStatus(translate("linked.conflict", "Both this browser and the linked file changed. Choose Sync Data or Save Changes; nothing was overwritten."), true);
                     } else if (fileChanged) {
                         await offerExternalLinkedData(fileNow);
                     } else if (localChanged) {
@@ -1603,8 +1604,8 @@ window.TeacherToolsCalendarValidate = value => {
         if (preferredFocus) preferredFocus.focus();
     }
 
-    registerTranslations({"en": {"offlineIndicator.online": "Online — offline files not prepared. Open Install & offline use.", "offlineIndicator.ready": "Online — offline files verified and ready. Open Install & offline use.", "offlineIndicator.offline-ready": "Offline — prepared files are ready to use. External services still need internet. Open Install & offline use.", "offlineIndicator.offline": "Offline — no verified offline copy. Open Install & offline use.", "offlineIndicator.update": "Update ready to apply. Your current offline copy is available. Open Install & offline use.", "offlineIndicator.update-only": "Update files are ready. Open Install & offline use to review or apply them.", "offlineIndicator.preparing": "Preparing offline files or downloading an update… Open Install & offline use.", "offlineIndicator.incomplete": "Offline files are incomplete or could not be verified. Open Install & offline use to repair them.", "offlineIndicator.update-error": "Update could not be verified; your current offline copy is still available. Open Install & offline use.", "offlineIndicator.checking": "Checking offline files… Open Install & offline use.", "offlineIndicator.unavailable": "Offline installation requires the hosted site or local server and service-worker support. Open Install & offline use."}, "ja": {"offlineIndicator.online": "オンラインです。オフライン用ファイルは未準備です。インストールとオフライン利用を開く。", "offlineIndicator.ready": "オンラインです。オフライン用ファイルは確認済みで準備完了です。インストールとオフライン利用を開く。", "offlineIndicator.offline-ready": "オフラインです。準備済みのファイルを利用できます。外部サービスにはインターネットが必要です。インストールとオフライン利用を開く。", "offlineIndicator.offline": "オフラインです。確認済みのオフライン用ファイルがありません。インストールとオフライン利用を開く。", "offlineIndicator.update": "適用できる更新があります。現在のオフライン用ファイルは利用できます。インストールとオフライン利用を開く。", "offlineIndicator.update-only": "更新ファイルの準備ができています。インストールとオフライン利用を開いて確認・適用してください。", "offlineIndicator.preparing": "オフライン用ファイルの準備、または更新のダウンロード中です。インストールとオフライン利用を開く。", "offlineIndicator.incomplete": "オフライン用ファイルが不足しているか、確認できませんでした。インストールとオフライン利用を開いて準備し直してください。", "offlineIndicator.update-error": "更新を確認できませんでした。現在のオフライン用ファイルは利用できます。インストールとオフライン利用を開く。", "offlineIndicator.checking": "オフライン用ファイルを確認中です。インストールとオフライン利用を開く。", "offlineIndicator.unavailable": "オフラインの準備には公開サイトまたはローカルサーバーと、サービスワーカー対応ブラウザが必要です。インストールとオフライン利用を開く。"}});
-    registerTranslations({en:{'offlineIndicator.reload':'A newer version is active. Save your work, then reload or open Install & offline use.'},ja:{'offlineIndicator.reload':'新しいバージョンが有効です。作業を保存してから再読み込みするか、インストールとオフライン利用を開いてください。'}});
+    registerTranslations({"en": {"offlineIndicator.online": "Online — offline files not prepared. Open Install & Offline Use.", "offlineIndicator.ready": "Online — offline files verified and ready. Open Install & Offline Use.", "offlineIndicator.offline-ready": "Offline — prepared files are ready to use. External services still need internet. Open Install & Offline Use.", "offlineIndicator.offline": "Offline — no verified offline copy. Open Install & Offline Use.", "offlineIndicator.update": "Update ready to apply. Your current offline copy is available. Open Install & Offline Use.", "offlineIndicator.update-only": "Update files are ready. Open Install & Offline Use to review or apply them.", "offlineIndicator.preparing": "Preparing offline files or downloading an update… Open Install & Offline Use.", "offlineIndicator.incomplete": "Offline files are incomplete or could not be verified. Open Install & Offline Use to repair them.", "offlineIndicator.update-error": "Update could not be verified; your current offline copy is still available. Open Install & Offline Use.", "offlineIndicator.checking": "Checking offline files… Open Install & Offline Use.", "offlineIndicator.unavailable": "Offline installation requires the hosted site or local server and service-worker support. Open Install & Offline Use."}, "ja": {"offlineIndicator.online": "オンラインです。オフライン用ファイルは未準備です。インストールとオフライン利用を開く。", "offlineIndicator.ready": "オンラインです。オフライン用ファイルは確認済みで準備完了です。インストールとオフライン利用を開く。", "offlineIndicator.offline-ready": "オフラインです。準備済みのファイルを利用できます。外部サービスにはインターネットが必要です。インストールとオフライン利用を開く。", "offlineIndicator.offline": "オフラインです。確認済みのオフライン用ファイルがありません。インストールとオフライン利用を開く。", "offlineIndicator.update": "適用できる更新があります。現在のオフライン用ファイルは利用できます。インストールとオフライン利用を開く。", "offlineIndicator.update-only": "更新ファイルの準備ができています。インストールとオフライン利用を開いて確認・適用してください。", "offlineIndicator.preparing": "オフライン用ファイルの準備、または更新のダウンロード中です。インストールとオフライン利用を開く。", "offlineIndicator.incomplete": "オフライン用ファイルが不足しているか、確認できませんでした。インストールとオフライン利用を開いて準備し直してください。", "offlineIndicator.update-error": "更新を確認できませんでした。現在のオフライン用ファイルは利用できます。インストールとオフライン利用を開く。", "offlineIndicator.checking": "オフライン用ファイルを確認中です。インストールとオフライン利用を開く。", "offlineIndicator.unavailable": "オフラインの準備には公開サイトまたはローカルサーバーと、サービスワーカー対応ブラウザが必要です。インストールとオフライン利用を開く。"}});
+    registerTranslations({en:{'offlineIndicator.reload':'A newer version is active. Save your work, then reload or open Install & Offline Use.'},ja:{'offlineIndicator.reload':'新しいバージョンが有効です。作業を保存してから再読み込みするか、インストールとオフライン利用を開いてください。'}});
     function initOfflineIndicator() {
         const button = document.getElementById('siteOfflineStatusButton');
         if (!button) return;
@@ -1956,4 +1957,4 @@ window.TeacherToolsCalendarValidate = value => {
 })();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-18-update-arrow-1 */
+/* teacher-tools-release: teacher-tools-2026-11-19-backup-import-notice-1 */

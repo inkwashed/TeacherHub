@@ -16,7 +16,7 @@
                 <span class="site-brand-mark" aria-hidden="true">${tool?tool.icon:'<img alt="" width="42" height="42">'}</span>
                 <span class="site-brand-copy">${tool?'<h1 id="siteAppName" class="site-brand-title"></h1>':'<span id="siteAppName" class="site-brand-title"></span>'}<span id="siteAppVersion" class="site-app-version" hidden></span>${pageId==='home'?'<span class="site-brand-domain">tools.letseigo.com</span>':''}</span>
             </a>
-            <a id="siteOfflineStatusButton" class="site-offline-status" href="${new URL('offline/index.html',root).href}" data-offline-state="online" aria-label="Online. Open Install &amp; offline use" title="Online. Open Install &amp; offline use"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="offline-status"></svg></a>
+            <a id="siteOfflineStatusButton" class="site-offline-status" href="${new URL('offline/index.html',root).href}" data-offline-state="online" aria-label="Online. Open Install &amp; Offline Use" title="Online. Open Install &amp; Offline Use"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="offline-status"></svg></a>
         </div>
         <nav id="sitePinnedTools" class="site-pinned-tools" aria-label="My tools"></nav>
         <div class="site-header-actions"><button type="button" id="siteMobileMenuButton" class="site-mobile-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="siteToolsMenu" data-i18n-aria-label="nav.open">
@@ -109,4 +109,4 @@
     }
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initialize,{once:true});else initialize();
 })();
-/* teacher-tools-release: teacher-tools-2026-11-18-update-arrow-1 */
+/* teacher-tools-release: teacher-tools-2026-11-19-backup-import-notice-1 */

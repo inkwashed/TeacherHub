@@ -109,40 +109,40 @@
                         </section>
                         <a id="siteInstallButton" class="site-profile-action site-profile-install" href="offline/index.html" data-i18n-aria-label="offline.open" aria-label="Install Teacher Tools or manage offline use">
                             <svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="download"></svg>
-                            <span data-i18n="offline.title">Install &amp; offline use</span>
+                            <span data-i18n="offline.title">Install &amp; Offline Use</span>
                         </a>
                     </div>
                     <section id="siteProfileSync" class="site-profile-sync" aria-labelledby="siteProfileSyncTitle">
                         <h3 id="siteProfileSyncTitle" class="site-profile-sync-title" data-i18n="profile.sync">File Sync</h3>
                 <div class="site-data-tabs" role="tablist" aria-label="Backup and synchronization options" data-i18n-aria-label="backup.tabsAria">
-                    <button type="button" id="siteDataExportTab" class="site-data-tab" role="tab" aria-selected="true" aria-controls="siteDataExportPanel" tabindex="0" data-site-data-tab="export" data-i18n="backup.tabExport">Export &amp; Import Backup</button>
+                    <button type="button" id="siteDataExportTab" class="site-data-tab" role="tab" aria-selected="true" aria-controls="siteDataExportPanel" tabindex="0" data-site-data-tab="export" data-i18n="backup.tabExport">Export &amp; Import</button>
                     <button type="button" id="siteDataFileTab" class="site-data-tab" role="tab" aria-selected="false" aria-controls="siteDataFilePanel" tabindex="-1" data-site-data-tab="file" data-i18n="backup.tabFile">File Sync</button>
                 </div>
                 <section id="siteDataExportPanel" class="site-data-tab-panel" role="tabpanel" aria-labelledby="siteDataExportTab" data-site-data-panel="export">
                     <p class="site-data-help" data-i18n="backup.help">Choose which saved data to include in one local backup file. Nothing is uploaded.</p>
                     <ul id="siteDataSummary" class="site-data-summary" aria-label="Saved Teacher Tools data" data-i18n-aria-label="backup.summaryAria"></ul>
                     <div class="site-data-actions">
-                        <button type="button" id="siteDataExportButton" class="site-data-action site-data-action-primary" data-i18n="backup.exportAll">Export all data</button>
-                        <button type="button" id="siteDataImportButton" class="site-data-action" data-i18n="backup.import">Import backup</button>
+                        <button type="button" id="siteDataExportButton" class="site-data-action site-data-action-primary" data-i18n="backup.exportAll">Export All Data</button>
+                        <button type="button" id="siteDataImportButton" class="site-data-action" data-i18n="backup.import">Import Backup</button>
                     </div>
                     <input type="file" id="siteDataImportFile" hidden class="site-data-file" accept=".json,application/json">
-                    <p class="site-data-note" data-i18n="backup.note">Importing replaces saved data for tools included in the file. Data for other tools remains unchanged. Older Scheduler and Spinner Wheel backup files are supported.</p>
+                    <p class="site-data-note notice" data-i18n="backup.note">Importing replaces saved data for all tools included in the backup file.</p>
                     <p id="siteDataStatus" class="site-data-status" role="status" aria-live="polite"></p>
                 </section>
                 <section id="siteDataFilePanel" class="site-data-tab-panel" role="tabpanel" aria-labelledby="siteDataFileTab" data-site-data-panel="file" hidden>
                     <div class="site-linked-data-heading">
                         <h4 id="siteLinkedDataTitle" data-i18n="linked.title">Linked data file</h4>
-                        <span class="site-beta-badge" data-i18n="linked.beta">CHROME/EDGE BETA</span>
+                        <span class="site-browser-badge" data-i18n="linked.browser">CHROME/EDGE</span>
                     </div>
-                    <p class="site-data-note" data-i18n="linked.help">Desktop Chrome/Edge can save changes to your linked JSON file about every 15 minutes while Teacher Tools is open and active with write access. Saves pause while hidden, closed or asleep and resume when you return. Use Save changes to save sooner. File sync does not upload files or guarantee cloud delivery.</p>
+                    <p class="site-data-note" data-i18n="linked.help">Desktop Chrome/Edge can save changes to your linked JSON file about every 15 minutes while Teacher Tools is open and active with write access. Saves pause while hidden, closed or asleep and resume when you return. Use Save Changes to save sooner. File sync does not upload files or guarantee cloud delivery.</p>
                     <p id="siteLinkedDataFile" class="site-linked-data-file" data-i18n="linked.none">No file linked</p>
                     <p id="siteLinkedDataLastSaved" class="site-linked-data-last-saved" hidden></p>
                     <p id="siteLinkedDataPermissionHelp" class="site-linked-data-permission" data-i18n="linked.permissionHelp" hidden>Chrome may require one additional confirmation before automatic saving can begin.</p>
                     <div class="site-linked-data-actions">
-                        <button type="button" id="siteLinkedDataCreate" class="site-data-action" data-i18n="linked.create">Create file</button>
-                        <button type="button" id="siteLinkedDataLink" class="site-data-action" data-i18n="linked.link">Link existing</button>
-                        <button type="button" id="siteLinkedDataLoad" class="site-data-action" data-i18n="linked.load" disabled>Pull synced data</button>
-                        <button type="button" id="siteLinkedDataSave" class="site-data-action" data-i18n="linked.save" disabled>Save changes</button>
+                        <button type="button" id="siteLinkedDataCreate" class="site-data-action" data-i18n="linked.create">Create File</button>
+                        <button type="button" id="siteLinkedDataLink" class="site-data-action" data-i18n="linked.link">Link Existing</button>
+                        <button type="button" id="siteLinkedDataLoad" class="site-data-action" data-i18n="linked.load" disabled>Sync Data</button>
+                        <button type="button" id="siteLinkedDataSave" class="site-data-action" data-i18n="linked.save" disabled>Save Changes</button>
                         <button type="button" id="siteLinkedDataDisconnect" class="site-data-action site-linked-data-disconnect" data-i18n="linked.disconnect" disabled>Disconnect</button>
                     </div>
                     <p id="siteLinkedDataStatus" class="site-data-status" role="status" aria-live="polite"></p>
@@ -198,7 +198,7 @@
     file.dataset.profileEditor = 'file'; exported.dataset.profileEditor = 'export';
     const fileButton = content.querySelector('#siteDataFileTab'), exportButton = content.querySelector('#siteDataExportTab');
     const fileRow = settingRow('File Sync', 'profile.sync', fileButton, 'file', 'profile.editFile');
-    const exportRow = settingRow('Export & Import Backup', 'backup.tabExport', exportButton, 'export', 'profile.editExport');
+    const exportRow = settingRow('Export & Import', 'backup.tabExport', exportButton, 'export', 'profile.editExport');
     fileButton.setAttribute('aria-controls', file.id); exportButton.setAttribute('aria-controls', exported.id);
     const install = details.querySelector('#siteInstallButton');
     install.before(fileRow, exportRow);
@@ -519,4 +519,4 @@
     }
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-18-update-arrow-1 */
+/* teacher-tools-release: teacher-tools-2026-11-19-backup-import-notice-1 */

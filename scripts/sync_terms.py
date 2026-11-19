@@ -5,12 +5,13 @@ import html
 import re
 
 ROOT = Path(__file__).resolve().parent.parent
-page = ROOT / 'index.html'
-text, count = re.subn(
-    r'(<!-- license:start -->).*?(<!-- license:end -->)',
-    lambda match: match[1] + html.escape((ROOT / 'LICENSE.txt').read_text()) + match[2],
-    page.read_text(), flags=re.S,
-)
-assert count == 1, 'Expected exactly one Home terms block'
-page.write_text(text)
-print('Updated Home terms from LICENSE.txt')
+for relative in ('index.html', 'offline/index.html'):
+    page = ROOT / relative
+    text, count = re.subn(
+        r'(<!-- license:start -->).*?(<!-- license:end -->)',
+        lambda match: match[1] + html.escape((ROOT / 'LICENSE.txt').read_text()) + match[2],
+        page.read_text(), flags=re.S,
+    )
+    assert count == 1, 'Expected exactly one Home terms block'
+    page.write_text(text)
+    print('Updated Home terms from LICENSE.txt')

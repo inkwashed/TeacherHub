@@ -125,6 +125,8 @@ def check():
 
     import html
     home = (ROOT / 'index.html').read_text()
+    offline_terms = re.search(r'<!-- license:start -->(.*?)<!-- license:end -->', (ROOT / 'offline/index.html').read_text(), re.S)
+    assert offline_terms and html.unescape(offline_terms[1]) == (ROOT / 'LICENSE.txt').read_text(), 'Offline terms differ from LICENSE.txt; run scripts/sync_terms.py'
     embedded_terms = re.search(r'<!-- license:start -->(.*?)<!-- license:end -->', home, re.S)
     assert embedded_terms and html.unescape(embedded_terms[1]) == (ROOT / 'LICENSE.txt').read_text(), 'Home terms differ from LICENSE.txt; run scripts/sync_terms.py'
 

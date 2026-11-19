@@ -14,12 +14,12 @@
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="../assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-18-update-arrow-1" data-teacher-tools-bootstrap></script>
+    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-19-backup-import-notice-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-18-update-arrow-1">
-    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-18-update-arrow-1">
-    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-18-update-arrow-1">
-    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-18-update-arrow-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-19-backup-import-notice-1">
+    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-19-backup-import-notice-1">
+    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-19-backup-import-notice-1">
+    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-19-backup-import-notice-1">
     <style>
 
         .offline-page { width: min(1060px, 100%); margin: 0 auto; padding: 24px 32px 40px; }
@@ -33,6 +33,9 @@
         .status-card { min-width: 0; padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; }
         .status-label { display: block; color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
         .status-value { display: block; margin-top: 4px; color: var(--text); font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
+        .offline-status-heading { display: flex; align-items: center; gap: 8px; }
+        .offline-version-info { position: relative; width: 18px; height: 18px; flex: 0 0 18px; font-size: 12px; line-height: 1; }
+        .offline-version-info::after { content: ""; position: absolute; inset: -7px; }
         .status-value.good { color: var(--accent); }
         .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
         .action { min-height: 44px; max-width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 9px 18px; border: 1px solid var(--accent-border); border-radius: 999px; color: var(--accent); background: var(--accent-soft); font: inherit; font-size: 14px; font-weight: 700; line-height: 1.4; text-decoration: none; cursor: pointer; }
@@ -53,16 +56,6 @@
         .section { margin-top: 32px; }
         .section-heading { margin: 0 0 12px; font-size: 26px; line-height: 1.25; letter-spacing: -.02em; }
         .section-copy { margin: 0 0 16px; color: var(--muted); font-size: 16px; line-height: 1.6; }
-        .option-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 20px; margin-top: 20px; }
-        .option-card { min-width: 0; padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 4px 0 var(--line); }
-        .option-card.recommended { border-color: var(--accent); box-shadow: 0 0 0 2px var(--focus-ring); }
-        .best-badge { display: none; width: fit-content; margin-bottom: 12px; padding: 4px 10px; border-radius: 999px; color: var(--accent-contrast,#fff); background: var(--accent); font-size: 11px; font-weight: 700; line-height: 1.4; }
-        .option-card.recommended .best-badge { display: inline-flex; }
-        .option-card h3 { margin: 0 0 8px; font-size: 20px; line-height: 1.3; }
-        .option-card p, .option-card li { color: var(--muted); font-size: 14px; line-height: 1.6; }
-        .option-card li + li { margin-top: 8px; }
-        .option-card p { margin: 0; }
-        .option-card ol { margin: 10px 0 0; padding-left: 19px; }
         .option-note { margin-top: 9px !important; padding-top: 9px; border-top: 1px solid var(--line); }
         .data-panel { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start; padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; }
         .data-icon { width: 42px; height: 42px; display: grid; place-items: center; color: var(--accent); background: var(--accent-soft); border-radius: 10px; }
@@ -74,34 +67,76 @@
         .migration-list li + li { margin-top: 8px; }
         .privacy-note { margin-top: 32px; padding: 16px 20px; color: var(--muted); background: var(--panel); border: 1px solid var(--line); border-radius: 16px; font-size: 14px; line-height: 1.6; }
         .page-footer { margin-top: 24px; color: var(--muted); text-align: center; font-size: 10px; }
-        @media (max-width: 760px) { .status-grid { grid-template-columns: 1fr; gap: 12px; } }
-        @media (max-width: 620px) { .offline-page { padding: 20px 20px 32px; } .offline-intro { font-size: 18px; } .section-heading { font-size: 23px; } .option-grid { grid-template-columns: 1fr; } }
+        .offline-footer-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 12px; text-align: left; font-size: 14px; }
+        .offline-footer-row p { margin: 0; }
+        .copyright-link { min-height: 44px; padding: 4px 0; border: 0; background: transparent; color: var(--accent); font: inherit; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+        @media(max-width:620px) { .offline-footer-row { flex-direction: column; align-items: flex-start; gap: 4px; } }
+        @media (max-width: 760px) {
+            .status-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+            .status-card { padding: 16px; }
+            .status-card:last-child { grid-column: 1 / -1; }
+        }
+        @media (max-width: 359px) { .status-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 620px) { .offline-page { padding: 20px 20px 32px; } .offline-intro { font-size: 18px; } .section-heading { font-size: 23px; } }
         @media (max-width: 480px) { .hero-actions .action { width: 100%; } .data-panel { grid-template-columns: 1fr; } }
+
+        .offline-step { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+        .offline-step[open] { border-color: var(--accent-border); }
+        .offline-step-summary { display: flex; align-items: center; gap: 12px; padding: 20px; cursor: pointer; list-style: none; }
+        .offline-step-summary::-webkit-details-marker { display: none; }
+        .offline-step-summary:hover { background: color-mix(in srgb, var(--accent-soft) 42%, transparent); }
+        .offline-step-summary:focus-visible { outline-offset: -4px; }
+        .offline-step-title .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+        .offline-step-number { display: grid; place-items: center; flex: 0 0 30px; height: 30px; border-radius: 50%; background: var(--accent); color: var(--accent-contrast, var(--tooltip-text)); font-size: 16px; font-weight: 700; }
+        .offline-step-icon { width: 24px; height: 24px; flex: 0 0 24px; color: var(--accent); fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .offline-step-title { flex: 1; min-width: 0; margin: 0; font-size: 18px; line-height: 1.4; }
+        .offline-step-chevron { display: grid; place-items: center; flex: 0 0 30px; height: 30px; color: var(--accent); background: var(--accent-soft); border-radius: 9px; }
+        .offline-step-chevron svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .offline-step[open] .offline-step-chevron { transform: rotate(180deg); }
+        .offline-step-list { margin: 0; padding: 0 24px 20px 62px; color: var(--text); font-size: 14px; line-height: 1.6; }
+        .offline-step-list li + li { margin-top: 12px; }
+        @media (max-width: 620px) { .offline-step-summary { padding: 16px; gap: 10px; } .offline-step-list { padding-inline: 46px 20px; } }
+        .offline-step-body { padding: 0 20px 20px; }
+        .install-device-tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+        .install-device-tab { display: inline-flex; align-items: center; justify-content: center; flex: 1 1 130px; gap: 6px; min-height: 44px; padding: 9px 12px; font: inherit; font-size: 14px; color: var(--muted); border: 1px solid transparent; border-radius: 10px; background: transparent; cursor: pointer; }
+        .install-device-tab[aria-selected="true"] { color: var(--accent); background: var(--surface); border-color: var(--accent-border); }
+        .install-device-tab:hover { color: var(--accent); }
+        .install-device-tab .recommendation-star { width: 16px; height: 16px; flex: 0 0 16px; fill: currentColor; stroke: none; }
+        .recommendation-star[hidden], .install-instructions[hidden], .install-recommendation[hidden] { display: none; }
+        .install-recommendation { display: inline-flex; align-items: center; gap: 6px; width: fit-content; margin: 16px 0 8px; padding: 5px 12px; border-radius: 999px; background: var(--accent); color: var(--accent-contrast, var(--tooltip-text)); font-size: 12px; font-weight: 700; line-height: 1.4; }
+        .install-recommendation svg { width: 14px; height: 14px; flex: 0 0 14px; fill: currentColor; stroke: none; }
+        .install-instructions { margin-top: 16px; }
+        .install-instructions h3 { margin: 0 0 8px; font-size: 18px; }
+        .install-instructions p, .install-instructions li { font-size: 14px; line-height: 1.6; }
+        .install-instructions p { margin: 0; color: var(--muted); }
+        .install-instructions ol { margin: 12px 0 0; padding-left: 24px; }
+        .install-instructions li + li { margin-top: 8px; }
     </style>
 </head>
 <body>
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-18-update-arrow-1" data-teacher-tools-tools></script>
-    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-18-update-arrow-1" data-teacher-tools-toolbar data-page="offline"></script>
-    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-18-update-arrow-1" data-teacher-tools-profile></script>
+    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-19-backup-import-notice-1" data-teacher-tools-tools></script>
+    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-19-backup-import-notice-1" data-teacher-tools-toolbar data-page="offline"></script>
+    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-19-backup-import-notice-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 <div class="site-page-scroll themed-scroll">
 
     <main class="offline-page">
         <section class="offline-hero" aria-labelledby="offlineTitle">
             <p class="eyebrow" data-i18n="offlinePage.eyebrow">Teacher Tools on this device</p>
-            <h1 id="offlineTitle" class="offline-title" data-i18n="offlinePage.title">Install & offline use</h1>
-            <p class="offline-intro" data-i18n="offlinePage.intro">Prepare the tool files to use Teacher Tools without internet. Adding Teacher Tools as a web app is optional.</p>
+            <h1 id="offlineTitle" class="offline-title" data-i18n="offlinePage.title">Install & Offline Use</h1>
+            <p class="offline-intro" data-i18n="offlinePage.intro">Download the Teacher Tools Offline file pack to use our apps even when you're offline.</p>
             <p id="protocolWarning" class="protocol-warning" role="alert" hidden data-i18n="offlinePage.protocolWarning">This page was opened directly from a file. Installation and offline updates require the hosted site or the local preview server.</p>
             <div class="status-grid" aria-label="Offline readiness" data-i18n-aria-label="offlinePage.statusAria">
                 <div class="status-card"><span class="status-label" data-i18n="offlinePage.environment">This device</span><span id="environmentValue" class="status-value">Checking…</span></div>
                 <div class="status-card"><span class="status-label" data-i18n="offlinePage.installStatus">App location</span><span id="installValue" class="status-value">Checking…</span></div>
-                <div class="status-card"><span class="status-label" data-i18n="offlinePage.offlineStatus">Offline files</span><span id="offlineValue" class="status-value">Checking…</span></div>
+                <div class="status-card"><span class="offline-status-heading"><span class="status-label" data-i18n="offlinePage.offlineStatus">Offline files</span><button id="offlineVersionInfo" class="tooltip-trigger offline-version-info" type="button" aria-label="Offline files version" data-i18n-aria-label="offlinePage.versionInfo" data-tooltip="No offline file pack is ready in this browser.">i</button></span><span id="offlineValue" class="status-value">Checking…</span></div>
             </div>
             <div class="hero-actions">
-                <button id="prepareButton" class="action primary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="download"></svg><span data-i18n="offlinePage.prepare">Prepare for offline use</span></button>
                 <button id="installButton" class="action" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="install-app"></svg><span data-i18n="offlinePage.install">Install Teacher Tools</span></button>
-                <button id="updateButton" class="action" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="check-updates"></svg><span data-i18n="offlinePage.update">Check for updates</span></button>
+                <button id="prepareButton" class="action primary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="download"></svg><span data-i18n="offlinePage.prepare">Download Offline Files</span></button>
+                <button id="updateButton" class="action" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="check-updates"></svg><span data-i18n="offlinePage.update">Check for Updates</span></button>
+                <button id="backupTopButton" class="action" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="backup"></svg><span data-i18n="offlinePage.backupShort">Export &amp; Import</span></button>
             </div>
             <div id="cacheProgressPanel" class="cache-progress" hidden>
                 <div class="cache-progress-row"><span data-i18n="offlinePage.progressLabel">Preparing offline files</span><span id="cacheProgressValue">0%</span></div>
@@ -110,36 +145,127 @@
             <p id="offlineMessage" class="live-status" role="status" aria-live="polite"></p>
         </section>
 
-        <section class="section" aria-labelledby="recommendationTitle">
-            <h2 id="recommendationTitle" class="section-heading" data-i18n="offlinePage.recommendationTitle">Before going offline</h2>
-            <ol class="migration-list"><li data-i18n="offlinePage.quick1">Open this page online in the browser or app you will use.</li><li data-i18n="offlinePage.quick2">Wait for Offline files to say Ready. Choose Prepare for offline use if needed.</li><li data-i18n="offlinePage.quick3">Before class, disconnect and check that your tools open.</li></ol>
-        </section>
-
-        <section class="section" aria-labelledby="updatesTitle"><h2 id="updatesTitle" class="section-heading" data-i18n="offlinePage.updatesTitle">Keep tools up to date</h2><p class="section-copy" data-i18n="offlinePage.updatesCopy">Use Check for updates while online. If Apply update appears, save your work first, then apply it. Reload other open app pages afterward. Clicking an app title refreshes its page; it does not apply a pending update.</p></section>
-        <section class="section" aria-labelledby="optionsTitle">
-            <h2 id="optionsTitle" class="section-heading" data-i18n="offlinePage.optionsTitle">Add Teacher Tools as a web app (optional)</h2>
-            <p class="section-copy" data-i18n="offlinePage.optionsCopy">After adding Teacher Tools as a web app, open it and confirm its Offline files say Ready. Files and saved data may be separate from your browser.</p>
-            <div class="option-grid">
-                <article class="option-card" data-option="chromium"><span class="best-badge" data-i18n="offlinePage.best">For this device</span><h3 data-i18n="offlinePage.chromeTitle">Chrome or Edge</h3><p data-i18n="offlinePage.chromeCopy">Use Chrome or Edge on a computer.</p><ol><li data-i18n="offlinePage.chromeStep1">Open Teacher Tools in Chrome or Edge.</li><li data-i18n="offlinePage.chromeStep2">Choose Install Teacher Tools above, or use the browser’s app-install option.</li><li data-i18n="offlinePage.chromeStep3">Open the Teacher Tools web app.</li></ol></article>
-                <article class="option-card" data-option="mac-safari"><span class="best-badge" data-i18n="offlinePage.best">For this device</span><h3 data-i18n="offlinePage.macTitle">Safari on Mac</h3><p data-i18n="offlinePage.macCopy">Use Safari’s Add to Dock option, if available.</p><ol><li data-i18n="offlinePage.macStep1">Choose File or Share → Add to Dock.</li><li data-i18n="offlinePage.macStep2">Confirm the name and choose Add.</li><li data-i18n="offlinePage.macStep3">Open Teacher Tools from the Dock.</li></ol></article>
-                <article class="option-card" data-option="ios"><span class="best-badge" data-i18n="offlinePage.best">For this device</span><h3 data-i18n="offlinePage.iosTitle">iPhone or iPad</h3><p data-i18n="offlinePage.iosCopy">These steps use Safari; browser menus may differ.</p><ol><li data-i18n="offlinePage.iosStep1">Open Teacher Tools in Safari and tap Share.</li><li data-i18n="offlinePage.iosStep2">Choose Add to Home Screen.</li><li data-i18n="offlinePage.iosStep3">If shown, enable Open as Web App, then tap Add.</li></ol></article>
-                <article class="option-card" data-option="android"><span class="best-badge" data-i18n="offlinePage.best">For this device</span><h3 data-i18n="offlinePage.androidTitle">Android phone or tablet</h3><p data-i18n="offlinePage.androidCopy">These steps use Chrome.</p><ol><li data-i18n="offlinePage.androidStep1">Open Teacher Tools in Chrome.</li><li data-i18n="offlinePage.androidStep2">In the browser menu, choose Add to Home screen or Install app.</li><li data-i18n="offlinePage.androidStep3">Confirm, then open the Teacher Tools web app.</li></ol></article>
+        <details class="section offline-step" id="offlineStep2">
+            <summary class="offline-step-summary">
+                <span class="offline-step-number" aria-hidden="true">1</span>
+                <svg class="offline-step-icon" viewBox="0 0 24 24" data-shared-icon="install-app" aria-hidden="true"></svg>
+                <h2 id="optionsTitle" class="offline-step-title"><span class="visually-hidden" data-i18n="offlinePage.step2">Step 1: </span><span data-i18n="offlinePage.optionsTitle">Install Teacher Tools as a web app (optional)</span></h2>
+                <span class="offline-step-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" data-shared-icon="chevron"></svg></span>
+            </summary>
+            <div class="offline-step-body">
+                <p class="section-copy" data-i18n="offlinePage.optionsCopy">Check the recommended steps below for instructions on installing Teacher Tools as a web app on your phone or computer.</p>
+                <div class="install-device-tabs" role="tablist" aria-label="Installation instructions" data-i18n-aria-label="offlinePage.installTabs"><button id="installTab-chromium" class="install-device-tab" type="button" role="tab" data-install-option="chromium" aria-controls="installPanel-chromium" aria-selected="false" tabindex="-1"><svg class="recommendation-star" viewBox="0 0 24 24" data-shared-icon="star" aria-hidden="true" hidden></svg><span data-i18n="offlinePage.tabChrome">Chrome / Edge</span></button><button id="installTab-mac-safari" class="install-device-tab" type="button" role="tab" data-install-option="mac-safari" aria-controls="installPanel-mac-safari" aria-selected="false" tabindex="-1"><svg class="recommendation-star" viewBox="0 0 24 24" data-shared-icon="star" aria-hidden="true" hidden></svg><span data-i18n="offlinePage.tabSafari">Safari</span></button><button id="installTab-ios" class="install-device-tab" type="button" role="tab" data-install-option="ios" aria-controls="installPanel-ios" aria-selected="false" tabindex="-1"><svg class="recommendation-star" viewBox="0 0 24 24" data-shared-icon="star" aria-hidden="true" hidden></svg><span data-i18n="offlinePage.tabIOS">iPhone / iPad</span></button><button id="installTab-android" class="install-device-tab" type="button" role="tab" data-install-option="android" aria-controls="installPanel-android" aria-selected="false" tabindex="-1"><svg class="recommendation-star" viewBox="0 0 24 24" data-shared-icon="star" aria-hidden="true" hidden></svg><span data-i18n="offlinePage.tabAndroid">Android</span></button></div>
+                <p class="install-recommendation" id="installRecommendation"><svg viewBox="0 0 24 24" data-shared-icon="star" aria-hidden="true"></svg><span data-i18n="offlinePage.best">For this device</span></p>
+                <section id="installPanel-chromium" class="install-instructions" data-option="chromium" role="tabpanel" aria-labelledby="installTab-chromium" tabindex="0" hidden><h3 data-i18n="offlinePage.chromeTitle">Chrome or Edge</h3><p data-i18n="offlinePage.chromeCopy">Use Chrome or Edge on a computer.</p><ol><li data-i18n="offlinePage.chromeStep1">Open Teacher Tools in Chrome or Edge.</li><li data-i18n="offlinePage.chromeStep2">Choose Install Teacher Tools above, or use the browser’s app-install option.</li><li data-i18n="offlinePage.chromeStep3">Open the Teacher Tools web app.</li></ol></section><section id="installPanel-mac-safari" class="install-instructions" data-option="mac-safari" role="tabpanel" aria-labelledby="installTab-mac-safari" tabindex="0" hidden><h3 data-i18n="offlinePage.macTitle">Safari on Mac</h3><p data-i18n="offlinePage.macCopy">Use Safari’s Add to Dock option, if available.</p><ol><li data-i18n="offlinePage.macStep1">Choose File or Share → Add to Dock.</li><li data-i18n="offlinePage.macStep2">Confirm the name and choose Add.</li><li data-i18n="offlinePage.macStep3">Open Teacher Tools from the Dock.</li></ol></section><section id="installPanel-ios" class="install-instructions" data-option="ios" role="tabpanel" aria-labelledby="installTab-ios" tabindex="0" hidden><h3 data-i18n="offlinePage.iosTitle">iPhone or iPad</h3><p data-i18n="offlinePage.iosCopy">These steps use Safari; browser menus may differ.</p><ol><li data-i18n="offlinePage.iosStep1">Open Teacher Tools in Safari and tap Share.</li><li data-i18n="offlinePage.iosStep2">Choose Add to Home Screen.</li><li data-i18n="offlinePage.iosStep3">If shown, enable Open as Web App, then tap Add.</li></ol></section><section id="installPanel-android" class="install-instructions" data-option="android" role="tabpanel" aria-labelledby="installTab-android" tabindex="0" hidden><h3 data-i18n="offlinePage.androidTitle">Android phone or tablet</h3><p data-i18n="offlinePage.androidCopy">These steps use Chrome.</p><ol><li data-i18n="offlinePage.androidStep1">Open Teacher Tools in Chrome.</li><li data-i18n="offlinePage.androidStep2">In the browser menu, choose Add to Home screen or Install app.</li><li data-i18n="offlinePage.androidStep3">Confirm, then open the Teacher Tools web app.</li></ol></section>
             </div>
-        </section>
+        </details>
 
-        <section class="section" aria-labelledby="dataTitle">
-            <h2 id="dataTitle" class="section-heading" data-i18n="offlinePage.dataTitle">Back up or move your data</h2>
-            <p class="section-copy" data-i18n="offlinePage.dataCopy">Your schools, notes and settings stay in the browser or app where you saved them. Offline tool files are not a backup of that data.</p>
-            <div class="data-panel"><span class="data-icon" aria-hidden="true"><svg viewBox="0 0 24 24" data-shared-icon="backup"></svg></span><div><p data-i18n="offlinePage.backupCopy">Use Profile → Export &amp; Import Backup to save or restore a JSON backup.</p><button id="backupButton" class="action" type="button" data-i18n="offlinePage.backup">Export &amp; Import Backup</button></div></div>
-            <ol class="migration-list"><li data-i18n="offlinePage.move1">Export a backup from the browser or app containing your data.</li><li data-i18n="offlinePage.move2">In the new browser or app, open Profile → Export &amp; Import Backup and restore the file.</li><li data-i18n="offlinePage.move3">Check your data before removing the old browser or app.</li></ol>
-        </section>
-        <p class="privacy-note" data-i18n="offlinePage.note">Google Calendar, new Selfie imports and external links need internet. Browsers may remove stored files or data, so keep separate backups.</p>
-        <footer class="page-footer" data-i18n="offlinePage.footer">Teacher Tools offline access</footer>
+        <details class="section offline-step" id="offlineStep1">
+            <summary class="offline-step-summary">
+                <span class="offline-step-number" aria-hidden="true">2</span>
+                <svg class="offline-step-icon" viewBox="0 0 24 24" data-shared-icon="download" aria-hidden="true"></svg>
+                <h2 id="recommendationTitle" class="offline-step-title"><span class="visually-hidden" data-i18n="offlinePage.step1">Step 2: </span><span data-i18n="offlinePage.recommendationTitle">Download the Teacher Tools Offline file pack</span></h2>
+                <span class="offline-step-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" data-shared-icon="chevron"></svg></span>
+            </summary>
+            <ol class="offline-step-list" type="a">
+                <li data-i18n="offlinePage.quick1">Open this page online in the browser you want to use.</li>
+                <li><span data-i18n="offlinePage.quick2Click">Click </span><strong data-i18n="offlinePage.prepare">Download Offline Files</strong><span data-i18n="offlinePage.quick2Wait">. Wait for Offline Files to show </span><strong data-i18n="offlinePage.ready">Ready</strong><span>.</span></li>
+                <li data-i18n="offlinePage.quick3">Disconnect from the internet and test Teacher Tools in the same browser to make sure everything is working.</li>
+            </ol>
+        </details>
+
+
+
+        <details class="section offline-step" id="offlineStep3">
+            <summary class="offline-step-summary">
+                <span class="offline-step-number" aria-hidden="true">3</span>
+                <svg class="offline-step-icon" viewBox="0 0 24 24" data-shared-icon="check-updates" aria-hidden="true"></svg>
+                <h2 id="updatesTitle" class="offline-step-title"><span class="visually-hidden" data-i18n="offlinePage.step3">Step 3: </span><span data-i18n="offlinePage.updatesTitle">Keep Teacher Tools up to date</span></h2>
+                <span class="offline-step-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" data-shared-icon="chevron"></svg></span>
+            </summary>
+            <ol class="offline-step-list" type="a">
+                <li><span data-i18n="offlinePage.updateAStart">Make sure you are connected to the internet, then click </span><strong data-i18n="offlinePage.updateCheckLabel">Check for Updates</strong><span data-i18n="offlinePage.updateAEnd"> to download any available updates to the Offline files.</span></li>
+                <li><span data-i18n="offlinePage.updateBStart">If </span><strong data-i18n="offlinePage.updateApplyLabel">Apply Update</strong><span data-i18n="offlinePage.updateBEnd"> appears, save or sync your data first, then click to apply the update.</span></li>
+                <li data-i18n="offlinePage.updateC">Reload any open app pages to make sure the updates are applied and visible.</li>
+            </ol>
+        </details>
+
+        <details class="section offline-step" id="offlineStep4">
+            <summary class="offline-step-summary">
+                <span class="offline-step-number" aria-hidden="true">4</span>
+                <svg class="offline-step-icon" viewBox="0 0 24 24" data-shared-icon="backup" aria-hidden="true"></svg>
+                <h2 id="dataTitle" class="offline-step-title"><span class="visually-hidden" data-i18n="offlinePage.step4">Step 4: </span><span data-i18n="offlinePage.dataTitle">Export &amp; Import your data</span></h2>
+                <span class="offline-step-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" data-shared-icon="chevron"></svg></span>
+            </summary>
+            <div class="offline-step-body">
+                <p class="section-copy" data-i18n="offlinePage.dataLocalCopy">Your schools, notes and settings are only saved locally in your browser unless you set up File Sync (Autosave) or download a backup file of your data.</p>
+                <div class="install-device-tabs" role="tablist" aria-label="Backup instructions" data-i18n-aria-label="offlinePage.backupInstructions">
+                    <button id="backupGuideTab-export" class="install-device-tab" type="button" role="tab" data-backup-guide="export" aria-controls="backupGuidePanel-export" aria-selected="true" tabindex="0" data-i18n="offlinePage.exportChoice">Export</button>
+                    <button id="backupGuideTab-import" class="install-device-tab" type="button" role="tab" data-backup-guide="import" aria-controls="backupGuidePanel-import" aria-selected="false" tabindex="-1" data-i18n="offlinePage.importChoice">Import</button>
+                </div>
+                <section id="backupGuidePanel-export" class="install-instructions" role="tabpanel" aria-labelledby="backupGuideTab-export" tabindex="0">
+                    <h3 data-i18n="offlinePage.exportHeading">Download a backup file</h3>
+                    <ol>
+                        <li data-i18n="offlinePage.exportStep1">Open Teacher Tools in the browser you currently use.</li>
+                        <li data-i18n="offlinePage.backupStepProfile">Open Profile → Export &amp; Import.</li>
+                        <li data-i18n="offlinePage.exportStep3">Make sure all boxes are checked, then click Export All Data to download your backup file.</li>
+                    </ol>
+                </section>
+                <section id="backupGuidePanel-import" class="install-instructions" role="tabpanel" aria-labelledby="backupGuideTab-import" tabindex="0" hidden>
+                    <h3 data-i18n="offlinePage.importHeading">Import a backup file</h3>
+                    <ol>
+                        <li data-i18n="offlinePage.importStep1">Open Teacher Tools in your new browser or app.</li>
+                        <li data-i18n="offlinePage.backupStepProfile">Open Profile → Export &amp; Import.</li>
+                        <li data-i18n="offlinePage.importStep3">Click Import Backup and choose your backup file to copy the data into that browser.</li>
+                    </ol>
+                </section>
+            </div>
+        </details>
+        <footer class="page-footer">
+            <div class="offline-footer-row"><p data-i18n="offlinePage.footer">Teacher Tools offline access</p><button id="open-license" class="copyright-link" type="button" aria-haspopup="dialog" aria-controls="license-dialog" data-i18n="home.useCopyright">Use &amp; copyright</button></div>
+            <span>Let’s EiGo! Teacher Tools © 2026 letseigo.com · All rights reserved.</span>
+        </footer>
     </main>
 </div>
 
+    <dialog id="license-dialog" class="site-theme-panel" aria-labelledby="license-title">
+        <div class="site-theme-header">
+            <h2 id="license-title" class="site-theme-title" data-i18n="home.useCopyright">Use &amp; copyright</h2>
+            <button id="close-license" class="site-theme-close" type="button" autofocus aria-label="Close terms" data-i18n-aria-label="home.closeTerms">×</button>
+        </div>
+        <div class="license-text" lang="en" tabindex="0"><!-- license:start -->Let’s EiGo! Teacher Tools / TOOLS.LETSEIGO.COM — TERMS OF USE
+
+Copyright © 2026 letseigo.com. All rights reserved.
+
+Permission is granted to individual users, teachers, schools, and other educational users to access and use an unmodified copy of Teacher Tools free of charge for personal, classroom, and non-commercial educational purposes.
+
+These terms cover Teacher Tools applets, source code, and original artwork and assets supplied with them. Any separately identified third-party material remains subject to its own terms.
+
+You may save, print, and share the calendars, schedules, classroom results, and other documents or images produced by the built-in export, print, and download features for personal, classroom, and non-commercial educational purposes. You may also export and restore your records using the built-in backup and file-sync features. This permission does not authorize extracting or redistributing the underlying artwork, asset collection, or applet code.
+
+These terms do not claim ownership of records or other content you enter into Teacher Tools.
+
+You may share links to the official hosted version of Teacher Tools.
+
+Official hosted site: tools.letseigo.com. Teacher Tools is part of Let’s EiGo! (letseigo.com).
+
+Without prior written permission from the copyright holder, you may not:
+
+1. Sell, license, rent, monetize, or otherwise use the software commercially.
+2. Incorporate the software or its source code into another product, application, website, service, or commercial offering.
+3. Redistribute, republish, mirror, or host copies of the software or its source code for distribution to others.
+4. Distribute modified, adapted, translated, rebranded, or derivative versions of the software.
+5. Remove, obscure, or alter copyright, attribution, or terms-of-use notices.
+6. Represent the software, its source code, or a derivative work as your own original creation.
+
+Permission to modify, redistribute, integrate, or otherwise use the software outside the permissions above may be granted separately in writing by the copyright holder.
+
+THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. USE OF THE SOFTWARE IS AT THE USER’S OWN RISK.
+<!-- license:end --></div>
+    </dialog>
+
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-18-update-arrow-1" data-teacher-tools-ui></script>
+    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-19-backup-import-notice-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
     <script>
     (() => {
@@ -147,14 +273,28 @@
         const ui = window.TeacherToolsUI;
         const catalogs = {
             en: {
-                "offlinePage.eyebrow":"Teacher Tools on this device","offlinePage.title":"Install & offline use","offlinePage.intro":"Prepare the tool files to use Teacher Tools without internet. Adding Teacher Tools as a web app is optional.","offlinePage.statusAria":"Offline readiness","offlinePage.environment":"This device","offlinePage.installStatus":"App location","offlinePage.offlineStatus":"Offline files","offlinePage.prepare":"Prepare for offline use","offlinePage.install":"Install Teacher Tools","offlinePage.update":"Check for updates","offlinePage.recommendationTitle":"Before going offline","offlinePage.optionsTitle":"Add Teacher Tools as a web app (optional)","offlinePage.optionsCopy":"After adding Teacher Tools as a web app, open it and confirm its Offline files say Ready. Files and saved data may be separate from your browser.","offlinePage.best":"For this device","offlinePage.chromeTitle":"Chrome or Edge","offlinePage.chromeCopy":"Use Chrome or Edge on a computer.","offlinePage.chromeStep1":"Open Teacher Tools in Chrome or Edge.","offlinePage.chromeStep2":"Choose Install Teacher Tools above, or use the browser’s app-install option.","offlinePage.chromeStep3":"Open the Teacher Tools web app.","offlinePage.macTitle":"Safari on Mac","offlinePage.macCopy":"Use Safari’s Add to Dock option, if available.","offlinePage.macStep1":"Choose File or Share → Add to Dock.","offlinePage.macStep2":"Confirm the name and choose Add.","offlinePage.macStep3":"Open Teacher Tools from the Dock.","offlinePage.iosTitle":"iPhone or iPad","offlinePage.iosCopy":"These steps use Safari; browser menus may differ.","offlinePage.iosStep1":"Open Teacher Tools in Safari and tap Share.","offlinePage.iosStep2":"Choose Add to Home Screen.","offlinePage.iosStep3":"If shown, enable Open as Web App, then tap Add.","offlinePage.androidTitle":"Android phone or tablet","offlinePage.androidCopy":"These steps use Chrome.","offlinePage.androidStep1":"Open Teacher Tools in Chrome.","offlinePage.androidStep2":"In the browser menu, choose Add to Home screen or Install app.","offlinePage.androidStep3":"Confirm, then open the Teacher Tools web app.","offlinePage.dataTitle":"Back up or move your data","offlinePage.dataCopy":"Your schools, notes and settings stay in the browser or app where you saved them. Offline tool files are not a backup of that data.","offlinePage.backup":"Export & Import Backup","offlinePage.move1":"Export a backup from the browser or app containing your data.","offlinePage.move2":"In the new browser or app, open Profile → Export & Import Backup and restore the file.","offlinePage.move3":"Check your data before removing the old browser or app.","offlinePage.note":"Google Calendar, new Selfie imports and external links need internet. Browsers may remove stored files or data, so keep separate backups.","offlinePage.footer":"Teacher Tools offline access"
+                "offlinePage.eyebrow":"Teacher Tools on this device","offlinePage.title":"Install & Offline Use","offlinePage.intro":"Download the Teacher Tools Offline file pack to use our apps even when you're offline.","offlinePage.statusAria":"Offline readiness","offlinePage.environment":"This device","offlinePage.installStatus":"App location","offlinePage.offlineStatus":"Offline files","offlinePage.prepare":"Download Offline Files","offlinePage.install":"Install Teacher Tools","offlinePage.update":"Check for Updates","offlinePage.recommendationTitle":"Download the Teacher Tools Offline file pack","offlinePage.optionsTitle":"Install Teacher Tools as a web app (optional)","offlinePage.optionsCopy":"Check the recommended steps below for instructions on installing Teacher Tools as a web app on your phone or computer.","offlinePage.best":"For this device","offlinePage.chromeTitle":"Chrome or Edge","offlinePage.chromeCopy":"Use Chrome or Edge on a computer.","offlinePage.chromeStep1":"Open Teacher Tools in Chrome or Edge.","offlinePage.chromeStep2":"Choose Install Teacher Tools above, or use the browser’s app-install option.","offlinePage.chromeStep3":"Open the Teacher Tools web app.","offlinePage.macTitle":"Safari on Mac","offlinePage.macCopy":"Use Safari’s Add to Dock option, if available.","offlinePage.macStep1":"Choose File or Share → Add to Dock.","offlinePage.macStep2":"Confirm the name and choose Add.","offlinePage.macStep3":"Open Teacher Tools from the Dock.","offlinePage.iosTitle":"iPhone or iPad","offlinePage.iosCopy":"These steps use Safari; browser menus may differ.","offlinePage.iosStep1":"Open Teacher Tools in Safari and tap Share.","offlinePage.iosStep2":"Choose Add to Home Screen.","offlinePage.iosStep3":"If shown, enable Open as Web App, then tap Add.","offlinePage.androidTitle":"Android phone or tablet","offlinePage.androidCopy":"These steps use Chrome.","offlinePage.androidStep1":"Open Teacher Tools in Chrome.","offlinePage.androidStep2":"In the browser menu, choose Add to Home screen or Install app.","offlinePage.androidStep3":"Confirm, then open the Teacher Tools web app.","offlinePage.dataTitle":"Export & Import your data","offlinePage.dataCopy":"Your schools, notes and settings stay in the browser or app where you saved them. Offline tool files are not a backup of that data.","offlinePage.backup":"Export & Import Backup","offlinePage.move1":"Export a backup from the browser or app containing your data.","offlinePage.move2":"In the new browser or app, open Profile → Export & Import Backup and restore the file.","offlinePage.move3":"Check your data before removing the old browser or app.","offlinePage.note":"Google Calendar, new Selfie imports and external links need internet. Browsers may remove stored files or data, so keep separate backups.","offlinePage.footer":"Teacher Tools offline access"
             },
             ja: {
-                "offlinePage.eyebrow":"この端末のTeacher Tools","offlinePage.title":"インストールとオフライン利用","offlinePage.intro":"Teacher Toolsをインターネットなしで使うには、ツールのファイルを準備します。Teacher ToolsをWebアプリとして追加するかどうかは任意です。","offlinePage.statusAria":"オフライン準備状況","offlinePage.environment":"この端末","offlinePage.installStatus":"アプリの場所","offlinePage.offlineStatus":"オフライン用ファイル","offlinePage.prepare":"オフライン利用を準備","offlinePage.install":"Teacher Toolsをインストール","offlinePage.update":"更新を確認","offlinePage.recommendationTitle":"オフラインにする前に","offlinePage.optionsTitle":"Teacher ToolsをWebアプリとして追加する（任意）","offlinePage.optionsCopy":"Teacher ToolsをWebアプリとして追加したら、そのアプリを開き、オフライン用ファイルが「準備完了」か確認してください。ファイルや保存データがブラウザと別になる場合があります。","offlinePage.best":"この端末向け","offlinePage.chromeTitle":"Chrome または Edge","offlinePage.chromeCopy":"パソコンではChromeまたはEdgeを使えます。","offlinePage.chromeStep1":"ChromeまたはEdgeでTeacher Toolsを開きます。","offlinePage.chromeStep2":"上の「Teacher Toolsをインストール」またはブラウザのアプリインストール機能を選びます。","offlinePage.chromeStep3":"Teacher ToolsのWebアプリを開きます。","offlinePage.macTitle":"MacのSafari","offlinePage.macCopy":"Safariの「Dockに追加」を使います（対応している場合）。","offlinePage.macStep1":"「ファイル」または共有メニューから「Dockに追加」を選びます。","offlinePage.macStep2":"名前を確認し、「追加」を選びます。","offlinePage.macStep3":"DockからTeacher Toolsを開きます。","offlinePage.iosTitle":"iPhone または iPad","offlinePage.iosCopy":"Safariでの手順です。他のブラウザではメニューが異なる場合があります。","offlinePage.iosStep1":"SafariでTeacher Toolsを開き、共有をタップします。","offlinePage.iosStep2":"「ホーム画面に追加」を選びます。","offlinePage.iosStep3":"表示された場合は「Webアプリとして開く」をオンにして、「追加」をタップします。","offlinePage.androidTitle":"Androidスマートフォンまたはタブレット","offlinePage.androidCopy":"Chromeでの手順です。","offlinePage.androidStep1":"ChromeでTeacher Toolsを開きます。","offlinePage.androidStep2":"ブラウザのメニューから「ホーム画面に追加」または「アプリをインストール」を選びます。","offlinePage.androidStep3":"追加を確認し、Teacher ToolsのWebアプリを開きます。","offlinePage.dataTitle":"データのバックアップ・移行","offlinePage.dataCopy":"学校・メモ・設定は、保存したブラウザやアプリ内に残ります。オフライン用のツールファイルは、そのデータのバックアップではありません。","offlinePage.backup":"バックアップの書き出し・読み込み","offlinePage.move1":"データがあるブラウザやアプリでバックアップを書き出します。","offlinePage.move2":"移行先で「プロフィール → バックアップの書き出し・読み込み」を開き、ファイルを復元します。","offlinePage.move3":"元のブラウザやアプリを削除する前に、データを確認してください。","offlinePage.note":"Googleカレンダー、新しいセルフィーの取り込み、外部リンクにはインターネット接続が必要です。ブラウザが保存済みのファイルやデータを削除する場合があるため、別途バックアップを保管してください。","offlinePage.footer":"Teacher Tools オフライン利用"
+                "offlinePage.eyebrow":"この端末のTeacher Tools","offlinePage.title":"インストールとオフライン利用","offlinePage.intro":"Teacher Tools Offlineファイルパックをダウンロードすると、オフラインでもアプリを使えます。","offlinePage.statusAria":"オフライン準備状況","offlinePage.environment":"この端末","offlinePage.installStatus":"アプリの場所","offlinePage.offlineStatus":"オフライン用ファイル","offlinePage.prepare":"オフライン用ファイルをダウンロード","offlinePage.install":"Teacher Toolsをインストール","offlinePage.update":"更新を確認","offlinePage.recommendationTitle":"Teacher Tools Offlineファイルパックをダウンロード","offlinePage.optionsTitle":"Teacher ToolsをWebアプリとしてインストール（任意）","offlinePage.optionsCopy":"スマートフォンやパソコンにTeacher ToolsをWebアプリとしてインストールするには、下のおすすめ手順をご確認ください。","offlinePage.best":"この端末向け","offlinePage.chromeTitle":"Chrome または Edge","offlinePage.chromeCopy":"パソコンではChromeまたはEdgeを使えます。","offlinePage.chromeStep1":"ChromeまたはEdgeでTeacher Toolsを開きます。","offlinePage.chromeStep2":"上の「Teacher Toolsをインストール」またはブラウザのアプリインストール機能を選びます。","offlinePage.chromeStep3":"Teacher ToolsのWebアプリを開きます。","offlinePage.macTitle":"MacのSafari","offlinePage.macCopy":"Safariの「Dockに追加」を使います（対応している場合）。","offlinePage.macStep1":"「ファイル」または共有メニューから「Dockに追加」を選びます。","offlinePage.macStep2":"名前を確認し、「追加」を選びます。","offlinePage.macStep3":"DockからTeacher Toolsを開きます。","offlinePage.iosTitle":"iPhone または iPad","offlinePage.iosCopy":"Safariでの手順です。他のブラウザではメニューが異なる場合があります。","offlinePage.iosStep1":"SafariでTeacher Toolsを開き、共有をタップします。","offlinePage.iosStep2":"「ホーム画面に追加」を選びます。","offlinePage.iosStep3":"表示された場合は「Webアプリとして開く」をオンにして、「追加」をタップします。","offlinePage.androidTitle":"Androidスマートフォンまたはタブレット","offlinePage.androidCopy":"Chromeでの手順です。","offlinePage.androidStep1":"ChromeでTeacher Toolsを開きます。","offlinePage.androidStep2":"ブラウザのメニューから「ホーム画面に追加」または「アプリをインストール」を選びます。","offlinePage.androidStep3":"追加を確認し、Teacher ToolsのWebアプリを開きます。","offlinePage.dataTitle":"データのバックアップ・移行","offlinePage.dataCopy":"学校・メモ・設定は、保存したブラウザやアプリ内に残ります。オフライン用のツールファイルは、そのデータのバックアップではありません。","offlinePage.backup":"バックアップの書き出し・読み込み","offlinePage.move1":"データがあるブラウザやアプリでバックアップを書き出します。","offlinePage.move2":"移行先で「プロフィール → バックアップの書き出し・読み込み」を開き、ファイルを復元します。","offlinePage.move3":"元のブラウザやアプリを削除する前に、データを確認してください。","offlinePage.note":"Googleカレンダー、新しいセルフィーの取り込み、外部リンクにはインターネット接続が必要です。ブラウザが保存済みのファイルやデータを削除する場合があるため、別途バックアップを保管してください。","offlinePage.footer":"Teacher Tools オフライン利用"
             }
         };
-        Object.assign(catalogs.en,{"offlinePage.quick1": "Open this page online in the browser or app you will use.", "offlinePage.quick2": "Wait for Offline files to say Ready. Choose Prepare for offline use if needed.", "offlinePage.quick3": "Before class, disconnect and check that your tools open.", "offlinePage.updatesTitle": "Keep tools up to date", "offlinePage.updatesCopy": "Use Check for updates while online. If Apply update appears, save your work first, then apply it. Reload other open app pages afterward. Clicking an app title refreshes its page; it does not apply a pending update.", "offlinePage.backupCopy": "Use Profile → Export & Import Backup to save or restore a JSON backup."});
-        Object.assign(catalogs.ja,{"offlinePage.quick1": "実際に使うブラウザやアプリで、オンライン中にこのページを開きます。", "offlinePage.quick2": "オフライン用ファイルが「準備完了」になるまで待ちます。必要なら「オフライン利用を準備」を押します。", "offlinePage.quick3": "授業の前に接続を切り、ツールを開けるか確認してください。", "offlinePage.updatesTitle": "ツールを更新する", "offlinePage.updatesCopy": "オンライン中に「更新を確認」を押します。「更新を適用」が表示されたら、作業を保存してから適用してください。他に開いているツールのページも再読み込みします。アプリ名のクリックはページの再読み込みで、待機中の更新の適用ではありません。", "offlinePage.backupCopy": "プロフィールの「バックアップの書き出し・読み込み」でJSONバックアップを保存・復元できます。"});
+        Object.assign(catalogs.en,{"offlinePage.quick1":"Open this page online in the browser you want to use.", "offlinePage.quick2": "Wait for Offline files to say Ready. Choose Prepare for offline use if needed.", "offlinePage.quick3":"Disconnect from the internet and test Teacher Tools in the same browser to make sure everything is working.", "offlinePage.updatesTitle": "Keep Teacher Tools up to date", "offlinePage.updatesCopy": "Use Check for updates while online. If Apply Update appears, save your work first, then apply it. Reload other open app pages afterward. Clicking an app title refreshes its page; it does not apply a pending update.", "offlinePage.backupCopy": "Use Profile → Export & Import Backup to save or restore a JSON backup."});
+        Object.assign(catalogs.ja,{"offlinePage.quick1":"使いたいブラウザで、オンライン中にこのページを開きます。", "offlinePage.quick2": "オフライン用ファイルが「準備完了」になるまで待ちます。必要なら「オフライン利用を準備」を押します。", "offlinePage.quick3":"インターネット接続を切り、同じブラウザでTeacher Toolsが正常に使えるか確認します。", "offlinePage.updatesTitle": "ツールを更新する", "offlinePage.updatesCopy": "オンライン中に「更新を確認」を押します。「更新を適用」が表示されたら、作業を保存してから適用してください。他に開いているツールのページも再読み込みします。アプリ名のクリックはページの再読み込みで、待機中の更新の適用ではありません。", "offlinePage.backupCopy": "プロフィールの「バックアップの書き出し・読み込み」でJSONバックアップを保存・復元できます。"});
+        Object.assign(catalogs.en, {"offlinePage.step1":"Step 2: ","offlinePage.quick2Click":"Click ","offlinePage.quick2Wait":". Wait for Offline Files to show ","offlinePage.ready":"Ready"});
+        Object.assign(catalogs.ja, {"offlinePage.step1":"ステップ2：", "offlinePage.quick2Click":"「", "offlinePage.quick2Wait":"」を押し、オフライン用ファイルが次の表示になるまで待ちます：", "offlinePage.ready":"準備完了"});
+        Object.assign(catalogs.en, {"offlinePage.step2": "Step 1: ", "offlinePage.tabChrome": "Chrome / Edge", "offlinePage.tabSafari": "Safari", "offlinePage.tabIOS": "iPhone / iPad", "offlinePage.tabAndroid": "Android", "offlinePage.installTabs": "Installation instructions"});
+        Object.assign(catalogs.ja, {"offlinePage.step2": "ステップ1：", "offlinePage.tabChrome": "Chrome / Edge", "offlinePage.tabSafari": "Safari", "offlinePage.tabIOS": "iPhone / iPad", "offlinePage.tabAndroid": "Android", "offlinePage.installTabs": "インストール手順"});
+        Object.assign(catalogs.en, {"offlinePage.step3": "Step 3: ", "offlinePage.updateAStart": "Make sure you are connected to the internet, then click ", "offlinePage.updateCheckLabel": "Check for Updates", "offlinePage.updateAEnd": " to download any available updates to the Offline files.", "offlinePage.updateBStart": "If ", "offlinePage.updateApplyLabel": "Apply Update", "offlinePage.updateBEnd": " appears, save or sync your data first, then click to apply the update.", "offlinePage.updateC": "Reload any open app pages to make sure the updates are applied and visible."});
+        Object.assign(catalogs.ja, {"offlinePage.step3": "ステップ3：", "offlinePage.updateAStart": "インターネットに接続していることを確認し、「", "offlinePage.updateCheckLabel": "更新を確認", "offlinePage.updateAEnd": "」を押して、オフライン用ファイルの更新をダウンロードします。", "offlinePage.updateBStart": "「", "offlinePage.updateApplyLabel": "更新を適用", "offlinePage.updateBEnd": "」が表示されたら、先にデータを保存または同期してから、更新を適用してください。", "offlinePage.updateC": "開いているアプリのページを再読み込みし、更新が適用・表示されていることを確認します。"});
+        Object.assign(catalogs.en, {"offlinePage.step4": "Step 4: ", "offlinePage.dataLocalCopy": "Your schools, notes and settings are only saved locally in your browser unless you set up File Sync (Autosave) or download a backup file of your data.", "offlinePage.dataExportCopy": "To download a backup file: In the browser you currently use for Teacher Tools, open Profile → Export & Import, make sure all boxes are checked and click to Export All Data.", "offlinePage.dataImportCopy": "To import a backup file: In a new browser or app, open Profile → Export & Import and click Import Backup to copy the data into that browser."});
+        Object.assign(catalogs.ja, {"offlinePage.step4": "ステップ4：", "offlinePage.dataLocalCopy": "学校・メモ・設定は、ファイル同期（自動保存）を設定するか、データのバックアップファイルをダウンロードしない限り、ブラウザ内にのみ保存されます。", "offlinePage.dataExportCopy": "バックアップファイルをダウンロードするには：現在Teacher Toolsを使っているブラウザで「プロフィール → バックアップの書き出し・読み込み」を開き、すべての項目にチェックが入っていることを確認して「すべてのデータを書き出す」を押します。", "offlinePage.dataImportCopy": "バックアップファイルを読み込むには：新しいブラウザやアプリで「プロフィール → バックアップの書き出し・読み込み」を開き、「バックアップを読み込む」を押して、そのブラウザにデータをコピーします。"});
+        Object.assign(catalogs.en, {"offlinePage.versionInfo":"Offline files version"});
+        Object.assign(catalogs.ja, {"offlinePage.versionInfo":"オフライン用ファイルのバージョン"});
+        Object.assign(catalogs.en, {"offlinePage.backupShort":"Export & Import"});
+        Object.assign(catalogs.ja, {"offlinePage.backupShort":"書き出し・読み込み"});
+        Object.assign(catalogs.en, {"offlinePage.backupInstructions": "Backup instructions", "offlinePage.exportChoice": "Export", "offlinePage.importChoice": "Import", "offlinePage.exportHeading": "Download a backup file", "offlinePage.importHeading": "Import a backup file", "offlinePage.exportStep1": "Open Teacher Tools in the browser you currently use.", "offlinePage.backupStepProfile": "Open Profile → Export & Import.", "offlinePage.exportStep3": "Make sure all boxes are checked, then click Export All Data to download your backup file.", "offlinePage.importStep1": "Open Teacher Tools in your new browser or app.", "offlinePage.importStep3": "Click Import Backup and choose your backup file to copy the data into that browser."});
+        Object.assign(catalogs.ja, {"offlinePage.backupInstructions": "バックアップの手順", "offlinePage.exportChoice": "書き出し", "offlinePage.importChoice": "読み込み", "offlinePage.exportHeading": "バックアップファイルをダウンロード", "offlinePage.importHeading": "バックアップファイルを読み込む", "offlinePage.exportStep1": "現在使っているブラウザでTeacher Toolsを開きます。", "offlinePage.backupStepProfile": "「プロフィール → 書き出し・読み込み」を開きます。", "offlinePage.exportStep3": "すべての項目にチェックが入っていることを確認し、「すべてのデータを書き出す」を押してバックアップファイルをダウンロードします。", "offlinePage.importStep1": "新しいブラウザやアプリでTeacher Toolsを開きます。", "offlinePage.importStep3": "「バックアップを読み込む」を押し、バックアップファイルを選んで、そのブラウザにデータをコピーします。"});
         ui.registerTranslations(catalogs);
         const $ = id => document.getElementById(id);
         const installContext = location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1";
@@ -174,7 +314,14 @@
         const browserName = isChrome ? "Chrome" : isEdge ? "Edge" : isFirefox ? "Firefox" : isSafari ? "Safari" : "Browser";
         function text(key, fallback) { return ui.translate(key, fallback); }
         function setMessage(message, error=false) { $("offlineMessage").textContent = message; $("offlineMessage").classList.toggle("error", error); }
+        let readyBuild = '';
+        function updateVersionInfo() {
+            $("offlineVersionInfo").dataset.tooltip = readyBuild
+                ? (document.documentElement.lang === "ja" ? "準備済みのバージョン：" : "Ready version: ") + readyBuild
+                : (document.documentElement.lang === "ja" ? "このブラウザには準備済みのオフライン用ファイルがありません。" : "No offline file pack is ready in this browser.");
+        }
         function updateLanguageOwnedText() {
+            updateVersionInfo();
             const japanese = document.documentElement.lang === "ja";
             $("environmentValue").textContent = isIOS
                 ? standalone ? (japanese ? "iPhone / iPad · Teacher Tools Webアプリ" : "iPhone / iPad · Teacher Tools Web App") : `iPhone / iPad · ${browserName}`
@@ -185,7 +332,55 @@
             $("installValue").textContent = standalone ? (document.documentElement.lang === "ja" ? "アプリのウィンドウ" : "App window") : (document.documentElement.lang === "ja" ? "ブラウザのタブ" : "Browser tab");
 
         }
-        document.querySelector(`[data-option="${option}"]`)?.classList.add("recommended");
+        const backupGuideTabs = [...document.querySelectorAll('[data-backup-guide]')];
+        function selectBackupGuide(id, focus=false) {
+            backupGuideTabs.forEach(tab => {
+                const selected = tab.dataset.backupGuide === id;
+                tab.setAttribute('aria-selected', String(selected)); tab.tabIndex = selected ? 0 : -1;
+                document.getElementById('backupGuidePanel-'+tab.dataset.backupGuide).hidden = !selected;
+                if(selected && focus) tab.focus();
+            });
+        }
+        backupGuideTabs.forEach((tab,index) => {
+            tab.addEventListener('click',()=>selectBackupGuide(tab.dataset.backupGuide));
+            tab.addEventListener('keydown',event=>{
+                if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+                event.preventDefault();event.stopPropagation();
+                const next=event.key==='Home'?0:event.key==='End'?1:1-index;
+                selectBackupGuide(backupGuideTabs[next].dataset.backupGuide,true);
+            });
+        });
+        let selectedInstallOption = option;
+        const installTabs = [...document.querySelectorAll('[data-install-option]')];
+        function selectInstallOption(id, focus=false) {
+            selectedInstallOption = id;
+            installTabs.forEach(tab => {
+                const selected = tab.dataset.installOption === id;
+                tab.setAttribute('aria-selected', String(selected)); tab.tabIndex = selected ? 0 : -1;
+                if (selected && focus) tab.focus();
+            });
+            document.querySelectorAll('[data-option]').forEach(panel => { panel.hidden = panel.dataset.option !== id; });
+            document.getElementById('installRecommendation').hidden = id !== option;
+        }
+        function labelRecommendedOption() {
+            installTabs.forEach(tab => {
+                const recommended = tab.dataset.installOption === option;
+                tab.querySelector('.recommendation-star').toggleAttribute('hidden', !recommended);
+                tab.classList.toggle('recommended', recommended);
+                if(recommended) { tab.title = text('offlinePage.best', 'For this device'); tab.setAttribute('aria-description',tab.title); }
+            });
+        }
+        installTabs.forEach((tab,index) => {
+            tab.addEventListener('click',()=>selectInstallOption(tab.dataset.installOption));
+            tab.addEventListener('keydown',event=>{
+                if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+                event.preventDefault();event.stopPropagation();
+                const next=event.key==='Home'?0:event.key==='End'?installTabs.length-1:(index+(event.key==='ArrowRight'?1:-1)+installTabs.length)%installTabs.length;
+                selectInstallOption(installTabs[next].dataset.installOption,true);
+            });
+        });
+        selectInstallOption(option); labelRecommendedOption();
+        window.addEventListener('teacher-tools:languagechange',labelRecommendedOption);
         updateLanguageOwnedText();
         if (!installContext) {
             $("protocolWarning").hidden = false;
@@ -197,7 +392,7 @@
 
         async function askWorker(type, onProgress) {
             const registration = await navigator.serviceWorker.getRegistration("/");
-            // Inspect and prepare the same release that Apply update will activate.
+            // Inspect and prepare the same release that Apply Update will activate.
             const worker = registration?.waiting || registration?.active || registration?.installing;
             if (!worker) throw new Error("No active offline worker");
             return new Promise((resolve,reject) => { const channel = new MessageChannel(); const timer=setTimeout(()=>reject(new Error("Offline worker did not respond")),30000); channel.port1.onmessage=e=>{ if(e.data?.type === "PROGRESS"){onProgress?.(e.data);return;} clearTimeout(timer);resolve(e.data)}; worker.postMessage({type},[channel.port2]); });
@@ -206,12 +401,13 @@
             if (!("serviceWorker" in navigator)) { $("offlineValue").textContent = document.documentElement.lang === "ja" ? "このブラウザは未対応" : "Not supported here"; return; }
             try {
                 const result = await askWorker("STATUS");
-                const build = String(result.release || "").replace("teacher-tools-", "");
+                readyBuild = result.ready ? String(result.release || "").replace("teacher-tools-", "") : "";
+                updateVersionInfo();
                 $("offlineValue").textContent = result.ready
-                    ? `${document.documentElement.lang === "ja" ? "準備完了" : "Ready"}${build ? ` · ${build}` : ""}`
+                    ? (document.documentElement.lang === "ja" ? "準備完了" : "Ready")
                     : (document.documentElement.lang === "ja" ? "準備が必要" : "Not prepared");
                 $("offlineValue").classList.toggle("good",!!result.ready);
-            } catch { $("offlineValue").textContent = document.documentElement.lang === "ja" ? "準備が必要" : "Not prepared"; $("offlineValue").classList.remove("good"); }
+            } catch { readyBuild = ""; updateVersionInfo(); $("offlineValue").textContent = document.documentElement.lang === "ja" ? "準備が必要" : "Not prepared"; $("offlineValue").classList.remove("good"); }
         }
         if (installContext && "serviceWorker" in navigator) navigator.serviceWorker.register("/service-worker.js", {scope:"/"}).then(refreshReadiness).catch(()=>refreshReadiness()); else if (installContext) refreshReadiness();
         window.addEventListener("beforeinstallprompt", event => { event.preventDefault(); deferredInstall = event; window.teacherToolsInstallPrompt = event; $("installButton").disabled = false; });
@@ -235,7 +431,7 @@
             } catch(error) { setMessage(document.documentElement.lang === "ja" ? "準備できませんでした。接続を確認してもう一度お試しください。" : "Offline preparation failed. Check the connection and try again.",true); await refreshReadiness(); }
             finally { $("prepareButton").disabled=false; window.dispatchEvent(new CustomEvent('teacher-tools:offlinechange',{detail:{preparing:false}})); }
         });
-        $("installButton").addEventListener("click", async () => { if (standalone) { setMessage(document.documentElement.lang === "ja" ? "Teacher Toolsは既にアプリとして開かれています。" : "Teacher Tools is already open as an installed app."); return; } if (deferredInstall) { deferredInstall.prompt(); await deferredInstall.userChoice; deferredInstall=null; return; } document.querySelector(`[data-option="${option}"]`)?.scrollIntoView({behavior:"smooth",block:"center"}); setMessage(document.documentElement.lang === "ja" ? "下のおすすめ手順に従ってインストールしてください。" : "Follow the recommended instructions below to install on this device."); });
+        $("installButton").addEventListener("click", async () => { if (standalone) { setMessage(document.documentElement.lang === "ja" ? "Teacher Toolsは既にアプリとして開かれています。" : "Teacher Tools is already open as an installed app."); return; } if (deferredInstall) { deferredInstall.prompt(); await deferredInstall.userChoice; deferredInstall=null; return; } document.getElementById("offlineStep2").open=true; selectInstallOption(option); document.getElementById("installTab-"+option).scrollIntoView({behavior:"smooth",block:"center"}); setMessage(document.documentElement.lang === "ja" ? "下のおすすめ手順に従ってインストールしてください。" : "Follow the recommended instructions below to install on this device."); });
         $("updateButton").addEventListener("click", async () => {
             if (updateRegistration?.waiting) {
                 setMessage(document.documentElement.lang === "ja" ? "更新を適用しています…" : "Applying the update…");
@@ -263,13 +459,18 @@
                     });
                 }
                 if (reg?.waiting) {
-                    $("updateButton").querySelector("span").textContent = document.documentElement.lang === "ja" ? "更新を適用" : "Apply update";
-                    setMessage(document.documentElement.lang === "ja" ? "更新をダウンロードしました。作業を保存してから「更新を適用」を選んでください。" : "An update is ready. Save your work, then choose Apply update.");
+                    $("updateButton").querySelector("span").textContent = document.documentElement.lang === "ja" ? "更新を適用" : "Apply Update";
+                    setMessage(document.documentElement.lang === "ja" ? "更新をダウンロードしました。作業を保存してから「更新を適用」を選んでください。" : "An update is ready. Save your work, then choose Apply Update.");
                 } else setMessage(document.documentElement.lang === "ja" ? "最新バージョンです。" : "Teacher Tools is up to date.");
             } catch { setMessage(document.documentElement.lang === "ja" ? "更新を確認できませんでした。現在のバージョンは変更されていません。" : "Could not check for updates. Your current version is unchanged.",true); }
         });
         if ("serviceWorker" in navigator) navigator.serviceWorker.addEventListener("controllerchange", () => location.reload());
-        $("backupButton").addEventListener("click", event => {
+        const licenseDialog = $("license-dialog"), licenseOpener = $("open-license");
+        licenseOpener.addEventListener("click", () => licenseDialog.showModal());
+        $("close-license").addEventListener("click", () => licenseDialog.close());
+        licenseDialog.addEventListener("close", () => { if (!licenseDialog.open) licenseOpener.focus(); });
+        window.TeacherToolsUI.registerTranslations({en:{"home.useCopyright":"Use & copyright","home.closeTerms":"Close terms"},ja:{"home.useCopyright":"利用条件・著作権","home.closeTerms":"利用条件を閉じる"}});
+        $("backupTopButton").addEventListener("click", event => {
             event.stopPropagation();
             window.TeacherToolsProfile?.openSync('export', event.currentTarget);
         });

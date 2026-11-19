@@ -125,7 +125,7 @@ async function state(page,value){await poll(page,()=>document.getElementById('si
         assert(await page.evaluate(async()=>!!(await (await navigator.storage.getDirectory()).getFileHandle('teacher-tools-sync-test.json')).getFile()));
         await Promise.all([page.waitForEvent('load'),page.locator('#siteLinkedDataLink').click()]);
         await poll(page,()=>document.getElementById('siteLinkedDataDisconnect').disabled,value=>value===false,'link existing file');
-        await page.waitForLoadState();await page.goto(origin+'/offline/index.html');await page.locator('#backupButton').click();
+        await page.waitForLoadState();await page.goto(origin+'/offline/index.html');await page.locator('#backupTopButton').click();
         assert(await page.locator('#siteThemePanel').evaluate(e=>e.open));assert.equal(await page.locator('#siteDataExportTab').getAttribute('aria-expanded'),'true');
         assert.deepEqual(errors,[]);await context.close();
         console.log('PASS linked-file create, autosave, pull/reload, saved handle, disconnect without deletion, link existing, and offline-page Sync shortcut. Native OS picker UI was not exercised.');
