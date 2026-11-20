@@ -139,16 +139,16 @@ html[data-theme="true-dark"] .button-primary { color: #07101d; }
 .site-offline-status svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; overflow: visible; }
 .site-offline-status .offline-badge, .site-offline-status .offline-slash, .site-offline-status .offline-badge path { display: none; }
 .site-offline-status .offline-badge circle { fill: var(--surface); }
-.site-offline-status:is([data-offline-state="ready"], [data-offline-state="offline-ready"], [data-offline-state="update"], [data-offline-state="update-only"], [data-offline-state="reload"], [data-offline-state="preparing"], [data-offline-state="incomplete"], [data-offline-state="update-error"]) .offline-badge { display: initial; }
-.site-offline-status:is([data-offline-state="ready"], [data-offline-state="offline-ready"]) .offline-check,
-.site-offline-status:is([data-offline-state="update"], [data-offline-state="update-only"], [data-offline-state="reload"]) .offline-update,
+.site-offline-status:is([data-offline-state="online"], [data-offline-state="offline"], [data-offline-state="unavailable"], [data-offline-state="ready"], [data-offline-state="offline-ready"], [data-offline-state="update"], [data-offline-state="update-only"], [data-offline-state="reload"], [data-offline-state="preparing"], [data-offline-state="incomplete"], [data-offline-state="update-error"]) .offline-badge { display: initial; }
+.site-offline-status:is([data-offline-state="online"], [data-offline-state="offline"], [data-offline-state="unavailable"]) .offline-unprepared,
+.site-offline-status:is([data-offline-state="ready"], [data-offline-state="offline-ready"], [data-offline-state="update"], [data-offline-state="update-only"]) .offline-check,
 .site-offline-status[data-offline-state="preparing"] .offline-download,
-.site-offline-status:is([data-offline-state="incomplete"], [data-offline-state="update-error"]) .offline-alert { display: initial; }
-.site-offline-status:is([data-offline-state="ready"], [data-offline-state="offline-ready"]) .offline-cloud { fill: var(--accent-soft); }
-.site-offline-status[data-connection="offline"] .offline-slash { display: initial; }
-.site-offline-status:is([data-offline-state="incomplete"], [data-offline-state="update-error"], [data-offline-state="offline"]) { color: var(--warning-text); }
-.site-offline-status[data-offline-state="unavailable"] { color: var(--muted); }
-.site-offline-status:is([data-offline-state="checking"], [data-offline-state="preparing"]) .offline-cloud { stroke-dasharray: 3 2; }
+.site-offline-status:is([data-offline-state="incomplete"], [data-offline-state="update-error"], [data-offline-state="reload"]) .offline-alert { display: initial; }
+.site-offline-status:is([data-offline-state="online"], [data-offline-state="ready"]) .offline-cloud { fill: var(--accent-soft); }
+.site-offline-status[data-connection="offline"]:not([data-offline-state="offline"]):not([data-offline-state="offline-ready"]):not([data-offline-state="unavailable"]) .offline-slash { display: initial; }
+.site-offline-status:is([data-offline-state="incomplete"], [data-offline-state="update-error"]) { color: var(--warning-text); }
+.site-offline-status:is([data-offline-state="offline"], [data-offline-state="offline-ready"], [data-offline-state="unavailable"]) { color: color-mix(in srgb, var(--muted) 72%, var(--surface)); }
+.site-offline-status:is([data-offline-state="checking"], [data-offline-state="preparing"], [data-offline-state="update"], [data-offline-state="update-only"], [data-offline-state="reload"]) .offline-cloud { stroke-dasharray: 3 2; }
 /* File-sync state is visible in shape as well as color; the button always opens details. */
 .site-sync-status svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .site-sync-status .sync-attention { display: none; }
@@ -793,4 +793,4 @@ button:enabled:is(:hover, :focus-visible) > svg[data-shared-icon="settings"] { t
     border-radius: 12px;
 }
 
-/* teacher-tools-release: teacher-tools-2026-11-19-backup-import-notice-1 */
+/* teacher-tools-release: teacher-tools-2026-11-20-offline-notice-1 */

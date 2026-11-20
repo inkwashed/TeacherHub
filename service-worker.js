@@ -1,4 +1,4 @@
-const RELEASE = "teacher-tools-2026-11-19-backup-import-notice-1";
+const RELEASE = "teacher-tools-2026-11-20-offline-notice-1";
 const CACHE = `teacher-tools-${RELEASE}`;
 const APP_SHELL = [
   "/",
@@ -96,10 +96,19 @@ function cacheShell(onProgress) {
   return promise;
 }
 
-async function shellReady() {
+async function inspectShell() {
   const cache = await caches.open(CACHE);
-  const valid = await Promise.all(APP_SHELL.map(async url => validShellResponse(url, await cache.match(url))));
-  return valid.every(Boolean);
+  const results = await Promise.all(APP_SHELL.map(async url => {
+    const response = await cache.match(url);
+    if (!response) return 'missing';
+    return await validShellResponse(url, response) ? 'valid' : 'invalid';
+  }));
+  const reason = results.includes('invalid') ? 'invalid' : results.includes('missing') ? 'missing' : null;
+  return {ready: reason === null, reason};
+}
+
+async function shellReady() {
+  return (await inspectShell()).ready;
 }
 
 self.addEventListener("install", event => event.waitUntil(cacheShell()));
@@ -139,7 +148,7 @@ self.addEventListener("fetch", event => {
 
 self.addEventListener("message", event => {
   const reply = value => event.ports[0]?.postMessage(value);
-  if (event.data?.type === "STATUS") event.waitUntil(shellReady().then(ready => reply({ready,release:RELEASE,count:APP_SHELL.length})).catch(error => reply({ready:false,error:String(error)})));
+  if (event.data?.type === "STATUS") event.waitUntil(inspectShell().then(status => reply({...status,release:RELEASE,count:APP_SHELL.length})).catch(error => reply({ready:false,error:String(error)})));
   if (event.data?.type === "CACHE_NOW") event.waitUntil(cacheShell(progress => reply({type:"PROGRESS",...progress})).then(reply).catch(error => reply({ready:false,error:String(error)})));
   if (event.data?.type === "SKIP_WAITING") self.skipWaiting();
 });

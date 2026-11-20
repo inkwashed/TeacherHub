@@ -14,12 +14,12 @@
 <!-- TEACHER-TOOLS:FAVICON:END -->
         <script src="../assets/js/selfie/schema.js"></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:START -->
-    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-19-backup-import-notice-1" data-teacher-tools-bootstrap></script>
+    <script src="../assets/js/theme-bootstrap.js?v=teacher-tools-2026-11-20-offline-notice-1" data-teacher-tools-bootstrap></script>
 <!-- TEACHER-TOOLS:THEME-BOOTSTRAP:END -->
-    <meta name="teacher-tools-release" content="teacher-tools-2026-11-19-backup-import-notice-1">
-    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-19-backup-import-notice-1">
-    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-19-backup-import-notice-1">
-    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-19-backup-import-notice-1">
+    <meta name="teacher-tools-release" content="teacher-tools-2026-11-20-offline-notice-1">
+    <link rel="stylesheet" href="../assets/css/foundation.css?v=teacher-tools-2026-11-20-offline-notice-1">
+    <link rel="stylesheet" href="../assets/css/site.css?v=teacher-tools-2026-11-20-offline-notice-1">
+    <link rel="stylesheet" href="../assets/css/components.css?v=teacher-tools-2026-11-20-offline-notice-1">
     <style>
 
         .offline-page { width: min(1060px, 100%); margin: 0 auto; padding: 24px 32px 40px; }
@@ -44,7 +44,8 @@
         .action.primary:not(:disabled):hover { filter: brightness(.94); background: var(--accent); }
         .action:disabled { opacity: .55; cursor: not-allowed; transform: none; }
         .action svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-        .live-status { min-height: 20px; margin: 12px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+        .live-status { margin: 12px 0 0; padding: 12px 16px; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 12px; font-size: 14px; font-weight: 700; line-height: 1.5; overflow-wrap: anywhere; }
+        .live-status:empty { display: none; }
         .live-status.error { color: var(--danger); }
         .cache-progress { margin-top: 12px; padding: 11px 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
         .cache-progress[hidden] { display: none; }
@@ -115,9 +116,9 @@
 </head>
 <body>
     <!-- TEACHER-TOOLS:SITE-HEADER:START -->
-    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-19-backup-import-notice-1" data-teacher-tools-tools></script>
-    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-19-backup-import-notice-1" data-teacher-tools-toolbar data-page="offline"></script>
-    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-19-backup-import-notice-1" data-teacher-tools-profile></script>
+    <script src="../assets/js/tools.js?v=teacher-tools-2026-11-20-offline-notice-1" data-teacher-tools-tools></script>
+    <script src="../assets/js/toolbar.js?v=teacher-tools-2026-11-20-offline-notice-1" data-teacher-tools-toolbar data-page="offline"></script>
+    <script src="../assets/js/profile.js?v=teacher-tools-2026-11-20-offline-notice-1" data-teacher-tools-profile></script>
 <!-- TEACHER-TOOLS:SITE-HEADER:END -->
 <div class="site-page-scroll themed-scroll">
 
@@ -126,11 +127,16 @@
             <p class="eyebrow" data-i18n="offlinePage.eyebrow">Teacher Tools on this device</p>
             <h1 id="offlineTitle" class="offline-title" data-i18n="offlinePage.title">Install & Offline Use</h1>
             <p class="offline-intro" data-i18n="offlinePage.intro">Download the Teacher Tools Offline file pack to use our apps even when you're offline.</p>
-            <p id="protocolWarning" class="protocol-warning" role="alert" hidden data-i18n="offlinePage.protocolWarning">This page was opened directly from a file. Installation and offline updates require the hosted site or the local preview server.</p>
+            <p id="protocolWarning" class="protocol-warning" role="alert" hidden data-i18n="offlinePage.protocolWarning">Installation and offline updates aren't available from directly opened files or unsecured HTTP addresses. Open the Teacher Tools website or use the local preview server instead.</p>
             <div class="status-grid" aria-label="Offline readiness" data-i18n-aria-label="offlinePage.statusAria">
                 <div class="status-card"><span class="status-label" data-i18n="offlinePage.environment">This device</span><span id="environmentValue" class="status-value">Checking…</span></div>
                 <div class="status-card"><span class="status-label" data-i18n="offlinePage.installStatus">App location</span><span id="installValue" class="status-value">Checking…</span></div>
                 <div class="status-card"><span class="offline-status-heading"><span class="status-label" data-i18n="offlinePage.offlineStatus">Offline files</span><button id="offlineVersionInfo" class="tooltip-trigger offline-version-info" type="button" aria-label="Offline files version" data-i18n-aria-label="offlinePage.versionInfo" data-tooltip="No offline file pack is ready in this browser.">i</button></span><span id="offlineValue" class="status-value">Checking…</span></div>
+            </div>
+            <p id="offlineMessage" class="live-status" role="status" aria-live="polite"></p>
+            <div id="cacheProgressPanel" class="cache-progress" hidden>
+                <div class="cache-progress-row"><span id="cacheProgressLabel" data-i18n="offlinePage.progressLabel">Downloading Offline files...</span><span id="cacheProgressValue">0%</span></div>
+                <progress id="cacheProgressBar" max="100" value="0" aria-label="Offline preparation progress" data-i18n-aria-label="offlinePage.progressAria"></progress>
             </div>
             <div class="hero-actions">
                 <button id="installButton" class="action" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="install-app"></svg><span data-i18n="offlinePage.install">Install Teacher Tools</span></button>
@@ -138,11 +144,7 @@
                 <button id="updateButton" class="action" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="check-updates"></svg><span data-i18n="offlinePage.update">Check for Updates</span></button>
                 <button id="backupTopButton" class="action" type="button"><svg viewBox="0 0 24 24" aria-hidden="true" data-shared-icon="backup"></svg><span data-i18n="offlinePage.backupShort">Export &amp; Import</span></button>
             </div>
-            <div id="cacheProgressPanel" class="cache-progress" hidden>
-                <div class="cache-progress-row"><span data-i18n="offlinePage.progressLabel">Preparing offline files</span><span id="cacheProgressValue">0%</span></div>
-                <progress id="cacheProgressBar" max="100" value="0" aria-label="Offline preparation progress" data-i18n-aria-label="offlinePage.progressAria"></progress>
-            </div>
-            <p id="offlineMessage" class="live-status" role="status" aria-live="polite"></p>
+
         </section>
 
         <details class="section offline-step" id="offlineStep2">
@@ -169,7 +171,7 @@
             </summary>
             <ol class="offline-step-list" type="a">
                 <li data-i18n="offlinePage.quick1">Open this page online in the browser you want to use.</li>
-                <li><span data-i18n="offlinePage.quick2Click">Click </span><strong data-i18n="offlinePage.prepare">Download Offline Files</strong><span data-i18n="offlinePage.quick2Wait">. Wait for Offline Files to show </span><strong data-i18n="offlinePage.ready">Ready</strong><span>.</span></li>
+                <li><span data-i18n="offlinePage.quick2Click">Click </span><strong data-i18n="offlinePage.prepare">Download Offline Files</strong><span data-i18n="offlinePage.quick2Wait">. Wait for Offline Files to show </span><strong data-i18n="offlinePage.ready">Downloaded</strong><span>.</span></li>
                 <li data-i18n="offlinePage.quick3">Disconnect from the internet and test Teacher Tools in the same browser to make sure everything is working.</li>
             </ol>
         </details>
@@ -265,7 +267,7 @@ THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
     </dialog>
 
     <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:START -->
-    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-19-backup-import-notice-1" data-teacher-tools-ui></script>
+    <script src="../assets/js/ui.js?v=teacher-tools-2026-11-20-offline-notice-1" data-teacher-tools-ui></script>
 <!-- TEACHER-TOOLS:SHARED-BEHAVIOR:END -->
     <script>
     (() => {
@@ -281,8 +283,8 @@ THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
         };
         Object.assign(catalogs.en,{"offlinePage.quick1":"Open this page online in the browser you want to use.", "offlinePage.quick2": "Wait for Offline files to say Ready. Choose Prepare for offline use if needed.", "offlinePage.quick3":"Disconnect from the internet and test Teacher Tools in the same browser to make sure everything is working.", "offlinePage.updatesTitle": "Keep Teacher Tools up to date", "offlinePage.updatesCopy": "Use Check for updates while online. If Apply Update appears, save your work first, then apply it. Reload other open app pages afterward. Clicking an app title refreshes its page; it does not apply a pending update.", "offlinePage.backupCopy": "Use Profile → Export & Import Backup to save or restore a JSON backup."});
         Object.assign(catalogs.ja,{"offlinePage.quick1":"使いたいブラウザで、オンライン中にこのページを開きます。", "offlinePage.quick2": "オフライン用ファイルが「準備完了」になるまで待ちます。必要なら「オフライン利用を準備」を押します。", "offlinePage.quick3":"インターネット接続を切り、同じブラウザでTeacher Toolsが正常に使えるか確認します。", "offlinePage.updatesTitle": "ツールを更新する", "offlinePage.updatesCopy": "オンライン中に「更新を確認」を押します。「更新を適用」が表示されたら、作業を保存してから適用してください。他に開いているツールのページも再読み込みします。アプリ名のクリックはページの再読み込みで、待機中の更新の適用ではありません。", "offlinePage.backupCopy": "プロフィールの「バックアップの書き出し・読み込み」でJSONバックアップを保存・復元できます。"});
-        Object.assign(catalogs.en, {"offlinePage.step1":"Step 2: ","offlinePage.quick2Click":"Click ","offlinePage.quick2Wait":". Wait for Offline Files to show ","offlinePage.ready":"Ready"});
-        Object.assign(catalogs.ja, {"offlinePage.step1":"ステップ2：", "offlinePage.quick2Click":"「", "offlinePage.quick2Wait":"」を押し、オフライン用ファイルが次の表示になるまで待ちます：", "offlinePage.ready":"準備完了"});
+        Object.assign(catalogs.en, {"offlinePage.step1":"Step 2: ","offlinePage.quick2Click":"Click ","offlinePage.quick2Wait":". Wait for Offline Files to show ","offlinePage.ready":"Downloaded"});
+        Object.assign(catalogs.ja, {"offlinePage.step1":"ステップ2：", "offlinePage.quick2Click":"「", "offlinePage.quick2Wait":"」を押し、オフライン用ファイルが次の表示になるまで待ちます：", "offlinePage.ready":"ダウンロード済み"});
         Object.assign(catalogs.en, {"offlinePage.step2": "Step 1: ", "offlinePage.tabChrome": "Chrome / Edge", "offlinePage.tabSafari": "Safari", "offlinePage.tabIOS": "iPhone / iPad", "offlinePage.tabAndroid": "Android", "offlinePage.installTabs": "Installation instructions"});
         Object.assign(catalogs.ja, {"offlinePage.step2": "ステップ1：", "offlinePage.tabChrome": "Chrome / Edge", "offlinePage.tabSafari": "Safari", "offlinePage.tabIOS": "iPhone / iPad", "offlinePage.tabAndroid": "Android", "offlinePage.installTabs": "インストール手順"});
         Object.assign(catalogs.en, {"offlinePage.step3": "Step 3: ", "offlinePage.updateAStart": "Make sure you are connected to the internet, then click ", "offlinePage.updateCheckLabel": "Check for Updates", "offlinePage.updateAEnd": " to download any available updates to the Offline files.", "offlinePage.updateBStart": "If ", "offlinePage.updateApplyLabel": "Apply Update", "offlinePage.updateBEnd": " appears, save or sync your data first, then click to apply the update.", "offlinePage.updateC": "Reload any open app pages to make sure the updates are applied and visible."});
@@ -300,6 +302,41 @@ THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
         const installContext = location.protocol === "https:" || location.hostname === "localhost" || location.hostname === "127.0.0.1";
         let deferredInstall = window.teacherToolsInstallPrompt || null;
         let updateRegistration = null;
+        let verifiedWaiting = null;
+        let updateInspection = 0;
+        const watchedUpdateWorkers = new WeakSet();
+        function renderUpdateAction() {
+            const apply = verifiedWaiting && updateRegistration?.waiting === verifiedWaiting;
+            const label = $("updateButton").querySelector("span");
+            label.dataset.i18n = apply ? "offlinePage.updateApplyLabel" : "offlinePage.update";
+            label.textContent = text(label.dataset.i18n, apply ? "Apply Update" : "Check for Updates");
+        }
+        async function refreshUpdateAction() {
+            const inspection = ++updateInspection;
+            const worker = updateRegistration?.waiting;
+            verifiedWaiting = null;
+            renderUpdateAction();
+            if (!worker) return false;
+            try {
+                const result = await askWorker("STATUS");
+                if (inspection !== updateInspection || updateRegistration?.waiting !== worker) return false;
+                if (result.ready) verifiedWaiting = worker;
+            } catch { /* Keep Check for Updates available when verification fails. */ }
+            renderUpdateAction();
+            return !!verifiedWaiting;
+        }
+        function watchUpdateRegistration(registration) {
+            if (updateRegistration !== registration) {
+                updateRegistration = registration;
+                registration.addEventListener("updatefound", () => watchUpdateRegistration(registration));
+            }
+            [registration.installing, registration.waiting, registration.active].forEach(worker => {
+                if (!worker || watchedUpdateWorkers.has(worker)) return;
+                watchedUpdateWorkers.add(worker);
+                worker.addEventListener("statechange", () => refreshUpdateAction());
+            });
+            return refreshUpdateAction();
+        }
         const ua = navigator.userAgent;
         const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
         const isAndroid = /Android/.test(ua);
@@ -317,11 +354,12 @@ THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
         let readyBuild = '';
         function updateVersionInfo() {
             $("offlineVersionInfo").dataset.tooltip = readyBuild
-                ? (document.documentElement.lang === "ja" ? "準備済みのバージョン：" : "Ready version: ") + readyBuild
+                ? (document.documentElement.lang === "ja" ? "ダウンロード済みのバージョン：" : "Downloaded version: ") + readyBuild
                 : (document.documentElement.lang === "ja" ? "このブラウザには準備済みのオフライン用ファイルがありません。" : "No offline file pack is ready in this browser.");
         }
         function updateLanguageOwnedText() {
             updateVersionInfo();
+            renderUpdateAction();
             const japanese = document.documentElement.lang === "ja";
             $("environmentValue").textContent = isIOS
                 ? standalone ? (japanese ? "iPhone / iPad · Teacher Tools Webアプリ" : "iPhone / iPad · Teacher Tools Web App") : `iPhone / iPad · ${browserName}`
@@ -387,37 +425,41 @@ THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
             $("prepareButton").disabled = true;
             $("installButton").disabled = true;
             $("updateButton").disabled = true;
-            $("offlineValue").textContent = document.documentElement.lang === "ja" ? "サーバーから開いてください" : "Open from a server";
+            $("offlineValue").textContent = document.documentElement.lang === "ja" ? "ローカルファイル（テスト専用）" : "Local file - testing only";
         }
 
         async function askWorker(type, onProgress) {
             const registration = await navigator.serviceWorker.getRegistration("/");
             // Inspect and prepare the same release that Apply Update will activate.
             const worker = registration?.waiting || registration?.active || registration?.installing;
-            if (!worker) throw new Error("No active offline worker");
+            if (!worker) { if (type === "STATUS") return {ready:false, reason:"missing"}; throw new Error("No active offline worker"); }
             return new Promise((resolve,reject) => { const channel = new MessageChannel(); const timer=setTimeout(()=>reject(new Error("Offline worker did not respond")),30000); channel.port1.onmessage=e=>{ if(e.data?.type === "PROGRESS"){onProgress?.(e.data);return;} clearTimeout(timer);resolve(e.data)}; worker.postMessage({type},[channel.port2]); });
         }
         async function refreshReadiness() {
-            if (!("serviceWorker" in navigator)) { $("offlineValue").textContent = document.documentElement.lang === "ja" ? "このブラウザは未対応" : "Not supported here"; return; }
+            if (!("serviceWorker" in navigator)) { $("offlineValue").textContent = document.documentElement.lang === "ja" ? "このブラウザは非対応です" : "Browser not supported"; return; }
             try {
                 const result = await askWorker("STATUS");
                 readyBuild = result.ready ? String(result.release || "").replace("teacher-tools-", "") : "";
                 updateVersionInfo();
                 $("offlineValue").textContent = result.ready
-                    ? (document.documentElement.lang === "ja" ? "準備完了" : "Ready")
-                    : (document.documentElement.lang === "ja" ? "準備が必要" : "Not prepared");
+                    ? (document.documentElement.lang === "ja" ? "ダウンロード済み" : "Downloaded")
+                    : (result.error || result.reason === "invalid"
+                        ? (document.documentElement.lang === "ja" ? "確認できませんでした" : "Check failed")
+                        : (document.documentElement.lang === "ja" ? "見つかりません" : "Not found"));
                 $("offlineValue").classList.toggle("good",!!result.ready);
-            } catch { readyBuild = ""; updateVersionInfo(); $("offlineValue").textContent = document.documentElement.lang === "ja" ? "準備が必要" : "Not prepared"; $("offlineValue").classList.remove("good"); }
+            } catch { readyBuild = ""; updateVersionInfo(); $("offlineValue").textContent = document.documentElement.lang === "ja" ? "確認できませんでした" : "Check failed"; $("offlineValue").classList.remove("good"); }
         }
-        if (installContext && "serviceWorker" in navigator) navigator.serviceWorker.register("/service-worker.js", {scope:"/"}).then(refreshReadiness).catch(()=>refreshReadiness()); else if (installContext) refreshReadiness();
+        if (installContext && "serviceWorker" in navigator) navigator.serviceWorker.register("/service-worker.js", {scope:"/"}).then(reg => { watchUpdateRegistration(reg); return refreshReadiness(); }).catch(()=>refreshReadiness()); else if (installContext) refreshReadiness();
         window.addEventListener("beforeinstallprompt", event => { event.preventDefault(); deferredInstall = event; window.teacherToolsInstallPrompt = event; $("installButton").disabled = false; });
         $("prepareButton").addEventListener("click", async () => {
             $("prepareButton").disabled=true;
             window.dispatchEvent(new CustomEvent('teacher-tools:offlinechange',{detail:{preparing:true}}));
             $("cacheProgressPanel").hidden=false;
+            $("cacheProgressLabel").dataset.i18n="offlinePage.progressLabel";
+            $("cacheProgressLabel").textContent=text("offlinePage.progressLabel", "Downloading Offline files...");
             $("cacheProgressBar").value=0;
             $("cacheProgressValue").textContent="0%";
-            setMessage(document.documentElement.lang === "ja" ? "オフライン用ファイルを準備しています…" : "Preparing all Teacher Tools files for offline use…");
+            setMessage(document.documentElement.lang === "ja" ? "Teacher Toolsのオフライン用ファイルをダウンロードしています…" : "Downloading Teacher Tools Offline files…");
             try {
                 const result=await askWorker("CACHE_NOW", progress => {
                     const percent=Math.round((progress.completed/progress.total)*100);
@@ -426,24 +468,26 @@ THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                 });
                 if(!result.ready) throw new Error(result.error||"Cache incomplete");
                 $("cacheProgressBar").value=100;
-                setMessage(document.documentElement.lang === "ja" ? "準備完了です。インターネットなしでTeacher Toolsを開けます。" : "Ready. Teacher Tools can now open without internet.");
+                $("cacheProgressLabel").dataset.i18n="offlinePage.progressComplete";
+                $("cacheProgressLabel").textContent=text("offlinePage.progressComplete", "Download complete.");
+                setMessage(document.documentElement.lang === "ja" ? "ダウンロードが完了しました。インターネットなしでTeacher Toolsを開けます。" : "Download successful. Teacher Tools can now open without internet.");
                 await refreshReadiness();
-            } catch(error) { setMessage(document.documentElement.lang === "ja" ? "準備できませんでした。接続を確認してもう一度お試しください。" : "Offline preparation failed. Check the connection and try again.",true); await refreshReadiness(); }
+            } catch(error) { setMessage(document.documentElement.lang === "ja" ? "オフライン用ファイルをダウンロードできませんでした。接続を確認してもう一度お試しください。" : "Offline download failed. Check the connection and try again.",true); await refreshReadiness(); }
             finally { $("prepareButton").disabled=false; window.dispatchEvent(new CustomEvent('teacher-tools:offlinechange',{detail:{preparing:false}})); }
         });
         $("installButton").addEventListener("click", async () => { if (standalone) { setMessage(document.documentElement.lang === "ja" ? "Teacher Toolsは既にアプリとして開かれています。" : "Teacher Tools is already open as an installed app."); return; } if (deferredInstall) { deferredInstall.prompt(); await deferredInstall.userChoice; deferredInstall=null; return; } document.getElementById("offlineStep2").open=true; selectInstallOption(option); document.getElementById("installTab-"+option).scrollIntoView({behavior:"smooth",block:"center"}); setMessage(document.documentElement.lang === "ja" ? "下のおすすめ手順に従ってインストールしてください。" : "Follow the recommended instructions below to install on this device."); });
         $("updateButton").addEventListener("click", async () => {
-            if (updateRegistration?.waiting) {
+            if (await refreshUpdateAction()) {
                 setMessage(document.documentElement.lang === "ja" ? "更新を適用しています…" : "Applying the update…");
                 updateRegistration.waiting.postMessage({type:"SKIP_WAITING"});
                 return;
             }
-            if(!navigator.onLine){setMessage(document.documentElement.lang === "ja" ? "オフラインのため更新を確認できません。準備済みのツールは引き続き利用できます。" : "You are offline. Updates need internet; prepared tools can still be used.",true);return;}
+            if(!navigator.onLine){setMessage(document.documentElement.lang === "ja" ? "オフラインのため更新を確認できません。準備済みのツールは引き続き利用できます。" : "You are offline. Updates need internet; downloaded tools can still be used.",true);return;}
             setMessage(document.documentElement.lang === "ja" ? "更新を確認しています…" : "Checking for updates…");
             try {
                 const reg=await navigator.serviceWorker.getRegistration("/");
-                updateRegistration = reg || null;
                 if (!reg) throw new Error("Offline setup is unavailable");
+                watchUpdateRegistration(reg);
                 await reg.update();
                 // update() can resolve while the new worker is still installing.
                 if (reg?.installing) {
@@ -458,12 +502,16 @@ THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
                         check();
                     });
                 }
-                if (reg?.waiting) {
-                    $("updateButton").querySelector("span").textContent = document.documentElement.lang === "ja" ? "更新を適用" : "Apply Update";
-                    setMessage(document.documentElement.lang === "ja" ? "更新をダウンロードしました。作業を保存してから「更新を適用」を選んでください。" : "An update is ready. Save your work, then choose Apply Update.");
+                if (await refreshUpdateAction()) {
+                    setMessage(document.documentElement.lang === "ja" ? "更新があります。作業を保存してから「更新を適用」を選んでください。" : "An update is available. Save your work, then choose Apply Update.");
+                } else if (reg.waiting) {
+                    throw new Error("Update files could not be verified");
                 } else setMessage(document.documentElement.lang === "ja" ? "最新バージョンです。" : "Teacher Tools is up to date.");
             } catch { setMessage(document.documentElement.lang === "ja" ? "更新を確認できませんでした。現在のバージョンは変更されていません。" : "Could not check for updates. Your current version is unchanged.",true); }
         });
+        window.addEventListener("focus", refreshUpdateAction);
+        window.addEventListener("teacher-tools:offlinechange", refreshUpdateAction);
+        document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") refreshUpdateAction(); });
         if ("serviceWorker" in navigator) navigator.serviceWorker.addEventListener("controllerchange", () => location.reload());
         const licenseDialog = $("license-dialog"), licenseOpener = $("open-license");
         licenseOpener.addEventListener("click", () => licenseDialog.showModal());
@@ -474,8 +522,8 @@ THE SOFTWARE IS PROVIDED “AS IS,” WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
             event.stopPropagation();
             window.TeacherToolsProfile?.openSync('export', event.currentTarget);
         });
-        window.addEventListener("online",()=>setMessage(document.documentElement.lang === "ja" ? "オンラインに戻りました。" : "You are back online."));
-        window.addEventListener("offline",()=>setMessage(document.documentElement.lang === "ja" ? "オフラインです。準備済みのツールのみ利用できます。外部サービスには接続が必要です。" : "You are offline. Only prepared tools can open; external services need internet."));
+        window.addEventListener("online",()=>setMessage(document.documentElement.lang === "ja" ? "接続が復旧しました。オンラインに戻りました。" : "Connection restored. You are back online."));
+        window.addEventListener("offline",()=>setMessage(document.documentElement.lang === "ja" ? "接続が切れました。現在オフラインです。" : "Connection lost. You are currently offline."));
         window.addEventListener("teacher-tools:languagechange", updateLanguageOwnedText);
     })();
     </script>

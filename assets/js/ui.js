@@ -77,9 +77,10 @@ window.TeacherToolsCalendarValidate = value => {
             "tool.slidesDescription": "Build lesson slides from common fields",
             "offline.open": "Install Teacher Tools or manage offline use",
             "offline.title": "Install & Offline Use",
-            "offlinePage.progressLabel": "Preparing offline files",
+            "offlinePage.progressLabel": "Downloading Offline files...",
+            "offlinePage.progressComplete": "Download complete.",
             "offlinePage.progressAria": "Offline preparation progress",
-            "offlinePage.protocolWarning": "This page was opened directly from a file. Installation and offline updates require the hosted site or the local preview server.",
+            "offlinePage.protocolWarning": "Installation and offline updates aren't available from directly opened files or unsecured HTTP addresses. Open the Teacher Tools website or use the local preview server instead.",
             "language.open": "Open language settings",
             "language.title": "Language",
             "language.close": "Close language settings",
@@ -193,9 +194,10 @@ window.TeacherToolsCalendarValidate = value => {
             "tool.slidesDescription": "よく使う項目から授業スライドを作成",
             "offline.open": "Teacher Toolsのインストールとオフライン利用を開く",
             "offline.title": "インストールとオフライン利用",
-            "offlinePage.progressLabel": "オフライン用ファイルを準備中",
+            "offlinePage.progressLabel": "オフライン用ファイルをダウンロード中...",
+            "offlinePage.progressComplete": "ダウンロードが完了しました。",
             "offlinePage.progressAria": "オフライン準備の進行状況",
-            "offlinePage.protocolWarning": "このページはファイルから直接開かれています。インストールとオフライン更新には、公開サイトまたはローカルプレビューサーバーから開く必要があります。",
+            "offlinePage.protocolWarning": "直接開いたファイルや安全でないHTTPアドレスからは、インストールやオフライン用ファイルの更新ができません。Teacher Toolsのウェブサイト、またはローカルプレビューサーバーから開いてください。",
             "language.open": "言語設定を開く",
             "language.title": "言語",
             "language.close": "言語設定を閉じる",
@@ -1604,8 +1606,8 @@ window.TeacherToolsCalendarValidate = value => {
         if (preferredFocus) preferredFocus.focus();
     }
 
-    registerTranslations({"en": {"offlineIndicator.online": "Online — offline files not prepared. Open Install & Offline Use.", "offlineIndicator.ready": "Online — offline files verified and ready. Open Install & Offline Use.", "offlineIndicator.offline-ready": "Offline — prepared files are ready to use. External services still need internet. Open Install & Offline Use.", "offlineIndicator.offline": "Offline — no verified offline copy. Open Install & Offline Use.", "offlineIndicator.update": "Update ready to apply. Your current offline copy is available. Open Install & Offline Use.", "offlineIndicator.update-only": "Update files are ready. Open Install & Offline Use to review or apply them.", "offlineIndicator.preparing": "Preparing offline files or downloading an update… Open Install & Offline Use.", "offlineIndicator.incomplete": "Offline files are incomplete or could not be verified. Open Install & Offline Use to repair them.", "offlineIndicator.update-error": "Update could not be verified; your current offline copy is still available. Open Install & Offline Use.", "offlineIndicator.checking": "Checking offline files… Open Install & Offline Use.", "offlineIndicator.unavailable": "Offline installation requires the hosted site or local server and service-worker support. Open Install & Offline Use."}, "ja": {"offlineIndicator.online": "オンラインです。オフライン用ファイルは未準備です。インストールとオフライン利用を開く。", "offlineIndicator.ready": "オンラインです。オフライン用ファイルは確認済みで準備完了です。インストールとオフライン利用を開く。", "offlineIndicator.offline-ready": "オフラインです。準備済みのファイルを利用できます。外部サービスにはインターネットが必要です。インストールとオフライン利用を開く。", "offlineIndicator.offline": "オフラインです。確認済みのオフライン用ファイルがありません。インストールとオフライン利用を開く。", "offlineIndicator.update": "適用できる更新があります。現在のオフライン用ファイルは利用できます。インストールとオフライン利用を開く。", "offlineIndicator.update-only": "更新ファイルの準備ができています。インストールとオフライン利用を開いて確認・適用してください。", "offlineIndicator.preparing": "オフライン用ファイルの準備、または更新のダウンロード中です。インストールとオフライン利用を開く。", "offlineIndicator.incomplete": "オフライン用ファイルが不足しているか、確認できませんでした。インストールとオフライン利用を開いて準備し直してください。", "offlineIndicator.update-error": "更新を確認できませんでした。現在のオフライン用ファイルは利用できます。インストールとオフライン利用を開く。", "offlineIndicator.checking": "オフライン用ファイルを確認中です。インストールとオフライン利用を開く。", "offlineIndicator.unavailable": "オフラインの準備には公開サイトまたはローカルサーバーと、サービスワーカー対応ブラウザが必要です。インストールとオフライン利用を開く。"}});
-    registerTranslations({en:{'offlineIndicator.reload':'A newer version is active. Save your work, then reload or open Install & Offline Use.'},ja:{'offlineIndicator.reload':'新しいバージョンが有効です。作業を保存してから再読み込みするか、インストールとオフライン利用を開いてください。'}});
+    registerTranslations({"en": {"offlineIndicator.online":"Online / connected. Offline mode is not enabled.", "offlineIndicator.ready":"Online / connected. Offline mode is active.", "offlineIndicator.offline-ready":"Offline / no connection. Offline mode is active.", "offlineIndicator.offline":"Offline / no connection. Offline mode is not enabled.", "offlineIndicator.update":"Update files are ready to apply.", "offlineIndicator.update-only":"Update files are ready to apply.", "offlineIndicator.preparing":"Downloading Offline files...", "offlineIndicator.incomplete":"Offline files are incomplete or could not be verified. Please download them again.", "offlineIndicator.update-error":"Update could not be verified; your current Offline copy is still available.", "offlineIndicator.checking":"Checking Offline files…", "offlineIndicator.unavailable":"Offline mode unavailable. Offline installation requires the hosted site or local server and service-worker support."}, "ja": {"offlineIndicator.online":"オンライン／接続中。オフラインモードは有効になっていません。", "offlineIndicator.ready":"オンライン／接続中。オフラインモードは有効です。", "offlineIndicator.offline-ready":"オフライン／未接続。オフラインモードは有効です。", "offlineIndicator.offline":"オフライン／未接続。オフラインモードは有効になっていません。", "offlineIndicator.update":"更新ファイルを適用する準備ができています。", "offlineIndicator.update-only":"更新ファイルを適用する準備ができています。", "offlineIndicator.preparing":"オフライン用ファイルをダウンロード中...", "offlineIndicator.incomplete":"オフライン用ファイルが不足しているか、確認できませんでした。もう一度ダウンロードしてください。", "offlineIndicator.update-error":"更新を確認できませんでした。現在のオフライン用ファイルは引き続き利用できます。", "offlineIndicator.checking":"オフライン用ファイルを確認中…", "offlineIndicator.unavailable":"オフラインモードを利用できません。オフラインのインストールには、公開サイトまたはローカルサーバーと、サービスワーカー対応ブラウザが必要です。"}});
+    registerTranslations({en:{"offlineIndicator.reload":"A newer version is available. Please refresh to update."},ja:{"offlineIndicator.reload":"新しいバージョンがあります。再読み込みして更新してください。"}});
     function initOfflineIndicator() {
         const button = document.getElementById('siteOfflineStatusButton');
         if (!button) return;
@@ -1957,4 +1959,4 @@ window.TeacherToolsCalendarValidate = value => {
 })();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-19-backup-import-notice-1 */
+/* teacher-tools-release: teacher-tools-2026-11-20-offline-notice-1 */

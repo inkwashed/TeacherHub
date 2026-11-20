@@ -494,3 +494,7 @@ and the worker maps explicit index navigation to the prepared canonical page.
 ## Profile data settings styling — November 19, 2026
 
 File Sync and Export & Import retain the existing Profile workspace and data behavior. Shared site styles now use 44px data rows, readable summary text/states, larger file/status text, 12px field corners and pill-shaped 44px actions. File Sync's browser badge now says CHROME/EDGE in both languages; its CSS/translation names no longer call it beta. No storage metadata, sync timing, permissions or backup format changed. Checked bilingual responsive workspace flows, full/selected export and restore, invalid/cancelled imports, legacy imports, autosave timing and error handling, and linked-file fixtures. Native OS picker prompts still need manual testing.
+
+## Initial cloud refinement — November 20, 2026
+
+Online/Not Prepared now uses a softly filled cloud plus X badge; Online/Ready retains its fill/check. Offline/Not Prepared and Unavailable use an unfilled cloud/X in a lighter theme-relative grey, and Offline/Ready uses the same unfilled grey cloud with its check. Slashes are suppressed for these offline/unavailable states. Update, reload, preparing, checking and error artwork remains unchanged, including their existing disconnected overlays. Runtime status selection and tooltip wording are unchanged. Verified five appearances in light/dark and the actual readiness/cache-loss/repair/offline/update/reload/direct-file state flows.
