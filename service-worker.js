@@ -1,4 +1,4 @@
-const RELEASE = "teacher-tools-2026-11-20-offline-notice-1";
+const RELEASE = "teacher-tools-2026-11-25-sync-warning-1";
 const CACHE = `teacher-tools-${RELEASE}`;
 const APP_SHELL = [
   "/",

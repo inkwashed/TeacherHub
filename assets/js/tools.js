@@ -238,4 +238,4 @@
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initialize,{once:true});else initialize();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-20-offline-notice-1 */
+/* teacher-tools-release: teacher-tools-2026-11-25-sync-warning-1 */

@@ -148,7 +148,7 @@ window.TeacherToolsCalendarValidate = value => {
             "linked.fileChanged": "Synced changes are waiting. Choose Sync Data to use them, or Save Changes to replace them.",
             "linked.pending": "Changes are waiting for the next automatic save to {name}. Keep Teacher Tools active with file access, or choose Save Changes now.",
             "linked.conflict": "Both this browser and the linked file changed. Choose Sync Data or Save Changes; nothing was overwritten.",
-            "linked.loadConfirm": "Sync Data from {name}? This replaces the browser's supported Teacher Tools records with the file's records, then reloads the page.",
+            "linked.loadConfirm": "Sync Data from {name}? This will overwrite the browser's local Teacher Tools data with the selected file's data, then reload the page. This cannot be undone.",
             "linked.autoPullConfirm": "New synced data was detected in {name}, possibly from another browser. Load it now? This browser's Teacher Tools data will be overwritten. Choose Cancel to review and use Sync Data or Save Changes manually.",
             "linked.saveConfirm": "The linked file changed elsewhere. Replace it with this browser's current data?",
             "linked.error": "The linked file could not be accessed.",
@@ -265,7 +265,7 @@ window.TeacherToolsCalendarValidate = value => {
             "linked.fileChanged": "同期された変更があります。「同期データを取り込む」で反映するか、「変更を保存」で置き換えてください。",
             "linked.pending": "{name}への次回の自動保存を待っています。ファイルへのアクセスを許可してTeacher Toolsをアクティブにするか、「変更を保存」を押してください。",
             "linked.conflict": "このブラウザとリンク済みファイルの両方が変更されています。「同期データを取り込む」または「変更を保存」を選んでください。データは上書きされていません。",
-            "linked.loadConfirm": "{name}から同期データを取り込みますか？ ファイル内の対応データでブラウザの保存データを置き換え、ページを再読み込みします。",
+            "linked.loadConfirm": "{name}から同期データを取り込みますか？ 選択したファイルのデータでブラウザ内のTeacher Toolsのローカルデータを上書きし、ページを再読み込みします。この操作は取り消せません。",
             "linked.autoPullConfirm": "{name}に新しい同期データが見つかりました。別のブラウザからの変更かもしれません。今すぐ取り込みますか？ このブラウザのTeacher Toolsデータは上書きされます。キャンセルすると、「同期データを取り込む」または「変更を保存」で手動確認できます。",
             "linked.saveConfirm": "リンク済みファイルが別の場所で変更されています。このブラウザの現在のデータで置き換えますか？",
             "linked.error": "リンク済みファイルにアクセスできませんでした。",
@@ -861,7 +861,7 @@ window.TeacherToolsCalendarValidate = value => {
         try {
             if (!await linkedDataPermission(false, true)) throw new Error(translate("linked.error", "The linked file could not be accessed."));
             const payload = await readLinkedDataFile();
-            if (confirmLoad && !window.confirm(translate("linked.loadConfirm", `Sync Data from ${linkedDataState.handle.name}? This replaces the browser's supported Teacher Tools records with the file's records, then reloads the page.`, { name: linkedDataState.handle.name }))) return false;
+            if (confirmLoad && !window.confirm(translate("linked.loadConfirm", `Sync Data from ${linkedDataState.handle.name}? This will overwrite the browser's local Teacher Tools data with the selected file's data, then reload the page. This cannot be undone.`, { name: linkedDataState.handle.name }))) return false;
             const plan = linkedDataImportPlan(payload);
             applyStorageChanges(plan.changes);
             linkedDataState.fileFingerprint = linkedDataFingerprint(payload);
@@ -1959,4 +1959,4 @@ window.TeacherToolsCalendarValidate = value => {
 })();
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-20-offline-notice-1 */
+/* teacher-tools-release: teacher-tools-2026-11-25-sync-warning-1 */

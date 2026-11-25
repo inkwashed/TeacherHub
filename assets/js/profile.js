@@ -519,4 +519,4 @@
     }
 })();
 
-/* teacher-tools-release: teacher-tools-2026-11-20-offline-notice-1 */
+/* teacher-tools-release: teacher-tools-2026-11-25-sync-warning-1 */
